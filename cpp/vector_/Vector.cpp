@@ -1,0 +1,18 @@
+//Vector.cpp
+
+#include "Vector.h"
+Vector::Vector(int s){
+	if (s<0)
+		throw length_error{};
+	elem = new double[s];
+	sz = s;
+
+}
+
+double& Vector::operator[](int i){
+	return elem[i];
+}
+
+int Vector::size(){
+	return sz;
+}
