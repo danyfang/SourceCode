@@ -4,7 +4,7 @@
 Given k sorted linked lists and return it as one sorted list
 first assume list is sorted in accending order
 */
-
+//current solution exceeds time limit
 
 class ListNode {
     int val;
@@ -43,8 +43,14 @@ public class SortedList{
 		ListNode a = new ListNode(1);
 		ListNode b = new ListNode(2);
 		ListNode c = new ListNode(3);
+		ListNode x = new ListNode(8);
+		ListNode y = new ListNode(11);
+		ListNode z = new ListNode(23);
 		a.next = b;
 		b.next = c;
+		c.next = x;
+		x.next = y;
+		y.next = z;
 
 		ListNode d = new ListNode(4);
 		ListNode e = new ListNode(5);

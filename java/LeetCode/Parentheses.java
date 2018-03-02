@@ -84,7 +84,7 @@ class Solution{//solution a: brutal force, n has limit, otherwise overflow
 			backtrack(list, str+")", open, close+1, max);
 	}
 
-
+	//solution for valid parenthesis
 	public boolean isValid(String s) {
 		if(s.length() % 2 != 0)
 			return false;
