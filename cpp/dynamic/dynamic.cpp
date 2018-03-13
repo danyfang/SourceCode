@@ -38,7 +38,7 @@ bool wordBreak(string str){
             if(i == size){
                 return true;
             }
-            for(int j=i+1; j<=size; j++){// to match the longest word in the dictionary
+            for(int j=i+1; j<=size; j++){
                 if(wb[j] == false && dictionaryContains(str.substr(i,j-i))){
                     wb[j] = true;
                     cout << str.substr(i,j-1) << endl;
