@@ -2,9 +2,7 @@
 //Solution written by Xuqiang Fang on 27 Feb 2018
 /*
 Given k sorted linked lists and return it as one sorted list
-first assume list is sorted in accending order
 */
-//current solution exceeds time limit
 
 class ListNode {
     int val;
@@ -14,27 +12,8 @@ class ListNode {
 
 class Solution {//use recursion
     public ListNode mergeKLists(ListNode[] lists) {
-		ListNode result = lists[0];
-		for(int i=0; i<lists.length; i++){
-			if(lists[i] != null){
-				result = lists[i];
-				break;
-			}
-		}
-		if(result == null)//the ListNode list contains all null list
-			return result;
-		//result is not null
-		int foot = 0;
-		for(int i=0; i<lists.length; i++){
-			if(lists[i] != null && lists[i].val < result.val){
-				result = lists[i];
-				foot = i;
-			}
-		}
-		lists[foot] = lists[foot].next;
-		result.next = this.mergeKLists(lists);
-       	return result; 
-    }
+    
+	}
 }
 
 public class SortedList{

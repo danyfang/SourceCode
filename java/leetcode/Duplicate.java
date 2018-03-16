@@ -1,4 +1,5 @@
-
+//Leetcode problem 83 Remove Duplicates from Sorted list
+//Solution written by Xuqiang Fang on 18 Feb 2018
 class ListNode {
     int val;
     ListNode next;

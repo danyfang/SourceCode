@@ -1,4 +1,3 @@
-
 //Leetcode problem 461 Hamming Distance
 //Solution written by Xuqiang Fang on 2 March 2018
 /*

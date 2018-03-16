@@ -1,0 +1,36 @@
+//Leetcode problem 144 Binary Tree Preorder Traversal
+//Solution written by Xuqiang Fang on 13 March 2018 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
+
+class TreeNode{
+	int val;
+	TreeNode left;
+	TreeNode right;
+	TreeNode(int x){val = x;}
+}
+
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+		List<Integer> list = new ArrayList<Integer>();
+		LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+		TreeNode current = root;
+		while(current != null || !stack.isEmpty()){
+			list.add(current.val);
+			while(current != null){
+				stack.push(current);
+				current = current.left;
+			}
+			current = current.pop();
+			list.add()
+		}
+		return list;
+    }
+}
+public class PreorderTraveral{
+	public static void main(String[] args){
+		Solution s = new Solution();
+	}
+}

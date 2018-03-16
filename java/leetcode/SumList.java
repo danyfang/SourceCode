@@ -1,3 +1,6 @@
+//Leetcode problem 2 Add two numbers
+//Solution written by Xuqiang Fang on 22 feb 2018
+
 //all combing works are done by foot node;
 //all return head;
 class ListNode {

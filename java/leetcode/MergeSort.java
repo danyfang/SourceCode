@@ -1,4 +1,5 @@
-
+//Leetcode problem 88 Merge Sorted Array
+//Solution written by Xuqiang Fang 19 Feb 2018
 
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
