@@ -1,4 +1,4 @@
-//Leetcode problem 102 Binary Tree Level Order Traversal
+//Leetcode problem 102 Binary Tree Level Order Traversal 107
 //Solution written by Xuqiang Fang on 12 March 2018 
 // This solution was taken from reference solution on programcreek.com
 import java.util.List;
@@ -36,15 +36,15 @@ class Solution{
     }
 
 	public List<List<Integer>>	levelOrder(TreeNode root){
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		if (root == null)	
-			return null;
+			return result;
 	
 		LinkedList<TreeNode> current = new LinkedList<TreeNode>();
 		LinkedList<TreeNode> next = new LinkedList<TreeNode>();
 		current.add(root);
 
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		List<Integer> rootLevel = new ArrayList<Integer>(root.val);
+		List<Integer> rootLevel = new ArrayList<Integer>();
 
 		while(! current.isEmpty()){
 			TreeNode node = current.remove();
@@ -67,6 +67,74 @@ class Solution{
 		return result;
 			
 	}
+	public List<List<Integer>>	levelOrderBottom(TreeNode root){
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		if(root == null)
+			return result;
+		LinkedList<TreeNode> current = new LinkedList<TreeNode>();
+		LinkedList<TreeNode> next = new LinkedList<TreeNode>();
+		current.add(root);
+
+		List<Integer> rootLevel = new ArrayList<Integer>();
+		LinkedList<List<Integer>> queue = new LinkedList<List<Integer>>();
+
+		while(! current.isEmpty()){
+			TreeNode node = current.remove();
+			
+			if(node.left != null)
+				next.add(node.left);
+
+			if(node.right != null)
+				next.add(node.right);
+
+			rootLevel.add(node.val);
+			if(current.isEmpty()){
+				current = next;
+				next = new LinkedList<TreeNode>();
+				queue.push(rootLevel);
+				rootLevel = new ArrayList<Integer>();
+			}
+			
+		}
+		while(!queue.isEmpty()){
+			result.add(queue.pop());
+		}
+		return result;
+			
+	}
+	public List<Double> averageOfLevels(TreeNode root) {
+    	List<Double> result = new ArrayList<Double>();    
+		if(root == null)
+			return result;
+
+		LinkedList<TreeNode> current = new LinkedList<TreeNode>();
+		LinkedList<TreeNode> next = new LinkedList<TreeNode>();
+		current.add(root);
+		List<Integer> rootLevel = new ArrayList<>();
+		while(!current.isEmpty()){
+			TreeNode node = current.remove();
+			if(node.left != null)
+				next.add(node.left);
+			if(node.right != null)
+				next.add(node.right);
+			rootLevel.add(node.val);
+			if(current.isEmpty()){
+				current = next;
+				next = new LinkedList<TreeNode>();
+				result.add(average(rootLevel));
+				rootLevel = new ArrayList<Integer>();
+			}
+		}
+		return result;
+    }
+	private double average(List<Integer> rootLevel){
+		double size = rootLevel.size();
+		double sum = 0;
+		for(int element : rootLevel){
+			sum += element;
+		}
+		return sum/size;	
+	}
 }
 
 public class LevelTraversal{
@@ -81,6 +149,6 @@ public class LevelTraversal{
 		root.right = b;
 		b.left = c;
 		b.right = d;
-		System.out.println(s.levelOrder(root));
+		System.out.println(s.averageOfLevels(root));
 	}
 }
