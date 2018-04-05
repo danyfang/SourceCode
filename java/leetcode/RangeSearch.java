@@ -8,58 +8,44 @@ Your algorithm's runtime complexity must be in the order of O(log n).
 
 class Solution{
 	public int[] searchRange(int[] nums, int target){
-		if(nums == null || nums.length == 0){
-			return null;
-		}
 		int[] result = {-1,-1};
-		/*	
-		int index = find(nums, target, 0, nums.length-1);
-		
-		for(int i = index; i >= 0; i--){
-			if(nums[i] != target)
-				break;
-			result[0] = i;
+		if(nums == null || nums.length == 0){
+			return result;
 		}
-		for(int i = index; i < nums.length; i++){
-			if(nums[i] != target)
-				break;
-			result[1] = i;
-		}
-		*/
-		binarySearch(nums, 0, nums.length-1, target, result);
-
-
-		/*O(n) solution
-		for(int i=0; i<nums.length; i++){
-			if(nums[i] == target)
-			{
-				result[0] = i;
-				break;
+		int head = 0;
+		int tail = nums.length - 1;
+		while(head <= tail){
+			int mid = head + (tail - head)/2;
+			if(nums[mid] == target){
+				result[0] = findMin(nums, mid, target);
+				result[1] = findMax(nums, mid, target);
+				return result;
+			}else if(nums[mid] > target){
+				tail = mid;
+			}else{
+				head = mid;
 			}
 		}
-		for(int i=nums.length-1; i>=0; i--){
-			if(nums[i] == target)
-			{
-				result[1] = i;
-				break;
-			}
-		}
-		*/
 		return result;
-	}	
-
-	private int find(int[] nums, int target, int low, int high){
-		int index = (low+high)/2;
-		if(nums[index] > target){
-			return find(nums, target, low, index);
-		}
-		else if(nums[index] < target){
-			return find(nums, target, index, high);
-		}
-		else{
-			return index;
-		}
 	}
+
+	private int findMin(int[] nums, int index, int target){
+		int min = index;
+		for(int i=index; i>=0; i--){
+			if(nums[i] == target)
+				min = i;
+		}
+		return min;
+	}
+	private int findMax(int[] nums, int index, int target){
+		int max = index;
+		for(int i=index; i<nums.length; i++){
+			if(nums[i] == target)
+				max = i;
+		}
+		return max;
+	}
+
 	private void binarySearch(int[] nums, int left, int right, int target, int[] result){
 		if(left < right)
 			return;
@@ -96,7 +82,7 @@ class Solution{
 public class RangeSearch{
 	public static void main(String[] args){
 		Solution s = new Solution();
-		int[] nums = {8,9,8,8,8,10};
+		int[] nums = {8,8,8,8,8,10};
 		int[] result = s.searchRange(nums, 8);
 
 		for (int i=0; i<result.length; i++){
