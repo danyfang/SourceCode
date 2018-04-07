@@ -1,5 +1,5 @@
-//Leetcode problem Longest common prefxi 
-//Solution written by Xuqiang Fang 
+//Leetcode problem No 14 Longest Common Prefxi 
+//Solution written by Xuqiang Fang 21 Feb, 2018 
 
 class Solution {
     public String longestCommonPrefix(String[] strs) {

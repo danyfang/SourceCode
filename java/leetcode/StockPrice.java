@@ -50,52 +50,50 @@ class Solution{
         profit += temp;
         return profit;
     }
+    //Solution provided by user@small_box
     /*
-    The idea is to find two highest points
+    From the chart and figure of variables in each step, we can see that
+    lowestBuyPrice1 is always the lowest price in the input array, maxProfit1
+    keeps track of the biggest difference between prices and lowest price so far,
+    value change of lowestBuyPrice2 reflects the local valley in the input 
+    prices array and variable maxProfit2 maintains the maximum profit until 
+    the current price.
+    lowestBuyPrice1 and maxProfit1 are easy to understand. But how does 
+    lowestBuyPrice2 and maxProfit2 works? First, we shall see that lowestBuyPrice2
+    decreases whenever we hit a local minimum price. It indirectly (since it 
+    is negative) reflects the lowest price that is closest to the current
+    price. When the current price is bigger than -lowestBuyPrice2, 
+    maxProfit2i = price i - (price (i-1) -maxProfit1 (i-1))=
+    price i - price (i-1) +maxProfit1 (i-1), which means the 
+    accrued maximum profit until now.
+    */
+    /*
+    I came up with another explanation for this beautifully intended piece of 
+    code. We are allowed at most two operations(one buy one sell is an operation)
+
+    Suppose the price goes up all the way to the end, in this case, it's easy 
+    to consider because we just buy at the beginning and sell it at the end,
+    that is, one operation we get the maximum profit.
+
+    Now if the price reaches a highest point and then decreases all the way to the
+    end, this is also easy to consider because we also want just one operation.
+    After the highest point, we don't buy any stocks.
+
+    Now the tricky case is after a high point, it goes down and then goes up,
+    and many up and downs can follow after this.
     */
     public int maxProfit3(int[] prices){
-        if(prices == null || prices.length <= 1)
-            return 0;
-        int index1 = 0;//the second biggest
-        int index2 = 0;//the biggest
-        int max = prices[0];
-        int low = prices[0];
-        for(int i=1; i<prices.length; i++){
-            if(prices[i] > max){
-                index2 = i;
-                max = prices[i];
-            } 
-            low = prices[i] >= low ? low : prices[i];
+        int maxProfit1 = 0;
+        int maxProfit2 = 0;
+        int lowestBuyPrice1 = Integer.MAX_VALUE;
+        int lowestBuyPrice2 = Integer.MAX_VALUE;
+        for(int p : prices){
+            maxProfit2 = Math.max(maxProfit2, p-lowestBuyPrice2);
+            lowestBuyPrice2 = Math.min(lowestBuyPrice2, p - maxProfit1);
+            maxProfit1 = Math.max(maxProfit1, p-lowestBuyPrice1);
+            lowestBuyPrice1 = Math.min(lowestBuyPrice1, p);
         }
-        System.out.println("index2 = " + index2);
-        max = low;
-        for(int i=0; i<prices.length; i++){
-            if(prices[i] > max && i != index2){
-                index1 = i;
-                max = prices[i];
-            }
-        }
-        System.out.println("index1 = " + index1);
-        int profit = 0;
-        int small = Math.min(index1, index2);
-        int big = index1 + index2 - small;
-        for(int i=0; i<=small; i++){
-            int temp = prices[small] - prices[i];
-            profit = profit > temp ? profit : temp;
-        }
-        int second = 0;
-        for(int i=small; i<=big; i++){
-            int temp = prices[big] - prices[i];
-            second = second > temp ? second : temp;
-        }
-        profit += second;
-        int maxCur = 0, maxSoFar = 0;
-        for(int i = big+1; i < prices.length; i++) {
-            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
-            maxSoFar = Math.max(maxCur, maxSoFar);
-        }
-        profit += maxSoFar;
-        return profit;
+        return maxProfit2;
     }
 }
 
