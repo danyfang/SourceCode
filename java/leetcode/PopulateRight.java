@@ -1,4 +1,5 @@
 //Leetcode problem 116 Populating Next Right Pointers in Each Node
+//Leetcode problem 117 Populating Next Right Pointers in Each Node II
 //Solution written by Xuqiang Fang on 6 April, 2018 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,43 @@ class TreeLinkNode{
     TreeLinkNode(int x){val = x;}
 }
 class Solution{
-    public void connect(TreeLinkNode root){
-        int h = height(root);
-
+    public void connect_(TreeLinkNode root){
+        if(root == null)
+            return;
+        TreeLinkNode level = root;
+        TreeLinkNode left = level.left;
+        while(left != null){
+            level.left.next = level.right;
+            if(level.next != null){
+                level.right.next = level.next.left;
+                level = level.next;
+            }
+            else{
+                level = left;
+                left = level.left;
+            }
+        }
     }	
+    public void connect(TreeLinkNode root){
+        if(root == null)
+            return;
+        TreeLinkNode level = root;
+        TreeLinkNode left = getFirst(level);
+        while (left != null){
+            
+        }
+    }
+    public TreeLinkNode getFirst(TreeLinkNode root){
+        if(root.left != null){
+            return root.left;
+        }
+        else if(root.right != null){
+            return root.right;
+        }
+        else
+            return null;
+    }
+
     public List<TreeLinkNode> get(TreeLinkNode root, int h){
         List<TreeLinkNode> list = new ArrayList<>();
         return list; 
@@ -66,13 +100,41 @@ public class PopulateRight{
         TreeLinkNode d = new TreeLinkNode(5);
         TreeLinkNode e = new TreeLinkNode(6);
         TreeLinkNode f = new TreeLinkNode(7);
+        TreeLinkNode g = new TreeLinkNode(8);
+        TreeLinkNode h = new TreeLinkNode(9);
+        TreeLinkNode i = new TreeLinkNode(10);
+        TreeLinkNode j = new TreeLinkNode(11);
+        TreeLinkNode k = new TreeLinkNode(12);
+        TreeLinkNode l = new TreeLinkNode(13);
+        TreeLinkNode m = new TreeLinkNode(14);
+        TreeLinkNode n = new TreeLinkNode(15);
         root.left = a;
         root.right = b;
         a.left = c;
         a.right = d;
         b.left = e;
         b.right = f;
+        c.left = g;
+        c.right = h;
+        d.left = i;
+        d.right = j;
+        e.left = k;
+        e.right = l;
+        f.left = m;
+        f.right = n;
         //System.out.println(s.height(root));
-        s.level(root);
+        //s.level(root);
+        s.connect(root);
+        print(root);
 	}
+    public static void print(TreeLinkNode root){
+        while(root != null){
+            TreeLinkNode level = root;
+            while(level != null){
+                System.out.println(level.val);
+                level = level.next;
+            }
+            root = root.left;
+        }
+    }
 }
