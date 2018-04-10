@@ -95,6 +95,40 @@ class Solution{
         }
         return maxProfit2;
     }
+
+    public int maxProfit4(int k, int[] prices){
+        int[][] dp = new int[k+1][prices.length];
+        if (k >= prices.length / 2) return quickSolve(prices);
+        for(int i=0; i<prices.length; i++){
+            dp[0][i] = 0;
+        }
+        for(int i=0; i<=k; i++){
+            dp[i][0] = 0;
+        }
+        int maxdiff = 0;
+        for(int i=1; i<=k; i++){
+            maxdiff = dp[i-1][0] - prices[0];
+            for(int j=1; j<prices.length; j++){
+                dp[i][j] = Math.max(dp[i][j-1], maxdiff+prices[j]);
+                maxdiff = Math.max(maxdiff, dp[i-1][j] - prices[j]);
+            }
+        }
+        for(int i=0; i<=k; i++){
+            for(int j=0;j<prices.length; j++){
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println("\n");
+        }
+
+        return dp[k][prices.length-1];
+    }
+    private int quickSolve(int[] prices) {
+        int len = prices.length, profit = 0;
+        for (int i = 1; i < len; i++)
+            // as long as there is a price gap, we gain a profit.
+            if (prices[i] > prices[i - 1]) profit += prices[i] - prices[i - 1];
+        return profit;
+    }
 }
 
 public class StockPrice{
@@ -105,7 +139,8 @@ public class StockPrice{
         int[] p = {1,7,4,6,3,7,23,43,4,32,4,23,3,23,23,23,2,32,44,4,5,5,6,7};
         int[] p2 = {4,1,2};
         int[] p3 = {2,1,2,0,1};
-        System.out.println(s.maxProfit3(p));
+        int[] p4 = {2,5,7,1,4,3,1,3};
+        System.out.println(s.maxProfit4(p, 19));
         //System.out.println(s.maxProfit(prices2));
 	}
 }
