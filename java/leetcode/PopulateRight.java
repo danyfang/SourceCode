@@ -29,28 +29,43 @@ class Solution{
         }
     }	
     public void connect(TreeLinkNode root){
-        if(root == null)
-            return;
-        TreeLinkNode level = root;
-        TreeLinkNode left = getFirst(level);
-        while (left != null){
-            
+        TreeLinkNode head = root;//the left most node in the lower level
+        TreeLinkNode prev = null;//the previous node in the lower level
+        TreeLinkNode curr = null;//the current node in the upper level
+        while(head != null){
+            curr = head;
+            prev = null;
+            head = null;
+            while(curr != null){
+                if(curr.left != null){
+                    if(prev != null)
+                        prev.next = curr.left;
+                    else
+                        head = curr.left;
+                    prev = curr.left;
+                }
+                if(curr.right != null){
+                    if(prev != null)
+                        prev.next = curr.right;
+                    else
+                        head = curr.right;
+                    prev = curr.right;
+                }
+                curr = curr.next;
+            }
         }
     }
-    public TreeLinkNode getFirst(TreeLinkNode root){
-        if(root.left != null){
-            return root.left;
+    public TreeLinkNode findNext(TreeLinkNode cur, TreeLinkNode level){
+        //cur and level can not be null
+        while(level != null){
+            if(level.left != null && level.left != cur)
+                return level.left;
+            else if(level.right != null && level.right != cur){
+                return level.right;
+            }else 
+                level = level.next;
         }
-        else if(root.right != null){
-            return root.right;
-        }
-        else
-            return null;
-    }
-
-    public List<TreeLinkNode> get(TreeLinkNode root, int h){
-        List<TreeLinkNode> list = new ArrayList<>();
-        return list; 
+        return null;
     }
     public void level(TreeLinkNode root){
         if(root == null)
@@ -111,9 +126,10 @@ public class PopulateRight{
         root.left = a;
         root.right = b;
         a.left = c;
-        a.right = d;
-        b.left = e;
+        //a.right = d;
+        //b.left = e;
         b.right = f;
+        /*
         c.left = g;
         c.right = h;
         d.left = i;
@@ -122,6 +138,7 @@ public class PopulateRight{
         e.right = l;
         f.left = m;
         f.right = n;
+        */
         //System.out.println(s.height(root));
         //s.level(root);
         s.connect(root);

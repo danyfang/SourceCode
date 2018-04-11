@@ -45,10 +45,19 @@ class Solution{
     }
     //No 148 Merge Sort
     public ListNode sortList(ListNode head){
-        if(head == null)
+        if(head == null || head.next == null)
             return head;
-
-        return null; 
+        ListNode fast = head.next.next;
+        ListNode slow = head.next;
+        ListNode prev = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            prev = slow;
+            slow = slow.next;
+        }
+        prev.next = null;//cut the list into two parts
+        head = merge(sortList(head), sortList(slow));
+        return head; 
     }
     public ListNode merge(ListNode left, ListNode right){
         ListNode newHead = new ListNode(0);
@@ -92,10 +101,9 @@ public class InsertionSort{
         ListNode e = new ListNode(3);
         ListNode f = new ListNode(2);
         ListNode g = new ListNode(1);
-        /*
         a.next = b;
         b.next = c;
-        //c.next = d;
+        c.next = d;
         d.next = e;
         e.next = f;
         f.next = g;
@@ -103,17 +111,20 @@ public class InsertionSort{
         //f.next = e;
         //ListNode n = s.insert(g, d);
         //ListNode n = s.insertionSortList(a);
-        */
         
 
         //for merge sort test
+        /*
         g.next = f;
         f.next = e;
         e.next = d;
 
         c.next = b;
         b.next = a;
-        ListNode n = s.merge(g,c);
+        */
+        print(a);
+        ListNode n = s.sortList(a);
+        //ListNode n = s.merge(f,g);
         print(n);
 	}
     public static void print(ListNode head){

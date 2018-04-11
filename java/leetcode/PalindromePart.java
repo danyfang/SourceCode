@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Iterator;
 class Solution{
     //Solution exceeded time limit
-    public List<List<String>> partition(String s){
+    public List<List<String>> partition_(String s){
         List<List<String>> list = new ArrayList<>(); 
         if(s == null || s.length() <= 0)
             return list;
@@ -44,6 +44,27 @@ class Solution{
         }
         return list;
     }	
+
+
+    //Very simple backtracking solution
+    public List<List<String>> partition(String s){
+        List<List<String>> list = new ArrayList<>();
+        if(s == null || s.length() == 0)
+            return list;
+        dfs(list, new ArrayList<String>(), 0,s);
+        return list;
+    }
+    private void dfs(List<List<String>> list, List<String> temp, int splitat, String s){
+        if(splitat == s.length())
+            list.add(new ArrayList<>(temp));
+        for(int i=splitat; i<s.length(); i++){
+            if(isPalin(s.substring(splitat, i+1))){
+                temp.add(s.substring(splitat, i+1));
+                dfs(list, temp, i+1, s);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
     public boolean isPalin(String s){
         for(int m=0, n=s.length()-1; m<=n; m++,n--){
             if(s.charAt(m) != s.charAt(n))
@@ -51,19 +72,20 @@ class Solution{
         }
         return true;
     }
+
 }
 
 public class PalindromePart{
 	public static void main(String[] args){
 		Solution s = new Solution();
-        System.out.println(s.partition("fff"));
-        System.out.println(s.partition("aabcddc"));
+        //System.out.println(s.partition("ff"));
+        //System.out.println(s.partition("aabcddc"));
         /*
         [["a","a","b","c","d","d","c"],["a","a","b","c","dd","c"],
         ["a","a","b","cddc"],["aa","b","c","d","d","c"],["aa","b","c","dd","c"],
         ["aa","b","cddc"]]
         */
-        System.out.println(s.partition("aabcb"));
+        //System.out.println(s.partition("aabcb"));
         /*
         [["a","a","b","c","b"],["a","a","bcb"],["aa","b","c","b"],["aa","bcb"]]
         */
