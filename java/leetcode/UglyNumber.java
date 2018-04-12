@@ -1,4 +1,5 @@
 //Leetcode problem 264 Ugly Number II
+//Leetcode problem 263 Ugly Number 
 //Solution written by Xuqiang Fang on 16 March 2018 
 
 class Solution{
@@ -38,6 +39,16 @@ class Solution{
 		}
 		return false;
 	}
+    public boolean legal_(int n){
+        if(n == 0)
+            return false;
+        int[] prime = {2,3,5};
+        for(int i : prime){
+            while(n % i == 0)
+                n = n / i;
+        }
+        return n == 1;
+    }
 	public int nthUglyNumber_2(int n) {
         int[] ugly = new int[n];
         ugly[0] = 1;

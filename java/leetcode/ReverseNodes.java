@@ -22,9 +22,13 @@ class Solution{
             return head;
     
         times = length / k;
-        curr = head;
+        int temp = k;
         while(times > 0){
-            tail =  
+            temp = k;
+            ListNode recordTail = tail;
+            while(temp > 0){
+                curr = tail.next; 
+            }
             times--;
         }
         return head;
