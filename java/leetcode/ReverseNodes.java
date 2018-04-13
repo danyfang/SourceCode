@@ -8,6 +8,14 @@ class ListNode{
 }
 
 class Solution{
+    class NodePair{
+        ListNode head;
+        ListNode tail;
+        NodePair(ListNode h, ListNode t){
+            head = h;
+            tail = t;
+        }
+    }
     public ListNode reverseKGroup(ListNode head, int k) {
         int length = 0;        
         int times = 0;
@@ -17,22 +25,32 @@ class Solution{
             length++;
             curr = curr.next;
         }
-        System.out.println(length);
         if(length < k)
             return head;
     
         times = length / k;
-        int temp = k;
         while(times > 0){
-            temp = k;
-            ListNode recordTail = tail;
-            while(temp > 0){
-                curr = tail.next; 
-            }
+            //first record the next head
+             
             times--;
         }
         return head;
     }	
+    public NodePair reverseList(ListNode head){
+		if(head == null || head.next == null)	
+			return null;
+        ListNode oldHead = head;
+		ListNode temp = head.next;
+		ListNode current = head.next;
+		head.next = null;
+		while(temp != null){
+			current = temp;
+			temp = temp.next;
+			current.next = head;
+			head = current;
+		}
+		return new NodePair(head,oldHead);
+	}	
 }
 
 public class ReverseNodes{
