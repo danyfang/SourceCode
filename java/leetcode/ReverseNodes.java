@@ -8,38 +8,51 @@ class ListNode{
 }
 
 class Solution{
-    class NodePair{
-        ListNode head;
-        ListNode tail;
-        NodePair(ListNode h, ListNode t){
-            head = h;
-            tail = t;
-        }
-    }
     public ListNode reverseKGroup(ListNode head, int k) {
-        int length = 0;        
-        int times = 0;
-        ListNode curr = head;
-        ListNode tail = head;
-        while(curr != null){
-            length++;
-            curr = curr.next;
-        }
-        if(length < k)
+        if(head == null || k <= 1)
             return head;
-    
-        times = length / k;
-        while(times > 0){
-            //first record the next head
-             
-            times--;
+
+        int count = 1;
+        boolean once = true;
+        ListNode current = head;
+        ListNode newHead = head;
+        ListNode oldTail = head;
+        ListNode oldHead = head;
+        ListNode oldOldTail = null;
+        while(current != null){
+            if(count == k){
+                count = 1;
+                newHead = current.next;
+                //cut the list
+                current.next = null;
+                oldHead = reverseList(oldTail);
+                if(oldOldTail != null){
+                    oldOldTail.next = oldHead;
+                }
+                //link the list;
+                oldTail.next = newHead;
+                
+                //update
+                if(once){
+                    head = oldHead;
+                    once = false;
+                }
+                oldOldTail = oldTail;
+                oldTail = newHead;
+                current = newHead;
+            } 
+            count++;
+            if(current == null)
+                return head;
+            current = current.next;
         }
+
         return head;
     }	
-    public NodePair reverseList(ListNode head){
+    public ListNode reverseList(ListNode head){
 		if(head == null || head.next == null)	
-			return null;
-        ListNode oldHead = head;
+			return head;
+
 		ListNode temp = head.next;
 		ListNode current = head.next;
 		head.next = null;
@@ -49,8 +62,33 @@ class Solution{
 			current.next = head;
 			head = current;
 		}
-		return new NodePair(head,oldHead);
+		return head;
 	}	
+
+    //another smart solution provided by user@ofLucas
+    public ListNode reverseKGroup_(ListNode head, int k){
+        int n = 0;
+        for(ListNode i = head; i != null; n++, i = i.next);
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        for(ListNode prev = dummy, tail = head; n >= k; n -= k){
+            for(int i = 1; i < k; i++){
+                //first record the node that is cut out
+                ListNode next = tail.next.next;
+                //place the cut out link to the tail
+                tail.next.next = prev.next;
+                //get the link for new head(prev.next points to new head)
+                prev.next = tail.next;
+                //fix the cut out link
+                tail.next = next;
+            }
+
+            prev = tail;
+            tail = tail.next;
+        }
+        return dummy.next;
+    }
 }
 
 public class ReverseNodes{
@@ -66,7 +104,7 @@ public class ReverseNodes{
         b.next = c;
         c.next = d;
         //print(head);
-        s.reverseKGroup(head, 2);
+        print(s.reverseKGroup_(head, 5));
 	}
     public static void print(ListNode head){
         while(head != null){
