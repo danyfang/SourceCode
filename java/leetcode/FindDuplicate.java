@@ -13,12 +13,30 @@ There is only one duplicate number in the array, but it could be repeated more t
 */
 class Solution{
     public int findDuplicate(int[] nums){
-    
+        if(nums == null || nums.length <= 1)
+            return -1;
+        while(true){
+           int slow = nums[0];
+           int fast = nums[nums[0]];
+           while(slow != fast){
+                slow = nums[slow];
+                fast = nums[nums[fast]];
+            }
+
+            fast = 0;
+            while(fast != slow){
+                fast = nums[fast];
+                slow = nums[slow];
+            }
+            return slow;
+        }    
     }	
 }
 
 public class FindDuplicate{
 	public static void main(String[] args){
 		Solution s = new Solution();
+        int[] nums = {1,3,5,4,4,2};
+        System.out.println(s.findDuplicate(nums));
 	}
 }
