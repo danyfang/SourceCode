@@ -6,29 +6,33 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 class PeekingIterator implements Iterator<Integer>{
-    public PeekingIterator(Iterator<Integer> iterator){
-        iter = iterator;
-        if(iter.hasNext()){
-            next = iter.next();
-        }
-    }
-    public Integer peek(){
+    public PeekingIterator(Iterator<Integer> iterator) {
+	    // initialize any member here.
+        it = iterator;
+        if(it.hasNext())
+            next = it.next();
+	}
+
+    // Returns the next element in the iteration without advancing the iterator.
+	public Integer peek() {
         return next;
-    }
+	}
 
-    @Override
-    public Integer next(){
-        Integer res = next;
-        next = iter.hasNext() ? iter.next() : null;
-        return res;
-    }
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	@Override
+	public Integer next() {
+        Integer result = next;
+        next = it.hasNext() ? it.next() : null;
+        return result;
+	}
 
-    @Override
-    public boolean hasNext(){
+	@Override
+	public boolean hasNext() {
         return next != null;
-    }
+	}
+    private Iterator<Integer> it;
     private Integer next = null;
-    private Iterator<Integer> iter;
 }
 
 public class PeekingIteratorImp{
