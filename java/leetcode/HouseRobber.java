@@ -21,6 +21,9 @@ class Solution{
         return dp[nums.length-1];
     }	
     public int rob2(int[] nums){
+        if(nums == null || nums.length == 0)
+            return 0;
+
     }
 }
 

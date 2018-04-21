@@ -49,6 +49,11 @@ private:
 
 int main(){
     Solution s;
-
+    vector<pair<string, string>> tickets{{"JFK","SFO"},{"JFK","ATL"},{"SFO","ATL"},{"ATL","JFK"},{"ATL","SFO"}};
+    vector<string> route = s.findItinerary(tickets);
+    for(auto s : route){
+        cout << s << "\t";
+    }
+    cout << endl;
     return 0;
 }
