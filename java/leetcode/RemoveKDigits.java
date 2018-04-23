@@ -1,8 +1,11 @@
 //Leetcode problem 402 Remove K Digits
 //Solution written by Xuqiang Fang on 22 April, 2018 
 
+import java.util.Stack;
+
 class Solution{
     //This solution causes runtime error stackoverflow
+    /*
     public String removeK(String num, int k){
         if(num == null || num.length() == 0 || num.length() == k)
             return "0";
@@ -27,14 +30,26 @@ class Solution{
         }
         return removeKdigits(num.substring(0,num.length()-1),k-1);
     }	
+    */
+    public String removeKdigits(String num, int k){
+        int digits  = num.length() - k;
+        char[] stack = new char[num.length()];
+        int top = 0;
+        //when we know the limit of stack, use array
 
-    public String removeKDigits(String num, int k){
-        if(num == null || num.length() == 0 || num.length() == k)
-            return "0";
-        if(k == 0)
-            return num;
-        char[] ch = num.toCharArray();
-        
+        for(int i=0; i<num.length(); ++i){
+            char c = num.charAt(i);
+            while(top > 0 && stack[top-1] > c && k > 0){
+                top -= 1;
+                k -= 1;
+            }
+            stack[top++] = c;
+        }
+
+        int idx = 0;
+        while(idx < digits && stack[idx] == '0')
+            idx++;
+        return idx == digits ? "0" : new String(stack, idx, digits - idx);
     }
 }
 

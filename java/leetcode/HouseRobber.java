@@ -3,7 +3,7 @@
 //Solution written by Xuqiang Fang on 11 April, 2018 
 
 class Solution{
-    public int rob(int[] nums){
+    public int helper(int[] nums){
         if(nums == null || nums.length == 0)
             return 0;
         //dp[i] stores the largest benefit until i
@@ -20,10 +20,11 @@ class Solution{
 
         return dp[nums.length-1];
     }	
-    public int rob2(int[] nums){
+    public int rob(int[] nums){
         if(nums == null || nums.length == 0)
             return 0;
 
+        return 0;
     }
 }
 
