@@ -1,3 +1,4 @@
+//Leetcode problem 313 Super Ugly Number 
 //Leetcode problem 264 Ugly Number II
 //Leetcode problem 263 Ugly Number 
 //Solution written by Xuqiang Fang on 16 March 2018 
@@ -82,6 +83,29 @@ class Solution{
 		}
 		return ugly[n-1];
 	}
+    
+    public int nthSuperUglyNumber(int n, int[] primes){
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        int k = primes.length;
+        int[] index = new int[k];
+        for(int i=1; i<n; ++i){
+            int temp = ugly[index[0]] * primes[0];
+            for(int j=1; j<k; ++j){
+                if(ugly[index[j]] * primes[j] < temp){
+                    temp = ugly[index[j]] * primes[j];
+                }
+            }
+            ugly[i] = temp;
+            for(int j=0; j<k; ++j){
+                if(ugly[index[j]] * primes[j] == temp){
+                    index[j]++;
+                }
+            }
+        }
+
+        return ugly[n-1];
+    }
 }
 
 public class UglyNumber{
