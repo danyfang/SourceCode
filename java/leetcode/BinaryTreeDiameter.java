@@ -12,22 +12,27 @@ class TreeNode{
 
 class Solution{
     public int diameterOfBinaryTree(TreeNode root) {
+        int diameter = 0;
         if(root == null)
-            return 0;
+            return diameter;
         else if(root.left == null && root.right == null)
-            return 0;
-        else if(root.left == null)
-            return diameterOfBinaryTree(root.right) + 1;
-        else if(root.right == null)
-            return diameterOfBinaryTree(root.left) + 1;
-        else
-            return Math.max(diameterOfBinaryTree(root.left)+diameterOfBinaryTree(root.right)+2 , Math.max(diameterOfBinaryTree(root.left), diameterOfBinaryTree(root.right)));
+            return diameter;
+        else if(root.left == null){
+            diameter = height(root.right);
+        }
+        else if(root.right == null){
+            diameter = height(root.left);
+        }
+        else{
+            diameter = height(root.left) + height(root.right);
+        }
+        return Math.max(diameter, Math.max(diameterOfBinaryTree(root.left), diameterOfBinaryTree(root.right)));
     } 	
     public int height(TreeNode root){
         if(root == null)
             return 0;
         if(root.left == null && root.right == null)
-            return 0;
+            return 1;
         return 1 + Math.max(height(root.left), height(root.right));
     }
 }
@@ -35,6 +40,7 @@ class Solution{
 public class BinaryTreeDiameter{
 	public static void main(String[] args){
 		Solution s = new Solution();
+        /*
 		TreeNode root = new TreeNode(3);
 		TreeNode a = new TreeNode(9);
 		TreeNode b = new TreeNode(20);
@@ -44,6 +50,20 @@ public class BinaryTreeDiameter{
 		root.right = b;
 		b.left = c;
 		b.right = d;
+        */
+        TreeNode root = new TreeNode(1);
+        TreeNode a = new TreeNode(2);
+        TreeNode b = new TreeNode(3);
+        TreeNode c = new TreeNode(4);
+        TreeNode d = new TreeNode(5);
+        TreeNode e = new TreeNode(6);
+        TreeNode f = new TreeNode(8);
+        root.left = a;
+        root.right = b;
+        a.left = c;
+        a.right = d;
+        c.left = e;
+        c.right = f;
         System.out.println(s.height(root));
 	}
 }
