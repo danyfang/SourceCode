@@ -4,29 +4,47 @@
 import java.util.HashMap;
 import java.util.Map;
 class Solution{
-    public String fractionToInteger(int numerator, int denominator) {
-        if(numerator == Integer.MIN_VALUE && denominator == -1)
-            return  String.valueOf(Integer.MIN_VALUE); 
-        Map<Integer, Integer> map = new HashMap<>();
-        int remain = numerator % denominator;
-        if(remain == 0){
-            return String.valueOf(numerator / denominator);
+    //solution provided by user@dchen0215
+    public String fractionToDecimal(int numerator, int denominator) {
+        if(numerator == 0)
+            return "0";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(((numerator > 0) ^ (denominator > 0)) ? "-": "");
+        long num = Math.abs((long)numerator);
+        long den = Math.abs((long)denominator);
+
+        sb.append(num/den);
+        num %= den;
+        if(num == 0)
+            return sb.toString();
+
+
+        sb.append(".");
+        Map<Long, Integer> map = new HashMap<>();
+        map.put(num, sb.length());
+        while(num != 0){
+            num *= 10;
+            sb.append(num/den);
+            num %= den;
+            if(map.containsKey(num)){
+                int index = map.get(num);
+                sb.insert(index, "(");
+                sb.append(")");
+                break;
+            }
+            else{
+                map.put(num, sb.length());
+            }
         }
-        int index = 0;//denote the decimal index;
-        int decimal = 0;//denote the decimal value;
-        while(remain != 0){
-            index++;
-            decimal = remain * 10 / denominator;
-            remain = remain * 10 % denominator;
-        }
-        return "";
+        return sb.toString();
     }	
 
 }
 
-public class RecurringInteger{
+public class RecurringDecimal{
 	public static void main(String[] args){
 		Solution s = new Solution();
-        System.out.println(s.fractionToInteger(Integer.valueOf(args[0]), Integer.valueOf(args[1])));
+        System.out.println(s.fractionToDecimal(Integer.valueOf(args[0]), Integer.valueOf(args[1])));
 	}
 }

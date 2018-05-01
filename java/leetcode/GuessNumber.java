@@ -1,4 +1,5 @@
 //Leetcode problem 374 Guess Number Higher of Lower
+//Leetcode problem 375 Guess Number Higher of Lower II
 //Solution written by Xuqiang Fang on 18 April, 2018 
 class GuessGame{
     private int real = 0;
@@ -56,12 +57,50 @@ class Solution extends GuessGame{
         }
         return -1;
     }
+
+
+    //Problem 375 Guess Number Higher or Lower II
+    //use dynamic programming
+    //dp[i][j] means the minimum cost for range(i,j);
+    public int getMoneyAmount(int n){
+        int[][] table = new int[n+1][n+1];
+        return dp(table, 1, n);
+    }
+    public int dp(int[][] table, int s, int e){
+        if(s >= e)
+            return 0;
+        if(table[s][e] != 0)
+            return table[s][e];
+        int res = Integer.MAX_VALUE;
+        for(int x=s; x<=e; ++x){
+            int temp = x + Math.max(dp(table, s, x-1), dp(table, x+1, e));
+            res = Math.min(res, temp);
+        }
+        table[s][e] = res;
+        return res;
+    }
+
+    public int getMoney(int n) {
+        int[][] table = new int[n+1][n+1];
+        for(int j=2; j<=n; j++){
+            for(int i=j-1; i>0; i--){
+                int globalMin = Integer.MAX_VALUE;
+                for(int k=i+1; k<j; k++){
+                    int localMax = k + Math.max(table[i][k-1], table[k+1][j]);
+                    globalMin = Math.min(globalMin, localMax);
+                }
+                table[i][j] = i+1==j?i:globalMin;
+            }
+        }
+        return table[1][n];
+    }
+    
 }
 
 public class GuessNumber{
 	public static void main(String[] args){
 		Solution s = new Solution(10);
 
-        System.out.println(s.guessNumber(Integer.valueOf(args[0])));
+        System.out.println(s.getMoney(Integer.valueOf(args[0])));
 	}
 }
