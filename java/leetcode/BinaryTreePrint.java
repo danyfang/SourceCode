@@ -10,69 +10,36 @@ class TreeNode{
     TreeNode right;
     TreeNode(int x){val = x;}
 }
-
+//solution provided by user@compton_scatter
 class Solution{
     public List<List<String>> printTree(TreeNode root) {
         List<List<String>> list = new ArrayList<>();
-        if(root == null){
-            List<String> temp = new ArrayList<>();
-            temp.add("0");
-            list.add(temp);
-            return list;
+        int height = root == null ? 1 : getHeight(root);
+
+        int rows = height;
+        int columns = (int)Math.pow(2, height)-1;
+        List<String> row = new ArrayList<>();
+        for(int i=0; i<columns; ++i){
+            row.add("");
         }
-        else if(root.left == null && root.right == null){
-            List<String> temp = new ArrayList<>();
-            temp.add(String.valueOf(root.val));
-            list.add(temp);
-            return list;
+        for(int i=0; i<rows; ++i){
+            list.add(new ArrayList<>(row));
         }
-        else{
-            //left and right are both not null
-            List<List<String>> left = printTree(root.left);
-            List<List<String>> right = printTree(root.right);
-            int size = left.get(0).size();
-            List<String> temp = new ArrayList<>();
-            for(int i=0; i<size; ++i){
-                temp.add("0");
-            }
-            temp.add(String.valueOf(root.val));
-            for(int i=0; i<size; ++i){
-                temp.add("0");
-            }
-            list.add(temp);
-            if(right.size() > left.size()){
-                List<List<String>> exchange = left;
-                left = right;
-                right = exchange;
-            }
-            for(int i=0; i<left.size(); ++i){
-                List<String> l = left.get(i);
-                List<String> r;
-                if(i < right.size())
-                    r = right.get(i);
-                else{
-                    r = new ArrayList<>();
-                    for(int x=0; x<l.size(); ++x){
-                        r.add("0");
-                    }
-                }
-                if(r.size() < l.size()){
-                    for(int x=0; x<(l.size()-1)/2; ++x){
-                        r.add(0,"0");
-                    }
-                    for(int x=0; x<(l.size()-1)/2; ++x){
-                        r.add("0");
-                    }
-                }
-                List<String> com = new ArrayList<>();
-                com.addAll(l);
-                com.add("0");
-                com.addAll(r);
-                list.add(com);
-            }
-        }
+        populate(root, list, 0, rows, 0, columns-1);
         return list;
     }	
+    private void populate(TreeNode root, List<List<String>> list, int row, int totalRow, int i, int j){
+        if(row == totalRow || root == null)
+            return;
+        list.get(row).set((i+j)/2, Integer.toString(root.val));
+        populate(root.left, list, row+1, totalRow, i, (i+j)/2-1);
+        populate(root.right, list, row+1, totalRow, (i+j)/2+1, j);
+    }
+    private int getHeight(TreeNode root){
+        if(root == null)
+            return 0;
+        return 1 + Math.max(getHeight(root.left), getHeight(root.right));
+    }
 }
 
 public class BinaryTreePrint{
