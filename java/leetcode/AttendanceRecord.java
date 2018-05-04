@@ -1,5 +1,5 @@
 //Leetcode problem 551 Student Attendance Record I
-//Solution written by Xuqiang Fang on 
+//Solution written by Xuqiang Fang on 28 April, 2018
 
 class Solution{
     public boolean checkRecord(String s){

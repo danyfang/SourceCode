@@ -1,5 +1,5 @@
 //Leetcode problem 416 Partition Equal Subset Sum
-//Solution written by Xuqiang Fang on 
+//Solution written by Xuqiang Fang on 4 April, 2018
 import java.util.Arrays;
 class Solution{
     public boolean canPartition(int[] nums){

@@ -1,4 +1,4 @@
-//Leetcode problem 376 WIggle Subsequence
+//Leetcode problem 376 Wiggle Subsequence
 //Solution written by Xuqiang Fang on 18 April, 2018 
 
 class Solution{
