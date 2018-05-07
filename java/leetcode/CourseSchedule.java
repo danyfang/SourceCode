@@ -1,8 +1,11 @@
 //Leetcode problem 207 Course Schedule
+//Leetcode problem 210 Course Schedule II
 //Solution written by Xuqiang Fang on 25 April, 2018 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 class Solution{
     public boolean canFinish(int num, int[][] pre){
         List<Integer>[] courses = new ArrayList[num];  
@@ -77,6 +80,41 @@ class Solution{
         state[node] = 2;
         stack.push(node);
         return false;
+    }
+
+
+
+
+    //this solution is provided by user@jiayou.liu.961
+    //it is dfs not recursion but iteration
+    public boolean canF(int numCourses, int[][] prerequisites) {
+        int[][] matrix = new int[numCourses][numCourses]; // i -> j
+        int[] indegree = new int[numCourses];
+        
+        for (int i=0; i<prerequisites.length; i++) {
+            int ready = prerequisites[i][0];
+            int pre = prerequisites[i][1];
+            if (matrix[pre][ready] == 0)
+                indegree[ready]++; //duplicate case
+            matrix[pre][ready] = 1;
+        }
+        
+        int count = 0;
+        Queue<Integer> queue = new LinkedList();
+        for (int i=0; i<indegree.length; i++) {
+            if (indegree[i] == 0) queue.offer(i);
+        }
+        while (!queue.isEmpty()) {
+            int course = queue.poll();
+            count++;
+            for (int i=0; i<numCourses; i++) {
+                if (matrix[course][i] != 0) {
+                    if (--indegree[i] == 0)
+                        queue.offer(i);
+                }
+            }
+        }
+        return count == numCourses;
     }
 }
 
