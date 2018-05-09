@@ -7,6 +7,7 @@ class Solution{
             char max = ch[i];
             int index = i;
             for(int j=i+1; j<ch.length; ++j){
+                //here the equal condition is very important
                 if(ch[j] >= max){
                     max = ch[j];
                     index = j;
