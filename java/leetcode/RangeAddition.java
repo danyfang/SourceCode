@@ -2,8 +2,8 @@
 //Solution written by Xuqiang Fang on 
 class Solution{
     public int maxCount(int m, int n, int[][] ops){
-        int a = ops[0][0];
-        int b = ops[0][1];
+        int a = m;
+        int b = n;
         for(int[] op : ops){
             a = Math.min(a, op[0]);
             b = Math.min(b, op[1]);

@@ -1,4 +1,5 @@
 //Leetcode problem 74 Search a 2D Matrix
+//Leetcode problem 240 Search a 2D Matrix II
 //Solution written by Xuqiang Fang on 12 March 2018
 /*
 Write an efficient algorithm that searches for a value in an m x n matrix.
@@ -9,7 +10,8 @@ The first integer of each row is greater than the last integer of the previous r
 */
 //solution accepted
 class Solution{
-	public boolean searchMatrix(int[][] matrix, int target) {
+    //No 74
+	public boolean searchMatrix_(int[][] matrix, int target) {
 		if(matrix.length == 0 || matrix[0].length == 0)
 			return false;
        	int row = matrix.length;
@@ -39,6 +41,13 @@ class Solution{
 		else
 			return getRow(matrix, target, (low+high)/2, high);
 	}
+    
+    //No 240
+    public boolean searchMatrix(int[][] matrix, int target){
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0)
+            return false;
+
+    }
 }
 
 public class SearchMatrix{

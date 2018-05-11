@@ -35,6 +35,25 @@ class Solution{
             res[i] = result[i];
         return res;
     }
+
+    public int[] singleNumber3(int[] nums){
+        int diff = 0;
+        for(int num : nums){
+            diff ^= num;
+        }
+        diff &= -diff;
+        System.out.println(Integer.toBinaryString(diff));
+        int[] res = {0,0};
+        for(int num : nums){
+            if((num & diff) == 0){
+                res[0] ^= num;
+            }
+            else{
+                res[1] ^= num;
+            }
+        }
+        return res;
+    }
 }
 
 public class SingleNumber{
@@ -43,7 +62,7 @@ public class SingleNumber{
 		int[] nums = new int[]{1,1,8,3,3,4,4,5,5};
 		//System.out.println(s.singleNumber(nums));
         int[] nums2 = {1,2,1,3,2,5};
-        int[] res = s.singleNumber2(nums2);
+        int[] res = s.singleNumber3(nums2);
         for(int i : res)
             System.out.println(i);
 	}
