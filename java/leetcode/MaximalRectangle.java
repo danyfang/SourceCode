@@ -16,7 +16,7 @@ class Solution{
 		int max = 0;
 		for(int y=0; y<row; y++){
 			for(int x=0; x<col; x++){
-				if (matrix[y][x] == 1){
+				if (matrix[y][x] == '1'){
 					//System.out.println( y + " " + x);
 					top[x] += 1;
 				}
@@ -30,7 +30,7 @@ class Solution{
 			*/
 			int l = 0;
 			for(int x=0; x<col; x++){
-				if(matrix[y][x] == 1)
+				if(matrix[y][x] == '1')
 					left[x] = Math.min(left[x], ++l);
 				else{
 					left[x] = col;
@@ -38,20 +38,25 @@ class Solution{
 				}
 			}
 			for(int x=0; x<col; x++){
-				System.out.print(left[x]);
+				System.out.print(left[x] + "\t");
 			}
 
 			int r = 0;
 			for(int x=col-1; x>=0; x--){
-				if(matrix[y][x] == 1)
+				if(matrix[y][x] == '1')
 					right[x] = Math.min(right[x], ++r);
 				else{
 					right[x] = col;
 					r = 0;
 				}
 			}
+			for(int x=col-1; x>=0; --x){
+				System.out.print(right[x] + "\t");
+			}
+            
 			for(int x=0; x<col; x++){
-				if(matrix[y][x] == 1)
+				if(matrix[y][x] == '1')
+                    System.out.println("y = " + y + " x = " + x + " s = " + ((left[x]+right[x]-1)*top[x]));
 					max = Math.max(max, (left[x]+right[x]-1)*top[x]);
 			}
 		}
@@ -62,12 +67,14 @@ class Solution{
 public class MaximalRectangle{
 	public static void main(String[] args){
 		Solution s = new Solution();
-		char[][] matrix = {{0,0,0,1,0,0,0},{0,0,1,1,1,0,0},{0,1,1,1,1,1,0}};
+		char[][] matrix = { {'0','0','0','1','0','0','0'},
+                            {'0','0','1','1','1','0','0'},
+                            {'0','1','1','1','1','1','0'}};
 		/*
 		for(int x=0; x<matrix.length; x++){
 			for(int y=0; y<matrix[0].length; y++){
 				System.out.println(matrix[x][y]);
-				if(matrix[x][y] == 1)
+				if(matrix[x][y] == '1')
 					System.out.println(x + " " + y);
 			}
 		}

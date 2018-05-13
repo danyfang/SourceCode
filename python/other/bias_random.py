@@ -3,6 +3,8 @@ def single_prob(p):
    if random.random() < p:
        return 0
    return 1
+
+'''
 def bias_prob_generator(p):
    if p > 0.5:
        if single_prob(0.5) == 1:
@@ -26,3 +28,4 @@ for i in range(100000):
 
 
 print("0's: %d, 1's: %d" % (zero_cnt, one_cnt))
+'''

@@ -46,7 +46,57 @@ class Solution{
     public boolean searchMatrix(int[][] matrix, int target){
         if(matrix == null || matrix.length == 0 || matrix[0].length == 0)
             return false;
+        //first method, perform binary search on each row, assume less row than column
+        int m = matrix.length;
+        int n = matrix[0].length;
+        if(m <= n){
+            for(int[] row : matrix){
+                if(binarySearch(row, target))
+                    return true;
+            }
+        }
+        else{
+            for(int j=0; j<n; ++j){
+                if(binarySearch(matrix, j, target)) 
+                    return true;
+            }
+        }
 
+        return false;
+    }
+
+    private boolean binarySearch(int[][] matrix, int col, int target){
+        int l = 0;
+        int h = matrix.length-1;
+        while(l <= h){
+            int m = l + (h - l) / 2;
+            if(matrix[m][col] == target)
+                return true;
+            else if(matrix[m][col] < target){
+                l = m + 1;
+            }
+            else{
+                h = m - 1;
+            }
+        }
+        return false;
+    }
+
+    private boolean binarySearch(int[] nums, int target){
+        int l = 0; 
+        int h = nums.length-1;
+        while(l <= h){
+            int m = l + (h - l) / 2;
+            if(nums[m] == target)
+                return true;
+            else if(nums[m] < target){
+                l = m + 1;
+            }
+            else{
+                h = m - 1;
+            }
+        }
+        return false;
     }
 }
 
