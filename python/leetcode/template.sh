@@ -4,4 +4,7 @@ Solution written by Xuqiang Fang on
 '''
 
 class Solution(object):
-    def
+
+
+
+s = Solution()
