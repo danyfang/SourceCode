@@ -7,26 +7,25 @@ import java.util.Arrays;
 import java.util.Stack;
 
 class Solution{
+    //store the id, not timestamp
     public int[] exclusiveTime(int n, List<String> logs) {
         int[] ans = new int[n];        
         if(logs == null || logs.size() == 0)
             return ans;
         
         Stack<Integer> stack = new Stack<>();
-        int buildup = 0;
+        int prev = 0;
         for(String log : logs){
             String[] l = log.split(":");
+            if(!stack.isEmpty())
+                ans[stack.peek()] += Integer.parseInt(l[2]) - prev;
+            prev = Integer.parseInt(l[2]);
             if(l[1].equals("start")){
-                stack.push(Integer.valueOf(l[2])); 
+                stack.push(Integer.parseInt(l[0]));
             }
             else{
-                int time = Integer.valueOf(l[2]);
-                int id = Integer.valueOf(l[0]);
-                ans[id] = time + 1 - stack.pop() - buildup; 
-                buildup += ans[id];
-            }
-            if(stack.isEmpty()){
-                buildup = 0;
+                ans[stack.pop()]++;
+                prev++;
             }
         }
 
@@ -37,7 +36,7 @@ class Solution{
 public class ExclusiveTime{
 	public static void main(String[] args){
 		Solution s = new Solution();
-        List<String> logs = Arrays.asList("2:start:0","1:start:2","1:end:5","2:end:6","0:start:7","0:end:19");
+        List<String> logs = Arrays.asList("2:start:0","1:start:2","1:end:5","2:end:6");
         int[] res = s.exclusiveTime(3, logs);
         for(int i : res){
             System.out.println(i);
