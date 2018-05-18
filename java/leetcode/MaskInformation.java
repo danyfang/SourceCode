@@ -8,6 +8,9 @@ class Solution{
             if(S.length() == 10){
                 return "***-***-" + S.substring(6,10);
             }
+            else if(S.length() == 11){
+                return "+*-***-***-" + S.substring(7,11);
+            }
             else if(S.length() == 12){
                 return "+**-***-***-" + S.substring(8,12);
             }
