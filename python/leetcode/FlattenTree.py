@@ -29,19 +29,22 @@ class Solution(object):
             l += self.getList(root.right)
         return l
 
-root = TreeNode(1)
-a = TreeNode(2)
-b = TreeNode(5)
-c = TreeNode(3)
-d = TreeNode(4)
-e = TreeNode(6)
-root.left = a
-root.right = b
-a.left = c
-a.right = d
-b.right = e
-s = Solution()
-s.flatten(root)
-while(root != None):
-    print root.val
-    root = root.right
+def main():
+    root = TreeNode(1)
+    a = TreeNode(2)
+    b = TreeNode(5)
+    c = TreeNode(3)
+    d = TreeNode(4)
+    e = TreeNode(6)
+    root.left = a
+    root.right = b
+    a.left = c
+    a.right = d
+    b.right = e
+    s = Solution()
+    s.flatten(root)
+    while(root != None):
+        print(root.val)
+        root = root.right
+
+main()

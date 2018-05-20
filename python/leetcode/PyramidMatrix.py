@@ -46,9 +46,10 @@ class Solution(object):
 
         
 
-
-s = Solution()
-bottom = 'XYZ'
-allowed = ['XYD','YZE','DEA','FFF', 'XYE']
-print(s.pyramidTransition(bottom, allowed))
+def main():
+    s = Solution()
+    bottom = 'XYZ'
+    allowed = ['XYD','YZE','DEA','FFF', 'XYE']
+    print(s.pyramidTransition(bottom, allowed))
+main()
 

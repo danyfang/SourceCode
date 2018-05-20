@@ -6,5 +6,5 @@ Solution written by Xuqiang Fang on
 class Solution(object):
 
 
-
-s = Solution()
+def main():
+    s = Solution()

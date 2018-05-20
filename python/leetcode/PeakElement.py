@@ -12,7 +12,7 @@ class Solution(object):
         '''
         the idea is simple, find maximum using bianry search
         '''
-        l = 0;
+        l = 0
         n = len(nums)
         r = n - 1
         while(l < r):
@@ -22,6 +22,14 @@ class Solution(object):
                 l = m2
             else:
                 r = m1
-
         return l
+
+
+def main():
+    s = Solution()
+    nums = [1,2,3,4,0,-1]
+    print('the index of peak element is:')
+    print(s.findPeakElement(nums))
+
+main()
 

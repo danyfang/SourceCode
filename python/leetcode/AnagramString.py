@@ -30,10 +30,12 @@ class Solution(object):
 
         return True
 
+def main():
+    s = Solution()
+    st = "cbaebabacd"
+    p = "abc"
+    print(s.findAnagrams(st, p))
 
-s = Solution()
-st = "cbaebabacd"
-p = "abc"
-print s.findAnagrams(st, p)
-        
+main()
+            
 

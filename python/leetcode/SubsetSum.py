@@ -23,8 +23,12 @@ class Solution(object):
         else:
             return True
 
-nums = [1,5,11,5]
-s = Solution()
-print s.canPartition(nums)
-print s.canPartition([1,2,3,5])
+
+def main():
+    nums = [1,5,11,5]
+    s = Solution()
+    print(s.canPartition(nums))
+    print(s.canPartition([1,2,3,5]))
+
+main()
 

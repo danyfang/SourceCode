@@ -13,7 +13,7 @@ class Solution(object):
         if len(nums) == 0 : return False
         l = 0; h = len(nums) - 1
         while l < h:
-            m = l + (h - l) / 2
+            m = l + (h - l) // 2
             print('m = {}'.format(m))
             if nums[m] == target : return True
             if nums[l] < nums[m]:
@@ -34,6 +34,9 @@ class Solution(object):
 
         return True if nums[l] == target else False
 
-s = Solution()
-nums = [1,1,2,3,4,0,0,1,1]
-print(s.search(nums, 8))
+def main():
+    s = Solution()
+    nums = [1,1,2,3,4,0,0,1,1]
+    print(s.search(nums, 8))
+
+main()

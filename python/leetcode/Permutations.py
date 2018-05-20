@@ -54,10 +54,11 @@ class Solution(object):
             used[i] = 0
             temp.pop(len(temp)-1)
 
-
-s = Solution()
-x = [1,2,5]
-print(s.permute(x))
-y = [1,3,3,4,4]
-z = [3,3,0,3]
-print(s.permuteUnique(z))
+def main():
+    s = Solution()
+    x = [1,2,5]
+    print(s.permute(x))
+    y = [1,3,3,4,4]
+    z = [3,3,0,3]
+    print(s.permuteUnique(z))
+main()

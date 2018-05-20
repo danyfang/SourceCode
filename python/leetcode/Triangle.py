@@ -16,13 +16,15 @@ class Solution(object):
                 temp = min(prev[j], prev[j-1])
                 next[j] = temp + next[j]
             prev = next
-        print next
+        print(next)
         return min(next)
         '''
         :type triangle list[list[int]]
         :rtype int
         '''
 
-triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
-s = Solution()
-print s.minimumTotal(triangle)
+def main():
+    triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+    s = Solution()
+    print(s.minimumTotal(triangle))
+main()

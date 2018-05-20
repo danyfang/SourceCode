@@ -29,6 +29,9 @@ class Solution(object):
         :type S: int
         :rtype: int
         '''
-s = Solution()
-nums = [1,1,1,1,1]
-print s.findTargetSumWays(nums, 3)
+
+def main():
+    s = Solution()
+    nums = [1,1,1,1,1]
+    print(s.findTargetSumWays(nums, 3))
+main()

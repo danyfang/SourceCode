@@ -26,9 +26,9 @@ class Solution(object):
         self.dfs(grid, i, j-1)
         self.dfs(grid, i, j+1)
 
+def main():
+    s = Solution()
+    grid = [['1','1','0','1','0'], ['1','1','0','0','1'],['0','0','1','0','0'],['0','0','0','1','1']]
+    print(s.numIslands(grid))
 
-s = Solution()
-
-grid = [['1','1','0','1','0'], ['1','1','0','0','1'],['0','0','1','0','0'],['0','0','0','1','1']]
-
-print(s.numIslands(grid))
+main()

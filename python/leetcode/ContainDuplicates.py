@@ -27,7 +27,8 @@ class Solution(object):
             if i>= k: del d[nums[i-k] // width]
         return False
 
-
-s = Solution()
-nums = [1,0,1,1]
-print(s.containsNearbyAlmostDuplicate(nums, 1, 0))
+def main():
+    s = Solution()
+    nums = [1,0,1,1]
+    print(s.containsNearbyAlmostDuplicate(nums, 1, 0))
+main()
