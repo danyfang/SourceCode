@@ -3,20 +3,60 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Comparator;
+class Element{
+    int firstIndex;
+    int secondIndex;
+    int value;
+    Element(int i, int j, int v){
+        firstIndex = i;
+        secondIndex = j;
+        value = v;
+    }
+}
 class Solution{
     public int[] smallestRange(List<List<Integer>> nums) {
         int k = nums.size();
         if(k == 1){
             return new int[]{nums.get(0).get(0), nums.get(0).get(0)};
         }
-        int[] index = new int[k];
-        int lower = nums.get(0).get(0);
-        int upper = nums.get(0).get(0);
+        PriorityQueue<Element> minQueue = new PriorityQueue<>((a,b)->(a.value-b.value));
+        PriorityQueue<Element> maxQueue = new PriorityQueue<>((a,b)->(b.value-a.value));
+        int lower = 0;
+        int higher = Integer.MAX_VALUE;
         for(int i=0; i<k; ++i){
-            lower = Math.min(lower, nums.get(i).get(index[i]));
-            upper = Math.max(upper, nums.get(i).get(index[i]));
+            Element ele = new Element(i, 0, nums.get(i).get(0));
+            minQueue.offer(ele);
+            maxQueue.offer(ele);
         }
-        return new int[]{lower, upper};
+        /*
+        while(!maxQueue.isEmpty()){
+            System.out.println(maxQueue.poll().value);
+        }
+        */
+        while(true){
+            Element min = minQueue.poll();
+            Element max = maxQueue.peek();
+            if(max.value-min.value<higher-lower){
+                lower = min.value;
+                higher = max.value;
+            }
+            int updateIndex = min.secondIndex;
+            if(++updateIndex >= nums.get(min.firstIndex).size()){
+                break;
+            }
+            else{
+                maxQueue.remove(min);
+                //System.out.println("remove element :" + min.value);
+                int value = nums.get(min.firstIndex).get(updateIndex);
+                Element ele = new Element(min.firstIndex,updateIndex, value);
+                minQueue.offer(ele);
+                maxQueue.offer(ele);
+            }
+        }
+
+        return new int[]{lower, higher};
     }
 }
 

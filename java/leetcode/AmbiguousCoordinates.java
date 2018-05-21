@@ -1,5 +1,5 @@
 //Leetcode problem 816 Ambiguous Coordinates
-//Solution written by Xuqiang Fang on 9 May, 2018
+//Solution written by Xuqiang Fang on 21 May, 2018
 
 import java.util.ArrayList;
 import java.util.List;
