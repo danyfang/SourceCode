@@ -53,7 +53,7 @@ class Solution:
         """
         res = [[]]
         if not endWord in wordList:
-            return res
+            return []
         if not beginWord in wordList:
             wordList = [beginWord] + wordList
         graph = [[] for i in wordList]
@@ -64,7 +64,7 @@ class Solution:
                     graph[j].append(i)
         endIndex = wordList.index(endWord)
         if len(graph[endIndex]) == 0:
-            return res
+            return []
         #print(graph)
         temp = [beginWord]
         visited = {wordList.index(beginWord)}

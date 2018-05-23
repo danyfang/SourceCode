@@ -55,51 +55,17 @@ class Solution{
         return 0;
     }
     
-    public List<List<String>> findLadder(String beginWord, String endWord, List<String> wordList) {
-        List<List<String>>  res = new ArrayList<>();
-        Set<String> dict = new HashSet<>(); 
-        dict.addAll(wordList);
-        if(!dict.contains(endWord)){
-            return res;
-        }
-        int len = beginWord.length();
-        Set<String> begin = new HashSet<>();
-        Set<String> end = new HashSet<>();
-        begin.add(beginWord);
-        end.add(endWord);
-        int step = 0;
 
-        while(!begin.isEmpty() && !end.isEmpty()){
-            ++step;
-            //always search in the smaller set
-            if(begin.size() > end.size()){
-                Set<String> temp = begin;
-                begin = end;
-                end = temp;
-            }
-            Set<String> temp = new HashSet<>();
-            for(String word : begin){
-                StringBuilder sb = new StringBuilder(word);
-                for(int i=0; i<len; ++i){
-                    char c = word.charAt(i);
-                    for(int j=0; j<26; ++j){
-                        sb.setCharAt(i, (char)('a'+j));
-                        if(end.contains(sb.toString())){
-                            return res;
-                        }
-                        else if(!dict.contains(sb.toString())){
-                            continue;
-                        }
-                        temp.add(sb.toString());
-                        dict.remove(sb.toString());
-                    }
-                    sb.setCharAt(i, c);
-                }
-            }
-            begin = temp;
-        }
+    //general idea: use bfs to build path graph and then use dfs to find the path
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>>  res = new ArrayList<>();
         return res;
     }
+
+
+
+
+
     //single source all destinations, shortest path
     //TLE
     /**The reason for TLE is because this algorithm spends too much time building the graph*/
