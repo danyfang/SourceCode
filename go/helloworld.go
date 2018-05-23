@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {  
+func main(){
     fmt.Println("Hello World")
     var age = 26
     var name = "xuqiang fang"
