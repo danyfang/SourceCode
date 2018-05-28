@@ -1,3 +1,8 @@
+'''
+Leetcode problem No 698 Partition to K Equal Sum Subsets
+Solution written by Xuqiang Fang on 14 May, 2018
+'''
+
 class Solution(object):
     def canPartitionKSubsets(self, nums, k):
         totalSum = sum(nums)
