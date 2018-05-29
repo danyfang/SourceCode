@@ -30,11 +30,46 @@ class Solution{
         String sum = x2.toString();
         return num.startsWith(sum, start) && isValid(x1,x2, start+sum.length(), num);
     }
+
+    public boolean isAdditiveNumb(String num){
+        if(num == null || num.length() < 3){
+            return false;
+        }
+        int n = num.length();
+        for(int i=1; i<=n/2; ++i){
+            for(int j=1; j<=(n-i)/2; ++j){
+                if(check(num.substring(0,i), num.substring(i,i+j), num.substring(i+j))){
+                    return true;
+                } 
+            }
+        }
+        return false;
+    }
+    private boolean check(String a, String b, String c){
+        if(a.length() > 1 && a.charAt(0) == '0'){
+            return false;
+        }
+        if(b.length() > 1 && b.charAt(0) == '0'){
+            return false;
+        }
+        BigInteger ab = new BigInteger(a);
+        BigInteger bb = new BigInteger(b);
+        String s = ab.add(bb).toString();
+        if(s.equals(c)){
+            return true;
+        }
+        else if(c.length() < s.length() || !s.equals(c.substring(0,s.length()))){
+            return false;
+        }
+        return check(b, s, c.substring(s.length()));
+    }
+
 }
 
 public class AdditiveNumber{
 	public static void main(String[] args){
 		Solution s = new Solution();
-        System.out.println(s.isAdditiveNumber(args[0]));
+        System.out.println(s.isAdditiveNumb(args[0]));
+        //System.out.println(s.isAdditiveNumber(args[0]));
 	}
 }
