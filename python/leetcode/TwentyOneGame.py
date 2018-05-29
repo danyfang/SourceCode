@@ -11,17 +11,21 @@ class Solution(object):
         :type W: int
         :rtype: float
         """
-        #won't draw at all
-        if K == 0:
-            return 0
-        if K == 1:
-            return N/W
-
-        prob = 0.0
-        for i in range(1,W):
-            prob += 1/W * self.new21Game(N, K-i, W)
-
-        return prob
+        if K == 0 or N >= K + W:
+            return 1.0
+        p = [0.0 for i in range(N+1)]
+        p[0] = 1.0
+        s = 1.0
+        ans = 0.0
+        for i in range(1,N+1):
+            p[i] = s / W
+            if i < K:
+                s += p[i]
+            else:
+                ans += p[i]
+            if i >= W:
+                s -= p[i-W]
+        return ans
 
 def main():
     s = Solution()
