@@ -13,11 +13,11 @@
 
 using namespace std;
 
-//SOlution TLE
+//Solution TLE
 class WordDictionary_{
 public:
     /** Initialize your data structure here. */
-    WordDictionary() {
+    WordDictionary_() {
     }
     
     /** Adds a word into the data structure. */
@@ -57,40 +57,92 @@ private:
 };
 
 
-const int ALPHA_SIZE = 26;
-class WordDictionray{
+class TrieNode{
+public:
+    TrieNode(bool b = false){
+        is_word = b;
+        memset(next, 0, sizeof(next));
+    }
+    TrieNode *next[26];
+    bool is_word;
+};
+class WordDictionary{
 public:
     /** Initialize your data structure here. */
     WordDictionary() {
-        root = NULL;
+        root = new TrieNode();
+    }
+    ~WordDictionary(){
+        clear(root);
     }
     
     /** Adds a word into the data structure. */
     void addWord(string word) {
-        
+        auto t = root;
+        for(int i=0; i<word.length(); ++i){
+            if(t->next[word[i]-'a'] == nullptr){
+                t->next[word[i]-'a'] = new TrieNode();
+            }
+            t = t->next[word[i]-'a'];
+        }
+        t->is_word = true;
     }
     
     /** Returns if the word is in the data structure. A word could contain the dot character '.' 
     to represent any one letter. */
     bool search(string word) {
+        auto t = find(word, root);
+        if(t != nullptr && t->is_word){
+            return true;
+        }
+        return false;
     }
 private:
-    class TrieNode{
-    public:
-        TrieNode(){
-            isEnd = false; 
+    TrieNode *root;
+    TrieNode *find(string w, TrieNode *r){
+        if(r == nullptr){
+            return nullptr;
         }
-    private:
-        vector<TrieNode> children(ALPHA_SIZE);
-        bool isEnd;
-    };
-    TrieNode root;
-}
+        auto t = r;
+        for(int i=0; i<w.length(); ++i){
+            if(w[i] != '.'){
+                if(t != nullptr && t->next[w[i]-'a'] != nullptr){
+                    t = t->next[w[i]-'a'];
+                }
+                else{
+                    t = nullptr;
+                    break;
+                }
+            }
+            else if(t != nullptr){
+                for(int j=0; j<26; ++j){
+                    auto s = find(w.substr(i+1), t->next[j]); 
+                    if(s != nullptr && s->is_word){
+                        return s;
+                    } 
+                }
+                t = nullptr;
+            }
+        }
+        return t;
+    }
+
+    void clear(TrieNode *root){
+        for(int i=0; i<26; ++i){
+            if(root->next[i] != nullptr){
+                clear(root->next[i]);
+            }
+        }
+        delete root;
+    }
+};
 int main(){
     WordDictionary w;
     w.addWord("bad");
     w.addWord("dad");
+    w.addWord("adds");
     cout << w.search("dad") << endl;
-    cout << w.search(".ad") << endl;
+    cout << w.search(".a.") << endl;
+    cout << w.search("add.") << endl;
     return 0;
 }
