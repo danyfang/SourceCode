@@ -1,4 +1,5 @@
 //Leetcode problem 319 Bulb Switcher
+//Leetcode problem 672 Bulb Switcher II
 //Solution written by Xuqiang Fang on 18 April, 2018 
 
 class Solution{
@@ -30,6 +31,23 @@ class Solution{
             square++;
         }
         return square-1;
+    }
+
+
+    public int flipLights(int n, int m) {
+        if(n == 0 || m == 0){
+            return 1;
+        } 
+        else if(n == 1){
+            return 2;
+        }
+        else if(n == 2){
+            return m == 1 ? 3 : 4;
+        }
+        else if(m == 1){
+            return 4;
+        }
+        return m == 2 ? 7 : 8;
     }
 }
 
