@@ -1,5 +1,5 @@
 abstract class A{
-	private String info = "Hello World";
+	private String info = "Hello world~!";
 	public void print(){
 		System.out.println(info);
 	}

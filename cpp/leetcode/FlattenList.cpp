@@ -13,9 +13,9 @@
 using namespace std;
 class NestedInteger{
 public:
-    bool isInteger() const;
-    int getInteger() const;
-    const vector<NestedInteger> &getList() const;
+    virtual bool isInteger() const;
+    virtual int getInteger() const;
+    virtual const vector<NestedInteger> &getList() const;
 };
 
 class NestedIterator {

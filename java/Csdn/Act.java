@@ -1,3 +1,8 @@
+/*
+* This source code demos the usage of template design pattern using abstract class
+* abstract gives a template, all children will follow the template
+*/
+
 abstract class Action{
 	public static final int EAT = 3;
 	public static final int SLEEP = 5; 

@@ -93,7 +93,7 @@ class Dept{
 	}
 }
 
-public class table{
+public class Table{
 	public static void main(String[] args){
 		Emp empa = new Emp(1200,"张三",800);
 		Emp empb = new Emp(1201,"李四",900);		

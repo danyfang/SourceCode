@@ -20,7 +20,7 @@ class Student{
 	}
 
 }
-public class dany{
+public class Studen{
 	public static void main(String [] args){
 		Student s = new Student("方绪强",26, "中国","01-10-1991");
 		s.getInfo();
