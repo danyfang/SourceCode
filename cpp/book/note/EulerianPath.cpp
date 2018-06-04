@@ -40,8 +40,62 @@ void euler(int u){
 }
 
 int main(){
-    memset(visited, false, sizeof(visited));
-    memset(degree, 0, sizeof(degree));
-    memset(&G, 0, sizeof(G));
+    int x, y, z, start;
+    while((cin>> x >> y) && x && y){
+        memset(visited, false, sizeof(visited));
+        memset(degree, 0, sizeof(degree));
+        memset(&G, 0, sizeof(G));
+
+        start = x < y ? x : y;
+        cin >> z;
+        G.ne = max(G.ne, z);
+        G.nv = max(G.nv, max(x, y));
+        G.matrix[x][z] = y;
+        G.matrix[y][z] = x;
+        ++degree[x];
+        ++degree[y];
+
+        while((cin >> x >> y) && x && y){
+            cin >> z;
+            G.ne = max(G.ne, z);
+            G.nv = max(G.nv, max(x, y));
+            G.matrix[x][z] = y;
+            G.matrix[y][z] = x;
+            ++degree[x];
+            ++degree[y];
+        }
+
+        bool flag = true;
+        for(int i=1; i<=G.nv; ++i){
+            if(degree[i] & 1){
+                flag = false;
+                break;
+            }
+        }
+        if(!flag){
+            cout << "Round trip does not exist." << endl;
+        }
+        else{
+            euler(start);
+            stack_print(s);
+        }
+    }
     return 0;
 }
+
+/*Input
+
+1 2 1
+2 3 2
+3 1 6
+1 2 5
+2 3 3
+3 1 4
+0 0
+1 2 1
+2 3 2
+1 3 3
+2 4 4
+0 0 
+0 0
+*/
