@@ -67,6 +67,8 @@ int main(){
 
         bool flag = true;
         for(int i=1; i<=G.nv; ++i){
+            //this is condition is necessary but not enough
+            //there can be at most two vertices that have odd degree
             if(degree[i] & 1){
                 flag = false;
                 break;
