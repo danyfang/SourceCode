@@ -35,10 +35,10 @@ public:
             }
         }
         else{
-            ans.push_back((double)(s[k/2-1]+s[k/2])/2.0);
+            ans.push_back(((double)s[k/2-1]+(double)s[k/2])/2.0);
             for(int i=k; i<n; ++i){
                 insert_delete(s, nums[i-k], nums[i]);
-                ans.push_back((double)(s[k/2-1]+s[k/2])/2.0);
+                ans.push_back(((double)s[k/2-1]+(double)s[k/2])/2.0);
             } 
         }
         return ans;
@@ -64,6 +64,7 @@ private:
                         }
                     }        
                     nums.front() = in;
+                    break;
                 } 
             }
         }
@@ -82,6 +83,7 @@ private:
                         }
                     }
                     nums.back() = in;
+                    break;
                 }
             } 
         }
@@ -91,7 +93,9 @@ private:
 int main(){
     Solution s;
     vector<int> nums{1,3,-1,-3,5,3,6,7};
+    vector<int> num{7,8,8,3,8,1,5,3,5,4};
     vector<double> a = s.medianSlidingWindow(nums, 3);
+    a = s.medianSlidingWindow(num, 3);
     for(auto b : a){
         cout << b << " ";
     }

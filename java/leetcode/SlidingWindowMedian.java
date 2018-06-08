@@ -28,10 +28,10 @@ class Solution{
         }
         Arrays.sort(s);
         if(k % 2 == 0){
-            ans[0] = (double)(s[k/2-1] + s[k/2]) / 2.0;
+            ans[0] = ((double)s[k/2-1] + (double)s[k/2]) / 2.0;
             for(int i=0; i<n-k; ++i){
                 insertRemove(s, nums[i], nums[i+k]);
-                ans[i+1] = (double)(s[k/2] + s[k/2-1]) / 2.0;
+                ans[i+1] = ((double)s[k/2] + (double)s[k/2-1]) / 2.0;
             } 
         }
         else{
@@ -59,6 +59,7 @@ class Solution{
                         }
                     }        
                     nums[0] = in;
+                    break;
                 } 
             }
         }
@@ -77,6 +78,7 @@ class Solution{
                         }
                     }
                     nums[nums.length-1] = in;
+                    break;
                 }
             } 
         }
@@ -88,7 +90,9 @@ public class SlidingWindowMedian{
 	public static void main(String[] args){
 		Solution s = new Solution();
         int[] nums = {1,3,-1,-3,5,3,6,7};
+        int[] num = {7,8,8,3,8,1,5,3,5,4};
         double[] ans = s.medianSlidingWindow(nums, 3);
+        ans = s.medianSlidingWindow(num, 3);
         for(double a : ans){
             System.out.println(a);
         }
