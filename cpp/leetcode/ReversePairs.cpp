@@ -69,6 +69,86 @@ private:
     }
 };
 
+//this is another solution based on binary search tree;
+//but it TLE
+/*
+* Imagine a BST is built and the answer would just be some basic queries 
+*/
+struct Node{
+    int val, cnt;
+    Node* left;
+    Node* right;
+    Node(int v){
+        val = v;
+        cnt = 1;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+/*
+*cnt is the total number of elements in the subtree rooted at
+* current node that are greater than or equal to val
+*/
+class BST{
+public:
+    int reversePairs(vector<int> &nums){
+        int ans = 0;
+        Node* root = nullptr;
+        for(auto n : nums){
+            int t = search(root, n*2L+1);
+            cout << "t = " << t << endl;
+            ans += t;
+            root = insert(root, n);
+        }
+        print(root);
+        destroy(root);
+        return ans; 
+    }
+private:
+    void print(Node* root){
+        if(root != nullptr){
+            print(root->left);
+            cout << root->val << " " << root->cnt << endl;
+            print(root->right);
+        }
+    }
+    int search(Node* root, long val){
+        if(root == nullptr){
+            return 0;
+        }
+        else if(val == root->val){
+            return root->cnt;
+        }
+        else if(root->val > val){
+            return root->cnt + search(root->left, val);
+        }
+        return search(root->right, val);
+    }
+    Node* insert(Node* root, int val){
+        if(root == nullptr){
+            root = new Node(val);
+        }
+        else if(root->val == val){
+            root->cnt++;
+        }
+        else if(root->val > val){
+            root->left = insert(root->left, val);
+        }
+        else{
+            root->cnt++;
+            root->right = insert(root->right, val);
+        }
+        return root;
+    }
+    void destroy(Node* root){
+        if(root != nullptr){
+            destroy(root->left);
+            destroy(root->right);
+            delete root;
+        }
+    }
+};
+
 int main(){
     Solution s;
     vector<int> nums{1,3,2,3,1};
@@ -77,5 +157,10 @@ int main(){
     cout << s.reversePairs(nums) << endl;
     cout << s.reversePairs(num) << endl;
     cout << s.reversePairs(nu) << endl;
+
+    
+    BST b;
+    cout << "BST based solution" << endl;
+    cout << b.reversePairs(nums) << endl;
     return 0;
 }
