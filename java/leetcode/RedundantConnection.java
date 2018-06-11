@@ -87,6 +87,7 @@ class Solution{
         }
         return new int[]{};
     }
+    //find operation, with path compression
     private int find(int child, int[] parents){
         while(parents[child] != child){
             parents[child] = parents[parents[child]];

@@ -13,13 +13,47 @@
 using namespace std;
 class Solution{
 public:
-    int rectangleArea(vector<vector<int>>& r) {
-        int modolo = (1<<10)+7;
-        int sum = (r[0][2]-r[0][0]) * (r[0][3]-r[0][1]);
-        for(int i=1; i<r.size(); ++i){
-            cout << helper(r[0], r[i]) << endl;
+    //cannot understand it
+    int rectangleArea(vector<vector<int>>& rec) {
+        int mod = 1000000000+7;
+        vector<int> x{0};
+        for(auto r : rec){
+            x.push_back(r[0]);
+            x.push_back(r[2]);
         }
-        return 0;
+        sort(x.begin(), x.end());
+        vector<int>::iterator end_unique = unique(x.begin(), x.end());
+        x.erase(end_unique, x.end());
+        unordered_map<int, int> x_i;
+        for(int i=0; i<x.size(); ++i){
+            //cout << x[i] << endl;
+            x_i[x[i]] = i;
+        }
+        vector<int> count(x.size(), 0);
+        vector<vector<int>> L;
+        for(auto r : rec){
+            int x1 = r[0], y1 = r[1], x2 = r[2], y2 = r[3];
+            L.push_back({y1, x1, x2, 1});
+            L.push_back({y2, x1, x2, -1});
+        }
+        sort(L.begin(), L.end());
+        long long cur_y = 0, cur_x_sum = 0, area = 0;
+        for(auto l : L){
+            long long y = l[0], x1 = l[1], x2 = l[2];
+            int sig = l[3];
+            area = (area + (y - cur_y) * cur_x_sum) % mod;
+            cur_y = y;
+            for(int i=x_i[x1]; i<x_i[x2]; ++i){
+                count[i] += sig;
+            }
+            cur_x_sum = 0;
+            for(int i=0; i<x.size(); ++i){
+                if(count[i] > 0){
+                    cur_x_sum += x[i+1] - x[i];
+                }
+            }
+        }
+        return area;
     }
 private:
     long helper(const vector<int>& base, const vector<int>& v){
@@ -49,6 +83,8 @@ private:
 int main(){
     Solution s;
     vector<vector<int>> r{{0,0,2,2},{1,0,2,3},{1,0,3,1}};
-    s.rectangleArea(r);
+    cout << s.rectangleArea(r) << endl;
+    vector<vector<int>> rec{{0,0,1000000000,1000000000}};
+    cout << s.rectangleArea(rec) << endl;
     return 0;
 }
