@@ -71,6 +71,34 @@ class Solution{
     }
 }
 
+//another solution
+class Xuqiang{
+    /*
+    * greedy algorithm, sort both work array and [d, p] array
+    * Keep a variable: best so far to record the max profit under current difficulty level
+    */
+    public int maxProfitAssignment(int[] d, int[] p, int[] w) {
+        int n = d.length;
+        int[][] job = new int[n][2];
+        for(int i=0; i<n; ++i){
+            job[i][0] = d[i];
+            job[i][1] = p[i];
+        }
+        Arrays.sort(job, (a,b)->(a[0]-b[0]));
+        Arrays.sort(w);
+        int ans = 0;
+        int x = 0, y = 0, m = 0; //m is the best so far
+        while(x < w.length){
+            while(y < n && job[y][0] <= w[x]){
+                m = Math.max(m, job[y][1]);
+                y++;
+            }
+            ans += m;
+            x++;
+        }
+        return ans;
+    }
+}
 public class ProfitWork{
 	public static void main(String[] args){
 		Solution s = new Solution();
@@ -82,5 +110,8 @@ public class ProfitWork{
         int[] wo = {40,25,25};
         System.out.println(s.maxProfitAssignment(d,p,w));
         System.out.println(s.maxProfitAssignment(di,pr,wo));
+        Xuqiang x = new Xuqiang();
+        System.out.println(x.maxProfitAssignment(d,p,w));
+        System.out.println(x.maxProfitAssignment(di,pr,wo));
 	}
 }

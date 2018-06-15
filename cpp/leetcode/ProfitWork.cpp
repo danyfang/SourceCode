@@ -76,6 +76,48 @@ private:
     }    
 };
 
+
+class Xuqiang{
+public:
+    int maxProfitAssignment(vector<int>& d, vector<int>& p, vector<int>& w){
+        const int n = d.size();
+        vector<pair<int, int>> jobs;
+        for(int i=0; i<n; ++i){
+            jobs.emplace_back(d[i], p[i]);
+        }
+        sort(jobs.begin(), jobs.end());
+        sort(w.begin(), w.end());
+        int x = 0, y = 0, ans = 0, best = 0;
+        while(x < w.size()){
+            while(y < n && jobs[y].first <= w[x]){
+                best = max(best, jobs[y].second);
+                y++;
+            }
+            x++;
+            ans += best;
+        }
+        return ans;
+    }
+
+    int maxProfitAssignment_(vector<int>& d, vector<int>& p, vector<int>& w){
+        const int n = d.size();
+        vector<int> a(100001, 0);
+        for(int i=0; i<n; ++i){
+            a[d[i]] = max(a[d[i]],p[i]);
+        }
+        int m = 0;
+        for(int i=0; i<a.size(); ++i){
+            m = max(m, a[i]);
+            a[i] = m;
+        }
+        int ans = 0;
+        for(auto i : w){
+            ans += a[i];
+        }
+        return ans;
+    }
+};
+
 int main(){
     Solution s;
     vector<int> d{2,4,6,8,10};

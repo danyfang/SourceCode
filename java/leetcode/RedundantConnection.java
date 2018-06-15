@@ -90,7 +90,7 @@ class Solution{
     //find operation, with path compression
     private int find(int child, int[] parents){
         while(parents[child] != child){
-            parents[child] = parents[parents[child]];
+            parents[child] = parents[parents[child]];//compress the path
             child = parents[child];
         }
         return child;
