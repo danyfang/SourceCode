@@ -40,7 +40,8 @@ class Solution{
     /*
     * this questions is essentially the same with Combination Sum, can use the same element
     */
-    //can use the same element unlimited times, this version can print the combinations
+    //can use the same element unlimited times, this version can print the combinations,
+    //but this solution will certainly cause TLE, see dynamic programming solution
 	public int change_(int target, int[] nums){
 		List<List<Integer>> list = new ArrayList<>();
 		Arrays.sort(nums);
@@ -65,7 +66,8 @@ class Solution{
     
 
     /*Problem No 518*/
-    public int change(int t, int[] nums){
+    //this solution will certainly TLE, see dynamic programming solution
+    public int change__(int t, int[] nums){
         //specific to this problem
         if(t == 0){
             return 0;
@@ -88,34 +90,19 @@ class Solution{
         }
         return sum;
     }
-
-    public int change_mem(int a, int[] nums){
-        if(a == 0){
-            return 0;
-        }
-        Arrays.sort(nums);
-        int[] mem = new int[a+1];
-        return dfs_(nums, mem, a, 0);
-    }
-    private int dfs_(int[] nums, int[] mem, int a, int s){
-        int sum = 0;
-        if(a < 0){
-            return 0;
-        }
-        else if(mem[a] != 0){
-            return mem[a];
-        }
-        else if(a == 0){
-            return 1;
-        }
-        else{
-            for(int i=s; i<nums.length; ++i){
-                sum += dfs_(nums, mem, a-nums[i], i);
+    
+    //dynamic programming solution , No 518 Coin change 2
+    public int change(int t, int[] nums){
+        int[] dp = new int[t+1];
+        dp[0] = 1;
+        for(int n : nums){
+            for(int i=n; i<=t; ++i){
+                dp[i] += dp[i-n];
             }
         }
-        mem[a] = sum;
-        return sum;
+        return dp[t];
     }
+
 }
 
 public class CoinChange{
@@ -125,9 +112,7 @@ public class CoinChange{
         //System.out.println(s.coinChange(coins, Integer.valueOf(args[0])));
         coins = new int[]{1,2,5};
         System.out.println(s.change(5, coins));
-        System.out.println(s.change_mem(5, coins));
         coins = new int[]{2};
         System.out.println(s.change(3, coins));
-        System.out.println(s.change_mem(3, coins));
 	}
 }

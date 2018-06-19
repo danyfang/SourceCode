@@ -14,34 +14,22 @@ using namespace std;
 class Solution{
 public:
     int change(int amount, vector<int>& coins) {
-        if(amount == 0){
-            return 0;
+    /*
+    * dp[i][j] the number of combinations to make up amount j using the first i types of coins
+    * dp[i][j] = :
+    *           case 1: not using the ith coin, dp[i-1][j]
+    *           case 2: using the ith coin, dp[i][j-coins[i]]
+    * Initialization:
+    *           dp[i][0] = 1
+    */
+        vector<int> dp(amount+1, 0);
+        dp[0] = 1;
+        for(int c : coins){
+            for(int i=c; i<=amount; ++i){
+                dp[i] += dp[i-c];
+            }
         }
-        vector<int> mem(amount+1, 0);    
-        sort(coins.begin(), coins.end());
-        int res = dfs(coins, mem, amount, 0);
-        /*
-        for(int i : mem){
-            cout << i << " ";
-        }
-        cout << endl;
-        */
-        return res;
-    }
-private:
-    int dfs(vector<int>& coins, vector<int>& mem, int a, int s){
-        int sum = 0;
-        if(a < 0){
-            return 0;
-        }
-        else if(a == 0){
-            return 1;
-        }
-        for(int i=s; i<coins.size(); ++i){
-            sum += dfs(coins, mem, a-coins[i], i);
-        }
-        mem[a] = sum;
-        return sum;
+        return dp[amount];
     }
 };
 
