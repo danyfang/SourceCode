@@ -15,7 +15,7 @@ class Solution{
 public:
     //first sort the envelopes and then use dp
     //using dp to find the longest increasing subsequence
-    int maxEnvelopes(vector<pair<int, int>>& envelopes) {
+    int maxEnvelopes_(vector<pair<int, int>>& envelopes) {
         sort(envelopes.begin(), envelopes.end()); 
         const int n = envelopes.size();
         vector<int> dp(n, 1);
@@ -27,6 +27,36 @@ public:
                 }
             }
             ans = max(ans, dp[i]);
+        }
+        return ans;
+    }
+    
+    //optimized version, use binary search to find Longest Increasing Subsequence
+    int maxEnvelopes(vector<pair<int, int>>& envelopes) {
+        sort(envelopes.begin(), envelopes.end(),[](pair<int, int>& a, pair<int,int>& b){
+            if(a.first == b.first){
+                return b.second < a.second;
+            }
+            return a.first < b.first;
+        }); 
+        const int n = envelopes.size();
+        vector<int> tails(n, 0);
+        int ans = 0;
+        for(auto x : envelopes){
+            int i = 0, j = ans;
+            while(i < j){
+                int m = (i+j) >> 1;
+                if(tails[m] < x.second){
+                    i = m + 1;
+                }
+                else{
+                    j = m;
+                }
+            }
+            tails[i] = x.second;
+            if(i == ans){
+                ans++;
+            }
         }
         return ans;
     }

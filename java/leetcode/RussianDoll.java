@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Comparator;
 class Solution{
-    public int maxEnvelopes(int[][] envelopes) {
+    public int maxEnvelopes_(int[][] envelopes) {
         int n = envelopes.length;
         if(n == 0){
             return 0;
@@ -32,11 +32,35 @@ class Solution{
         }
         return ans;
     }
+    
+    //try using binary search to boost, also sort the second dimension decending, so we can
+    //ignore case like [2,4] [2,5] because [2,5] would come before [2,4]
+    //hence we don't need to double check envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1]
+    public int maxEnvelopes(int[][] envelopes) {
+        int n = envelopes.length;
+        if(n == 0){
+            return 0;
+        }
+        Arrays.sort(envelopes, new MyCom());
+        int ans = 0;
+        int[] tail = new int[n];
+        for(int[] x : envelopes){
+            int i = Arrays.binarySearch(tail, 0, ans, x[1]);
+            if(i < 0){
+                i = -(i+1);
+            }
+            tail[i] = x[1];
+            if(i == ans){
+                ans++;
+            }
+        }
+        return ans;
+    }
 }
 class MyCom implements Comparator<int[]>{
     public int compare(int[] a, int[] b){
         if(a[0] == b[0]){
-            return a[1] - b[1];
+            return b[1] - a[1];
         } 
         return a[0] - b[0];
     }
