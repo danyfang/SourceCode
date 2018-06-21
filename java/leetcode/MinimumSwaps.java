@@ -22,10 +22,12 @@ class Solution{
         swap[0] = 1;
         for(int i=1; i<n; ++i){
             if(A[i] > A[i-1] && B[i] > B[i-1]){
+                //in this case, both keep or both swap
                 keep[i] = keep[i-1];
                 swap[i] = swap[i-1] + 1;
             }
             if(A[i] > B[i-1] && B[i] > A[i-1]){
+                //in this case, one swap and one keep
                 swap[i] = Math.min(swap[i], keep[i-1]+1);
                 keep[i] = Math.min(swap[i-1], keep[i]);
             }

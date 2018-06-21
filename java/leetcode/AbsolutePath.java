@@ -13,6 +13,10 @@ import java.util.LinkedList;
 import java.util.Arrays;
 class Solution{
     public int lengthLongestPath(String input) {
+        /*
+        * Important to note that each row there will be only one name, either directory name or file name
+        * The idea is to use a stack to record the length up to current level
+        */
         Stack<Integer> stack = new Stack<>();
         stack.push(0);
         int max = 0;
@@ -23,7 +27,7 @@ class Solution{
             while(lev+1 < stack.size()){
                 stack.pop();
             }
-            int len = stack.peek() + s.length() -lev + 1;
+            int len = stack.peek() + s.length() - lev + 1;
             stack.push(len);
             if(s.contains(".")){
                 max = Math.max(max, len-1);
