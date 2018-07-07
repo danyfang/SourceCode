@@ -42,3 +42,11 @@ class Solution(object):
 
 if __name__ == "__main__":
     print Solution().maxPoints([Point(), Point(), Point()])
+    a = Point(2,3)
+    b = Point(1,1)
+    c = Point(2,3)
+    d = Point(2,3)
+    e = Point(2,1)
+    f = Point(4,7)
+    g = Point(2,3)
+    print(Solution().maxPoints([a,b,c,d,e,f,g]))

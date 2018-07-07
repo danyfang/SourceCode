@@ -22,7 +22,7 @@ class Solution(object):
         while left < right:
             mid = left + (right - left) / 2
 
-            if nums[mid] <= target:
+            if nums[mid] <= target:#the right half is sorted
                 right = mid
             else:
                 left = mid + 1

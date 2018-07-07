@@ -53,6 +53,21 @@ class Solution2(object):
 
         return nums[left]
 
+class Solution3(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return self.helper(nums, 0, len(nums)-1)
+
+    def helper(self, nums, l, r):
+        if l + 1 >= r:
+            return min(nums[l], nums[r])
+        if nums[l] < nums[r]:
+            return nums[l]
+        mid = (l + r) / 2
+        return min(self.helper(nums, l, mid-1), self.helper(nums, mid, r))
 
 if __name__ == "__main__":
     print Solution().findMin([3, 1, 1, 2, 2, 3])
