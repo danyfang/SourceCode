@@ -76,3 +76,8 @@ class Solution(object):
         sticker_counts = map(collections.Counter, stickers)
         dp = { "":0 }
         return minStickersHelper(sticker_counts, target, dp)
+
+s = Solution()
+stickers = ["with", "example", "science"]
+target = "thehat"
+print(s.minStickers(stickers, target))
