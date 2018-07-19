@@ -13,3 +13,9 @@ dates = pd.date_range
 a = ['this', 'is', 'awesome']
 for b in a:
     print(b)
+
+
+ts = pd.Series(np.random.randn(1000), index =pd.date_range('1/1/2001', periods=1000))
+ts = ts.cumsum()
+
+ts.plot()

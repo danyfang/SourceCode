@@ -1,5 +1,5 @@
 '''
-Leetcode problem No 763 Partition Labels
+leetcode problem No 763 Partition Labels
 Solution written by Xuqiang Fang on 18 July, 2018
 '''
 
