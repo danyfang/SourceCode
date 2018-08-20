@@ -10,11 +10,6 @@ class Solution(object):
         :type N: int
         :rtype: int
         """
-        '''
-        let f(k, n) denote the number of moves for k eggs and n floors
-        f(1, n) = n
-        f(k, 1) = 1
-        '''
         dp = [[0] * (K + 1) for i in range(N + 1)]
         for m in range(1, N + 1):
             for k in range(1, K + 1):
