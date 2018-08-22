@@ -45,3 +45,34 @@ bmiTell bmi
     | bmi <= 25.0 = "You are supposedly normal"
     | bmi <= 35.0 = "You are fat"
     | otherwise = "You are a whale"
+
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ what xs
+    where what [] = "empty."
+          what [x] = "a singleton list."
+          what xs = "a longer list"
+
+
+--our own maximum function
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list"
+maximum' [x] = x
+maximum' (x:xs) = max x (maximum' xs) 
+{-
+        | x > maxTail = x
+        | otherwise = maxTail
+        where maxTail = maximum' xs
+-}
+
+--a quick sort imp
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) = 
+    let smallerSorted = quicksort [a | a <- xs, a <= x]
+        biggerSorted = quicksort [a | a <- xs, a > x]
+    in smallerSorted ++ [x] ++ biggerSorted
+
+--higher order function
+multThree :: (Num a) => a -> a -> a -> a
+multThree x y z = x * y * z
