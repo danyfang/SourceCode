@@ -4,6 +4,7 @@
 Description:
 
 */
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,6 +14,7 @@ Description:
 #include <set>
 #include <stack>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 int main(){

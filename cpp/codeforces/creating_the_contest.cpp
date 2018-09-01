@@ -4,9 +4,15 @@
 Description:
 You are given a problemset consisting of n problems. The difficulty of the i -th problem is a i
 . It is guaranteed that all difficulties are distinct and are given in the increasing order.  
-You have to assemble the contest which consists of some problems of the given problemset. In other words, the contest you have to assemble should be a subset of problems (not necessary consecutive) of the given problemset. There is only one condition that should be satisfied: for each problem but the hardest one (the problem with the maximum difficulty) there should be a problem with the difficulty not greater than twice the difficulty of this problem. In other words, let 
+You have to assemble the contest which consists of some problems of the given problemset. In other words,
+the contest you have to assemble should be a subset of problems (not necessary consecutive) of the given 
+problemset. There is only one condition that should be satisfied: for each problem but the hardest one 
+(the problem with the maximum difficulty) there should be a problem with the difficulty not greater than
+twice the difficulty of this problem. In other words, let 
 a i 1 , a i 2 , … , a i p be the difficulties of the selected problems in increasing order. Then for each j
- from 1 to p − 1 a i j + 1 ≤ a i j ⋅ 2 should hold. It means that the contest consisting of only one problem is always valid.  Among all contests satisfying the condition above you have to assemble one with the maximum number of problems. Your task is to find this number of problems.
+ from 1 to p − 1 a i j + 1 ≤ a i j ⋅ 2 should hold. It means that the contest consisting of only one problem
+ is always valid.  Among all contests satisfying the condition above you have to assemble one with the
+ maximum number of problems. Your task is to find this number of problems.
 */
 #include <iostream>
 #include <string>

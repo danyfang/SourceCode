@@ -2,8 +2,14 @@
 //Written by Xuqiang Fang on 27 Aug, 2018
 /*
 Description:
-A bracket sequence is a string containing only characters "(" and ")". A regular bracket sequence is a bracket sequence that can be transformed into a correct arithmetic expression by inserting characters "1" and "+" between the original characters of the sequence. For example, bracket sequences "()()" and "(())" are regular (the resulting expressions are: "(1)+(1)" and "((1+1)+1)"), and ")(", "(" and ")" are not.  
-Subsequence is a sequence that can be derived from another sequence by deleting some elements without changing the order of the remaining elements.  You are given a regular bracket sequence s and an integer number k . Your task is to find a regular bracket sequence of length exactly k such that it is also a subsequence of s .  
+A bracket sequence is a string containing only characters "(" and ")". A regular bracket sequence is a
+bracket sequence that can be transformed into a correct arithmetic expression by inserting characters
+"1" and "+" between the original characters of the sequence. For example, bracket sequences "()()" and
+"(())" are regular (the resulting expressions are: "(1)+(1)" and "((1+1)+1)"), and ")(", "(" and ")" are not.  
+Subsequence is a sequence that can be derived from another sequence by deleting some elements without
+changing the order of the remaining elements.  You are given a regular bracket sequence s and an 
+integer number k . Your task is to find a regular bracket sequence of length exactly k such that it is
+also a subsequence of s .  
 It is guaranteed that such sequence always exists.
 */
 #include <iostream>
@@ -17,6 +23,8 @@ It is guaranteed that such sequence always exists.
 #include <queue>
 using namespace std;
 
+//the first helper() function got TLE
+/*
 string helper(string& s, int l, int r, int k){
     if(k == 2){
         return "()";
@@ -47,6 +55,32 @@ string helper(string& s, int l, int r, int k){
     }
     return "";
 }
+*/
+string helper(string& s, vector<int>& used, int k){
+    stack<int> st;
+    int c = 0;
+    string ans;
+    for(int i=0; i<s.size(); ++i){
+        if(s[i] == '('){
+            st.push(i);
+        }
+        else{
+            used[i] = 1;
+            used[st.top()] = 1;
+            c += 2;
+            st.pop();
+        }
+        if(c == k){
+            for(int j=0; j<=i; ++j){
+                if(used[j]){
+                    ans.push_back(s[j]);
+                }
+            } 
+            break;
+        }
+    }
+    return ans;
+}
 int main(){
     int n, k;
     cin >> n >> k;
@@ -56,7 +90,8 @@ int main(){
         cout << s << endl;
     }
     else{
-        cout << helper(s, 0, n, k) << endl;
+        vector<int> used(n, 0);
+        cout << helper(s, used, k) << endl;
     }
     return 0;
 }

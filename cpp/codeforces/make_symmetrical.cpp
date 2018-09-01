@@ -22,6 +22,7 @@ const int N = 200001;
 int m[N][3];
 set<pair<int,int>> s;
 
+//this solution is TLE
 int main(){
     int n;
     cin >> n;

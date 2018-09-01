@@ -16,6 +16,7 @@ of positions ( i , j) ( i ≠ j) in array a such that the concatenation of a i a
 #include <set>
 #include <stack>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 const int N = 200 * 1000 + 13;
