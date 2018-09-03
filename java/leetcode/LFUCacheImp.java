@@ -13,12 +13,12 @@ import java.util.LinkedHashSet;
 import java.util.Arrays;
 class LFUCache {
     Map<Integer, Integer> map;
-    LinkedHashSet<Integer> set;
+    Map<Integer, LinkedHashSet<Integer>> cache;
     int capa;
     public LFUCache(int capacity) {
         capa = capacity; 
         map = new HashMap<>();
-        set = new LinkedHashSet<>();
+        cache = new HashMap<>();
     }
     
     public int get(int key) {
@@ -28,11 +28,23 @@ class LFUCache {
         else{
             int c = map.get(key);
             map.put(key, c+1);
+
         }
     }
     
     public void put(int key, int value) {
-        map.put(key, map.getOrDefault(key, 0)+1); 
+        if(!map.containsKey(key)){
+            if(map.size() < capa){
+                map.put(key, map.getOrDefault(key, 0)+1); 
+            } 
+            else{
+            
+            }
+        }
+        else{
+            //already contains the key
+
+        }
     }
 }
 public class LFUCacheImp{
