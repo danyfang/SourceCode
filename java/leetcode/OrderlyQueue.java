@@ -14,39 +14,62 @@ import java.util.Arrays;
 class Solution{
     public String orderlyQueue(String s, int k) {
         if(k == 1){
-            int c = 0;
-            StringBuilder sb = new StringBuilder(s);
-            for(int i=1; i<s.length(); ++i){
-                if(s.charAt(i) < s.charAt(c)){
-                    c = i;
+            int[] index = new int[26];
+            for(int i=0; i<s.length(); ++i){
+                index[s.charAt(i)-'a']++;
+            }
+            int i = 0;
+            for(i=0; i<26; ++i){
+                if(index[i] == s.length()){
+                    return s;
                 }
-            } 
-            helper(sb, c);
-            System.out.println(sb.toString());
-            int j = 0;
-            for(int i=1; i<sb.length(); ++i){
-                if(sb.charAt(i) == sb.charAt(j)){
-                    int tmp = i;
-                    while(i < sb.length() && j < tmp && sb.charAt(i) == sb.charAt(j)){
-                        i++;
-                        j++;
-                    }
-                    if(i == sb.length()){
-                        return sb.toString();
-                    }
-                    if(sb.charAt(i) < sb.charAt(j)){
-                        j = tmp;
-                    }
+                if(index[i] > 0){
+                    break;    
                 }
             }
-            helper(sb, j);
-            return sb.toString();
+            List<Integer> length = new ArrayList<>();
+            char c = (char)('a'+i);
+            int l = 0;
+            for(int j=0; j<s.length(); ++j){
+                if(s.charAt(j) == c && l > 0){
+                    length.add(l);
+                    l = 0;
+                }
+                l++;
+            }
+            length.add(l);
+            List<String> list = new ArrayList<>();
+            StringBuilder sb = new StringBuilder(s);
+            for(int j=0; j<length.size(); ++j){
+                String t = sb.substring(0, length.get(j)); 
+                sb.delete(0, length.get(j));
+                sb.append(t);
+                list.add(sb.toString());
+            }
+            String ans = list.get(0);
+            for(int j=1; j<list.size(); ++j){
+                ans = compare(ans, list.get(j));
+            }
+            return ans;
+
         }
         else{
             char[] ch = s.toCharArray();
             Arrays.sort(ch);
             return String.valueOf(ch);
         }
+    }
+    private String compare(String a, String b){
+        int n = a.length();
+        for(int i=0; i<n; ++i){
+            if(a.charAt(i) < b.charAt(i)){
+                return a;
+            }
+            else if(a.charAt(i) > b.charAt(i)){
+                return b;
+            }
+        }
+        return a;
     }
     private void helper(StringBuilder sb, int k){
         String s = sb.substring(0, k);
@@ -68,6 +91,6 @@ public class OrderlyQueue{
         System.out.println(s.orderlyQueue("brvigplenbczfjtvxerz", 1));
         System.out.println(s.orderlyQueue("lenbczfjtvxebbbbbrzbrvigp", 1));
         */
-        System.out.println(s.orderlyQueue("gtxlrjwkpzolcynsrgqcbvphnoradctlfjrloykccsicuxcqtgvrlegvesooadiqjgjmpojlupzphnmwtwsghewxiamusracsvevypoakmylaobzrssykhcamttaqvwukssbbiqjqtuhzoqqrerlzszzvppmjkxqeallbfijqevmbcyaqerzxllhlyamxcdvhuhavilbqvfyqofwlbyjhbabwwmcdyoubbudvylcslnxodjwncnawgszxnisoxgsdkujhjjadtsqddmmdzvwervizcudgedrguuyuzoaikzkhuxbzszqarfzywsgyvqefopkvrgapixgofzqtxlolqivjuajmxstqxsqxtawetkkelzvtqfbyxaxtceegxkolmgighpaynnkttszkcusamvyjmltsmepajibculdyilseuvmsszujnknxcxndyfamobqoocjdmjiwqcrzjurmkfkgmrxdvtqebdihviezsumcplicihjsdjtiwweqqeomgsxxcjcmrsbcqvpccpfthvxnstqqkxeesfnxjtwrcnuzlbjmybxlctddgorwpqmnrhhqqefoviebnnporwiufimntatuaoadwbxrtrttxjjqnrjkkbtoxtkubqyxihhxikigwlnkikxhsfxmhltwvdzmyeyfwhvewrdylevbatctcydoqjcmixffplhdvcxydyguilsotkbixuypimmgwbizoyavqwtzitvsuvhhkaxvdvipmlpxkawyuektwwyqdkydyjpvccmxzreujgplnzawlvwtmnpkswiyoheshvyjjhgzvwayvvykbonftzsuuveppwlgnmabemrnozcjouwqrxupakbzvicojsvpvaglmveonqabckptqcwkvejrqnyvprknqvflefadtihdokbjutzwmuukkolqvxqnfkfsodeacqqnuogtjbflpuwutpfrsgjhzsjfigvejngeyxanblcufhcznkoeuhw", 1));
+        System.out.println(s.orderlyQueue("gtxlrjwkpzolcynsrgqcbvphnoradctlfjrloykccsicuxcqtgvrlegvesooadiqjgjmpojl upzphnmwtwsghewxiamusracsvevypoakmylaobzrssykhcamttaqvwukssbbiqjqtuhzoqqrerlzszzvppmjkxqeallbfijqevmbcyaqerzxllhlyamxcdvhuhavilbqvfyqofwlbyjhbabwwmcdyoubbudvylcslnxodjwncnawgszxnisoxgsdkujhjjadtsqddmmdzvwervizcudgedrguuyuzoaikzkhuxbzszqarfzywsgyvqefopkvrgapixgofzqtxlolqivjuajmxstqxsqxtawetkkelzvtqfbyxaxtceegxkolmgighpaynnkttszkcusamvyjmltsmepajibculdyilseuvmsszujnknxcxndyfamobqoocjdmjiwqcrzjurmkfkgmrxdvtqebdihviezsumcplicihjsdjtiwweqqeomgsxxcjcmrsbcqvpccpfthvxnstqqkxeesfnxjtwrcnuzlbjmybxlctddgorwpqmnrhhqqefoviebnnporwiufimntatuaoadwbxrtrttxjjqnrjkkbtoxtkubqyxihhxikigwlnkikxhsfxmhltwvdzmyeyfwhvewrdylevbatctcydoqjcmixffplhdvcxydyguilsotkbixuypimmgwbizoyavqwtzitvsuvhhkaxvdvipmlpxkawyuektwwyqdkydyjpvccmxzreujgplnzawlvwtmnpkswiyoheshvyjjhgzvwayvvykbonftzsuuveppwlgnmabemrnozcjouwqrxupakbzvicojsvpvaglmveonqabckptqcwkvejrqnyvprknqvflefadtihdokbjutzwmuukkolqvxqnfkfsodeacqqnuogtjbflpuwutpfrsgjhzsjfigvejngeyxanblcufhcznkoeuhw", 1));
 	}
 }
