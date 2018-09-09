@@ -12,39 +12,58 @@ import java.util.Queue;
 import java.util.LinkedHashSet;
 import java.util.Arrays;
 class LFUCache {
-    Map<Integer, Integer> map;
+    Map<Integer, Integer> vals;
+    Map<Integer, Integer> counts;
     Map<Integer, LinkedHashSet<Integer>> cache;
-    int capa;
+    int cap;
+    int min;
     public LFUCache(int capacity) {
-        capa = capacity; 
-        map = new HashMap<>();
+        cap = capacity; 
+        vals = new HashMap<>();
+        counts = new HashMap<>();
         cache = new HashMap<>();
+        min = -1;
+        cache.put(1, new LinkedHashSet<>());
     }
     
     public int get(int key) {
-        if(!map.containsKey(key)){
+        if(!vals.containsKey(key)){
             return -1;
         }
         else{
-            int c = map.get(key);
-            map.put(key, c+1);
-
+            int c = counts.get(key);
+            counts.put(key, c+1);
+            cache.get(c).remove(key);
+            if(c == min && cache.get(c).size() == 0){
+                min++;
+            }
+            if(!cache.containsKey(c+1)){
+                cache.put(c+1, new LinkedHashSet<>());
+            }
+            cache.get(c+1).add(key);
+            return vals.get(key);
         }
     }
     
     public void put(int key, int value) {
-        if(!map.containsKey(key)){
-            if(map.size() < capa){
-                map.put(key, map.getOrDefault(key, 0)+1); 
-            } 
-            else{
-            
-            }
+        if(cap <= 0){
+            return;
         }
-        else{
-            //already contains the key
-
+        else if(vals.containsKey(key)){
+            vals.put(key, value);
+            get(key);
+            return;
         }
+        else if(vals.size() >= cap){
+            //evict the least frequent one, the freq is min
+            int out = cache.get(min).iterator().next();
+            cache.get(min).remove(out);
+            vals.remove(out);
+        }
+        vals.put(key, value);
+        counts.put(key, 1);
+        min = 1;
+        cache.get(1).add(key);
     }
 }
 public class LFUCacheImp{
