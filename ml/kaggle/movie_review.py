@@ -7,7 +7,8 @@ from sklearn.pipeline import Pipeline
 from nltk.corpus import stopwords
 import string
 from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.neighbors import KNeighborsClassifier
 
 
 movie = pd.read_csv('/Users/xuqiang/Desktop/movie/spam.csv')
@@ -29,6 +30,7 @@ def process_text(text):
 
 movie.data.apply(process_text)
 tfidf = TfidfVectorizer()
+
 X = TfidfVectorizer().fit_transform(movie.data).todense()
 y = LabelEncoder().fit_transform(movie.target)
 
@@ -39,4 +41,11 @@ clf.fit(X_train, y_train)
 
 pred = clf.predict(X_test)
 print(classification_report(pred, y_test))
+print(confusion_matrix(y_test, pred))
 
+clf = KNeighborsClassifier(n_neighbors = 20)
+clf.fit(X_train, y_train)
+
+pred = clf.predict(X_test)
+print(classification_report(pred, y_test))
+print(confusion_matrix(y_test, pred))
