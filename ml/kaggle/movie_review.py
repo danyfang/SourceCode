@@ -26,9 +26,9 @@ def process_text(text):
     #2
     clean_words = [word for word in nopunc.split() if word.lower() not in stopwords.words('english')]
     #3
-    return clean_words
+    return ' '.join(clean_words)
 
-movie.data.apply(process_text)
+movie.data = movie.data.apply(process_text)
 tfidf = TfidfVectorizer()
 
 X = TfidfVectorizer().fit_transform(movie.data).todense()
