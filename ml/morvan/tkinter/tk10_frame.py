@@ -7,7 +7,7 @@ import tkinter as tk
 
 window = tk.Tk()
 window.title('my window')
-window.geometry('200x200')
+window.geometry('800x800')
 tk.Label(window, text='on the window').pack()
 
 frm = tk.Frame(window)

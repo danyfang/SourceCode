@@ -31,3 +31,9 @@ b.pack()
 
 
 window.mainloop()
+
+'''
+for i in range(1,65):
+    im = fig.add_subplot(8,8,i)
+    im.imshow(images[i-1].reshape(8,8))
+'''
