@@ -11,69 +11,89 @@
 #include <queue>
 
 using namespace std;
-class Solution {
+class Solution{
 public:
     int shortestBridge(vector<vector<int>>& A) {
-        const int m = A.size();
-        const int n = A[0].size();
-        int ans = INT_MAX;
-        for(int i=0; i<m; ++i){
+        first.clear();
+        second.clear();
+        step = -1;
+        found = false;
+        bool flag = false;
+        const int n = A.size(); 
+        for(int i=0; i<n; ++i){
             for(int j=0; j<n; ++j){
-                if(A[i][j] == 1){
-                    string t = to_string(i)+","+to_string(j);
-                    if(s.empty()){
-                        helper(A, m, n, i, j);
+                if(A[i][j] == 1 && !flag){
+                    string t = to_string(i) + "," + to_string(j);
+                    if(first.empty()){
+                        dfs(A, n, i, j, first);
                     }
-                    else if(s.find(t) == s.end()){
+                    else if(first.count(t) == 0){
+                        dfs(A, n, i, j, second);
+                        flag = true;
+                        break;
                     }
                 }
             }
+            if(flag){
+                break;
+            }
         }
-        return ans;
+        while(!found){
+            expand(n);
+            step++;
+            //cout << "second.size() = " << second.size() << endl;
+            //cout << "first.size() = " << first.size() << endl;
+        }
+        return step;
     }
 private:
-    void helper(vector<vector<int>>& A, const int m, const int n, int i, int j){
+    void dfs(vector<vector<int>>& A, int n, int i, int j, unordered_set<string>& f){
         string t = to_string(i)+","+to_string(j);
-        s.insert(t);
-        for(auto &d : dir){
-            i +=d.first;
-            j += d.second;
-            t = to_string(i)+","+to_string(j);
-            if(i >= 0&&i < m&&j >= 0&&j < n&&s.find(t) == s.end()&&A[i][j] == 1)
-                helper(A, m, n, i, j);
+        f.insert(t);
+        for(auto& d : dir){
+            int x = i + d.first;
+            int y = j + d.second;
+            t = to_string(x) + "," + to_string(y);
+            if(x>=0 && x<n && y>=0 && y<n&&A[x][y] == 1 && f.count(t) == 0){
+                dfs(A, n, x, y, f);
+            }
         }
     }
-    int bfs(vector<vector<int>>& A, const int m, const int n, int i, int j, int curr, unordered_set<string> visited){
-        int ans = INT_MAX;
-        string t = to_string(i)+","+to_string(j);
-        if(visited.count(t) != 0){
-            return ans;
-        }
-        visited.insert(t);
-        for(auto& d : dir){
-            i += d.first;
-            j += d.second;
-            if(i >= 0&&i < m&&j >= 0&&j < n){
-                t = to_string(i) + "," + to_string(j);
-                if(A[i][j] == 1 && s.find(t) != s.end()){
-                    ans = min(ans, curr);
-                }    
-                else{
-                    ans = min(ans, bfs(A, m, n, i, j, curr+1, visited)); 
+    void expand(int n){
+        unordered_set<string> tmp = second;
+        for(auto& s : second){
+            int index = s.find(",");
+            int i = stoi(s.substr(0, index));
+            int j = stoi(s.substr(index+1, s.length()-index));
+            for(auto& d : dir){
+                int x = i + d.first;
+                int y = j + d.second;
+                string t = to_string(x) + "," + to_string(y);
+                if(first.count(t) != 0){
+                    found = true;
+                    return;
+                }
+                if(x>=0 && x<n && y>=0 && y<n){
+                    tmp.insert(t);
                 }
             }
         }
-        return ans;
+        second = tmp;
     }
-    unordered_set<string> s;
-    unordered_set<string> visited;
+    int step;
+    bool found;
+    unordered_set<string> first; 
+    unordered_set<string> second; 
     vector<pair<int, int>> dir = {{1,0},{-1, 0},{0, 1},{0,-1}};
 };
+
 int main(){
     Solution s;
     vector<vector<int>> A = {{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}};
     cout << s.shortestBridge(A) << endl;
     A = {{0,1,0},{0,0,0},{0,0,1}};
+    cout << s.shortestBridge(A) << endl;
+    A = {{0,1,0,0,0},{0,1,0,1,1},{0,0,0,0,1},{0,0,0,0,0},{0,0,0,0,0}};
     cout << s.shortestBridge(A) << endl;
     return 0;
 }
