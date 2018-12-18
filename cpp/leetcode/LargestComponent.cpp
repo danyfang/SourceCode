@@ -59,13 +59,13 @@ public:
             if(m.count(A[i])) s.uni(i, m[A[i]]);
             else m[A[i]] = i;
         }
-        
         return s.maxsz;
     }
 };
 
 int main(){
     Solution s;
-
+    vector<int> A{4, 6, 15, 35};
+    cout << s.largestComponentSize(A) << endl;
     return 0;
 }
