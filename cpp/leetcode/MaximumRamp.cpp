@@ -16,17 +16,6 @@ public:
   int maxWidthRamp(vector<int>& A){
     int ans = 0;
     const int n = A.size();
-    int i= 0, j = n-1;
-    while(i < n-ans ){
-      if(A[i] <= A[j]){
-	ans = max(ans, j-i);
-	i++;
-	j = n-1;
-      }
-      else{
-	j--;
-      }
-    }
     return ans;
   }
 };
