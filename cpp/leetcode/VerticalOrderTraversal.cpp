@@ -31,7 +31,7 @@ public:
           if(a[0] != b[0])
             return a[0] > b[0];
           else
-            return a[2] < b[2];
+            return a[1] < b[1];
         });
       vector<int> temp;
       for(auto& v : it->second){
@@ -46,12 +46,12 @@ public:
 private:
   int index;
   void helper(map<int, vector<vector<int>>>& m, TreeNode* root){
-    queue<pair<TreeNode*, vector<int>>> q;
+    queue<pair<TreeNode*&, vector<int>>> q;
     q.push({root, {root->val, 0, 0}});
     while(q.size() > 0){
       int s = q.size();
       for(int i=0; i<s; ++i){
-        auto& e = q.front();
+        auto e = q.front();
         q.pop();
         if(m.count(e.second[1]) == 0){
           m[e.second[1]] = {{e.second[2], e.second[0], index++}};
