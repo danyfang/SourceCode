@@ -17,7 +17,7 @@ public:
 };
 
 int main(){
-    Solution s;
+  Solution s;
 
-    return 0;
+  return 0;
 }
