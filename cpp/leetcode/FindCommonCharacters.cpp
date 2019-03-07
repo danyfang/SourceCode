@@ -18,36 +18,27 @@ public:
     auto ans = helper(A[0]);
     for(int i=1; i<n; ++i){
       auto tmp = helper(A[i]);
-      for(const auto& e : ans){
-	if(tmp.count(e.first) != 0){
-	  ans[e.first] = min(ans[e.first], tmp[e.first]);
-	}
-	else{
-	  ans.erase(e.first);
-	}
+      for(int j=0; j<26; ++j){
+	ans[j] = min(ans[j], tmp[j]);
       }
     }
     vector<string> ret;
-    for(const auto& e : ans){
-      for(int i=0; i<ans[e.first]; ++i){
+    for(int i=0; i<26; ++i){
+      while(ans[i] > 0){
 	string s;
-	s.push_back(ans[e.first]);
+	char c = (char)('a'+i);
+	s.push_back(c);
 	ret.push_back(s);
+	ans[i]--;
       }
     }
     return ret;
   }
 private:
-  int[] helper(string& a){
-    unordered_map<char, int> ans;
-    for(auto& c : a){
-      if(ans.find(c) == ans.end()){
-	ans[c] = 1;
-      }
-      else{
-	ans[c] += 1;
-      }
-    }
+  vector<int> helper(string& a){
+    vector<int> ans(26, 0);
+    for(auto& c : a)
+      ans[c-'a']++;
     return ans;
   }
 };
