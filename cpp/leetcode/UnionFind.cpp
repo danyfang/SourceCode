@@ -1,13 +1,7 @@
-/*
-A untility union find class
-*/
-
-
-
 class UnionFind{
 public:
   int find(int i){
-    p = parent[i];
+    auto p = parent[i];
     if(i == p){
       return i;
     }
@@ -33,5 +27,3 @@ public:
 private:
   vector<int> parent;
 };
-
-
