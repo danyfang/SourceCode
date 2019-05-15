@@ -61,12 +61,27 @@ public:
         }
         return count;
     }
+
+  //another classic solution
+  int videoStitching2(vector<vector<int>>& clips, int T){
+    sort(clips.begin(), clips.end());
+    int ans = 0;
+    for(auto i=0, st=0, end=0; st<T; st=end, ++ans){
+      for(; i<clips.size() && clips[i][0]<=st; ++i){
+        end = max(end, clips[i][1]);
+      }
+      if(st == end){
+        return -1;
+      }
+    }
+    return ans;
+  }
 };
 
 int main(){
   Solution s;
   vector<vector<int>> clips = {{0,1},{6,8},{0,2},{5,6},{0,4},{0,3},{6,7},{1,3},{4,7},{1,4},{2,5},{2,6},{3,4},{4,5},{5,7},{6,9}};
   cout << s.videoStitching(clips, 9) << endl;
-
+  cout << s.videoStitching2(clips, 9) << endl;
   return 0;
 }
