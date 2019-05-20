@@ -17,10 +17,13 @@ public:
     for(int i=0; i<n; ++i){
       node.push_back(helper(v, i));
     }
-    for(int i=0; 2*i+2<n; ++i){
+    for(int i=0, j=0; 2*j+1<n; ++i){
       if(node[i] != NULL){
-	node[i]->left = node[2*i+1];
-	node[i]->right = node[2*i+2];
+        node[i]->left = node[2*j+1];
+        if(2*j+2<n){
+          node[i]->right = node[2*j+2];
+        }
+        j++;
       }
     }
     return node[0];
@@ -38,6 +41,21 @@ public:
       cout << root->val << endl;
       print(root->right);
     }
+  }
+
+  void testcase(){
+    vector<int> v{1,2,5,3,null,6,null,4,null,7,null,8,null,null,9};
+    auto root = this->construct(v);
+    this->print(root);
+    this->destruct(root);
+    v = {1,401,null,349,88,90};
+    root = this->construct(v);
+    this->print(root);
+    this->destruct(root);
+    v = {1,2,5,3,4,6,7};
+    root = this->construct(v);
+    this->print(root);
+    this->destruct(root);
   }
 private:
   TreeNode* helper(vector<int>& v, int i){

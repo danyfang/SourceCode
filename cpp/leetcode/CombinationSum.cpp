@@ -1,4 +1,4 @@
-//Leetcode problem 377 Combination Sum IV
+//Leetcode problem 39 Combination Sum 
 //Solution written by Xuqiang Fang on 4 April, 2018
 
 #include <vector>
