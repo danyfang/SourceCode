@@ -1,0 +1,71 @@
+%
+% Body text font is Palatino!
+%
+
+\documentclass[a5paper,pagesize,8pt,bibtotoc,pointlessnumbers,
+normalheadings,DIV=9,twoside=false]{scrbook}
+
+\KOMAoptions{DIV=last}
+
+ 
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage[sc]{mathpazo}
+\linespread{1.05} 
+
+\usepackage{verbatim} % for comments
+\usepackage{listings} % for comments
+
+
+
+\title{A book title}   
+\author{Author Name} 
+\date{\today} 
+
+\begin{document}
+
+
+%=========================================
+\begin{titlepage}
+		\centering{
+			{\fontsize{40}{48}\selectfont 
+			A Book Title}
+		}\\
+			
+		\vspace{10mm}
+		\centering{\Large{Danny Fang}}\\
+		\vspace{\fill}
+		\centering \large{2020}
+\end{titlepage}
+
+
+%=========================================
+\newpage{}
+\thispagestyle {empty}
+
+\vspace*{2cm}
+
+\begin{center}
+	\Large{\parbox{10cm}{
+		\begin{raggedright}
+		{\Large 
+			\textit{Do what you think is interesting, 
+			do something that you think is fun and worthwhile, 
+			because otherwise you won't do it well anyway.}
+		}
+	
+		\vspace{.5cm}\hfill{---Brian W. Kernighan}
+		\end{raggedright}
+	}
+}
+\end{center}
+
+\newpage
+
+\include{gresentence}
+
+\include{ncp}
+
+
+\end{document}

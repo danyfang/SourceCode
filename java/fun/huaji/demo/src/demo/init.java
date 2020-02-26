@@ -135,9 +135,9 @@ public class init {
     public static void main(String[] args) throws IOException {
         ArrayList<ball> balls=new ArrayList<ball>();
         ArrayList<Image> ballimg=new ArrayList<Image>();
-        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/head.png")));
-        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/love.jpeg")));
-        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/love.jpeg")));
+        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/huaji2.png")));
+        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/huaji2.png")));
+        ballimg.add(ImageIO.read(new File("/Users/xuqiang/Source/java/fun/huaji/demo/src/img/huaji2.png")));
         MyFrame a=new MyFrame(0,0,balls);
         for(int i=0;i<100;i++)
         {
