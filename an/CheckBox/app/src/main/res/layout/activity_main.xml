@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="false"
+    android:layout_gravity="center_horizontal"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Your Favorite Ninjia"
+        app:layout_constraintBottom_toTopOf="@+id/ninjia_pic"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ViewFlipper
+        android:id="@+id/ninjia_pic"
+        android:layout_width="254dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mike" >
+    </ViewFlipper>
+
+
+    <RadioGroup
+        android:id="@+id/ninjia_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ninjia_pic">
+
+        <RadioButton
+            android:id="@+id/rd_leon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="radioButtonClick"
+            android:checked="true"
+            android:text="Leon" />
+
+        <RadioButton
+            android:id="@+id/rd_mike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="radioButtonClick"
+            android:text="Mike" />
+
+        <RadioButton
+            android:id="@+id/rd_don"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:onClick="radioButtonClick"
+            android:text="Don" />
+
+        <RadioButton
+            android:id="@+id/rd_raph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="radioButtonClick"
+            android:text="Raph" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
