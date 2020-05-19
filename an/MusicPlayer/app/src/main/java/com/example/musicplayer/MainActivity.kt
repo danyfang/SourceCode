@@ -3,6 +3,7 @@ package com.example.musicplayer
 import android.app.Activity
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
@@ -70,5 +71,11 @@ class MainActivity : Activity() {
         }
         player.release()
         super.onDestroy()
+        Log.i("Danny", "On Destory called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("Danny", "On stop called")
     }
 }
