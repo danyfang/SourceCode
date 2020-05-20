@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">样式资源</string>
+    <string name="title">Android 的市场份额</string>
+    <string name="text1">
+       谷歌今天给出了安卓系统各版本最新的份额数据，去年推出牛轧糖版本（7.0，7.1）终于达到了两位数的市场份额，占11.5%。</string>
+<string name="text_down">Android 系统的市场份额</string>
+</resources>
