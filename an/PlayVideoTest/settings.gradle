@@ -1,0 +1,3 @@
+rootProject.name='PlayVideoTest'
+include ':app'
+include ':bunny'

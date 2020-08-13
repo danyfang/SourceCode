@@ -6,3 +6,85 @@
 \#*\#
 .\#*
 ./cpp/leetcode/test
+# built application files
+*.apk
+*.ap_
+
+# Android DEX files
+*.dex
+
+# Java class files
+*.class
+*.jar
+
+# Generated files
+bin/
+gen/
+
+# hprof dumps
+captures/
+
+# Android Studio files
+.classpath
+.idea/*
+# Keep the external dependencies (plugins), copyright, and inspection profiles
+!.idea/copyright/Outlook_Android.xml
+!.idea/copyright/profiles_settings.xml
+!.idea/inspectionProfiles/Outlook_Android.xml
+!.idea/inspectionProfiles/profiles_settings.xml
+.gradle
+.project
+.settings/
+gradle/local.properties
+local.properties
+/*/local.properties
+/*/out
+/*/build
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+.DS_Store
+
+# ignore ktlint output
+lint-output-kotlin-lint.xml
+
+/.vscode/
+
+/client-android.iml
+
+/changelog.txt
+
+/build/
+
+/Adjust/build/tmp/packageReleaseJar/MANIFEST.MF
+/Adjust/build/outputs/aar/Adjust.aar
+/Adjust/build/intermediates/incremental/packageResources/release/merger.xml
+/Adjust/build/intermediates/incremental/packageResources/debug/merger.xml
+/Adjust/build/intermediates/incremental/mergeAssets/release/merger.xml
+/Adjust/build/intermediates/incremental/mergeAssets/debug/merger.xml
+/Adjust/build/intermediates/incremental/aidl/release/dependency.store
+/Adjust/build/intermediates/incremental/aidl/debug/dependency.store
+/Adjust/build/intermediates/bundles/release/classes.jar
+/Adjust/build/intermediates/bundles/release/AndroidManifest.xml
+/Adjust/build/intermediates/bundles/debug/AndroidManifest.xml
+/Adjust/build/generated/source/buildConfig/release/com/adjust/sdk/BuildConfig.java
+/Adjust/build/generated/source/buildConfig/debug/com/adjust/sdk/BuildConfig.java
+
+/helpshift/build
+
+npm-debug.log
+olm_scripts.pyc
+
+ReleaseNotes/
+scripts/changelog/node_modules/
+
+scripts/.secrets/ado.json
+
+hx-version
+native-symbols-versions
+
+node_modules
