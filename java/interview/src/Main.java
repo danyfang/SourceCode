@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -8,10 +11,13 @@ public class Main {
     }
     public static void main(String[] args) {
 
-        /*
+
         List<Integer> list = Arrays.asList(1,2,3,4,5, null, null,8);
+        list = Arrays.asList(1,2,3,4,5,null,6,7,null,null,null,null,8);
         Tree tree = new Tree();
-        Tree.Node head = tree.constructTree(list);
+        Tree.TreeNode head = tree.constructTree(list);
+        System.out.println(tree.deepestLeavesSum(head));
+        /*
         List<Integer> temp = new ArrayList<>();
         tree.preorder(temp, head);
         System.out.print(temp);
@@ -93,12 +99,14 @@ public class Main {
                 {'1','1','1','1','1'},
                 {'1','0','0','1','0'}};
         System.out.println(b.maxAreaChar(matrix));
-        */
+
         System.out.println(s.minInsertions("())))"));
         System.out.println(s.minInsertions("))())("));
         System.out.println(s.minInsertions(")))))))"));
         System.out.println(s.minInsertions("(((((((((("));
         System.out.println(s.minInsertions(")()()()()()()"));
+
+        */
     }
 
 }
