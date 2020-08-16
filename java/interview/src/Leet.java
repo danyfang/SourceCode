@@ -95,6 +95,36 @@ public class Leet {
         return sb.toString();
     }
 
+
+    public static long process(String s){
+        int[] mon = new int[]{0,31,59,90,120, 151, 181, 212, 243, 273, 304, 334};
+        int year = Integer.parseInt(s.substring(0, 4));
+        int month = Integer.parseInt(s.substring(5,7));
+        int day = Integer.parseInt(s.substring(8,10));
+        int hour = Integer.parseInt(s.substring(11,13));
+        int minute = Integer.parseInt(s.substring(14,16));
+        int second = Integer.parseInt(s.substring(17,19));
+        int number = Integer.parseInt(s.substring(20));
+        long ans = 0;
+        for(int y=2000; y<year; ++y){
+            if((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)){
+                ans += 366*24*3600;
+            } else {
+                ans += 365*24*3600;
+            }
+        }
+        for(int m=1; m<=month; ++m){
+            ans += mon[m-1] * 24* 3600;
+            if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
+                if(month > 2){
+                    ans += 24 * 3600;
+                }
+            }
+        }
+        ans += day * 24 * 3600;
+        return ans*1000;
+    }
+
     public int numIdenticalPairs(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i != nums.length; ++i) {
@@ -985,6 +1015,14 @@ public class Leet {
 
 
     // Leetcode medium level
+
+    public int minOperations(int n) {
+        int ans = 0;
+        for(int i=0; i<n; ++i){
+            ans += Math.abs(n-(2*i+1));
+        }
+        return ans/2;
+    }
     public int minInsertions(String s) {
         Stack<Character> stack = new Stack<>();
         int i = 0;
@@ -1026,5 +1064,59 @@ public class Leet {
         }
         ans += 2*stack.size();
         return ans;
+    }
+
+    public int numSplits(String s) {
+        int ans = 0;
+        HashMap<Character, Integer> left = new HashMap<>();
+        HashMap<Character, Integer> right = new HashMap<>();
+        for(int i=0; i<s.length(); ++i) {
+            right.put(s.charAt(i), right.getOrDefault(s.charAt(i), 0)+1);
+        }
+        for(int i=0; i<s.length(); ++i){
+            left.put(s.charAt(i), left.getOrDefault(s.charAt(i), 0)+1);
+            right.put(s.charAt(i), right.get(s.charAt(i))-1);
+            if(right.get(s.charAt(i)) == 0) {
+                right.remove(s.charAt(i));
+            }
+            if(left.size() == right.size()){
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public int longestAwesomeExceedTimeLimit(String s) {
+        int ans = 0;
+        Map<Integer, Integer> odd = new HashMap<>();
+        Map<Integer, Integer> even = new HashMap<>();
+        for(int i=0; i<s.length(); ++i){
+            for(int j=i; j<s.length(); ++j){
+                int k = s.charAt(j)-'0';
+                if(isPalindrome(odd, even, k, 1)){
+                    ans = Math.max(ans, j-i+1);
+                    System.out.println(s.substring(i, j+1));
+                }
+            }
+            odd.clear();
+            even.clear();
+        }
+        return ans;
+    }
+
+    public boolean isPalindrome(Map<Integer, Integer> odd, Map<Integer, Integer> even, int k, int v){
+        if(even.containsKey(k)){
+            odd.put(k, even.get(k)+v);
+            even.remove(k);
+        } else if(odd.containsKey(k)) {
+            even.put(k, odd.get(k) + v);
+            if (even.get(k) == 0) {
+                even.remove(k);
+            }
+            odd.remove(k);
+        } else {
+            odd.put(k, v);
+        }
+        return odd.size() == 1 || (odd.isEmpty() && !even.isEmpty());
     }
 }
