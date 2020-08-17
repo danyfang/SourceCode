@@ -39,4 +39,35 @@ public class Now {
         }
         return ans;
     }
+
+    public static long dateToSeconds(String s){
+        int[] mon = new int[]{0,31,28,31,30,31,30,31,31,30,31,30};
+        int year = Integer.parseInt(s.substring(0, 4));
+        int month = Integer.parseInt(s.substring(5,7));
+        int day = Integer.parseInt(s.substring(8,10));
+        int hour = Integer.parseInt(s.substring(11,13));
+        int minute = Integer.parseInt(s.substring(14,16));
+        int second = Integer.parseInt(s.substring(17,19));
+        long ans = 0;
+        for(int y=2000; y<year; ++y){
+            if((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)){
+                ans += 366*24*3600;
+            } else {
+                ans += 365*24*3600;
+            }
+        }
+        for(int m=1; m<=month; ++m){
+            ans += mon[m-1] * 24* 3600;
+            if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
+                if(month > 2){
+                    ans += 24 * 3600;
+                }
+            }
+        }
+        ans += day * 24 * 3600;
+        ans += hour * 3600;
+        ans += minute * 60;
+        ans += second;
+        return ans;
+    }
 }
