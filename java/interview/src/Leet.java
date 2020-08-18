@@ -1143,4 +1143,71 @@ public class Leet {
         }
         return odd.size() == 1 || (odd.isEmpty() && !even.isEmpty());
     }
+
+    /*max profit, only one transaction*/
+    public int maxProfitOneTrans(int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;
+        }
+        int ans = 0;
+        int lowestSoFar = prices[0];
+        for(int i=1; i<prices.length; ++i) {
+            lowestSoFar = Math.min(prices[i], lowestSoFar);
+            ans = Math.max(ans, prices[i] - lowestSoFar);
+        }
+        return ans;
+    }
+
+    /*max profit, as many trans as possible*/
+    /*[7,1,5,3,6,4]*/
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;
+        }
+        int ans = 0;
+        for(int i=1; i<prices.length; ++i) {
+            if(prices[i] > prices[i-1]) {
+                ans += (prices[i] - prices[i-1]);
+            }
+        }
+        return ans;
+    }
+
+    /*max profit, at most k trans*/
+    /*dp[i][j] means max profit within i trans up to day j*/
+    public int maxProfit(int k, int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;
+        }
+        int n = prices.length;
+        int[][] dp = new int[k+1][n];
+        for(int i=1; i<=k; ++i) {
+            int maxTemp = -prices[0];
+            for(int j=1; j<n; ++j){
+                dp[i][j] = Math.max(dp[i][j-1], prices[j]+maxTemp);
+                maxTemp = Math.max(maxTemp, dp[i-1][j-1]-prices[j]);
+            }
+        }
+        return dp[k][n-1];
+    }
+
+    public int longestOnes(int[] A, int K) {
+        if(A == null || A.length == 0) {
+            return 0;
+        }
+        int n = A.length;
+        int[] sum = new int[n+1];
+        for(int i=1; i<=n; ++i){
+            sum[i] = sum[i-1] + A[i-1];
+        }
+        int ans = 0;
+        for(int i=0; i<=n; ++i){
+            for(int j=i+K; j<=n; ++j){
+                if((j-i) - (sum[j] - sum[i]) <= K) {
+                    ans = Math.max(ans, j-i);
+                }
+            }
+        }
+        return ans;
+    }
 }

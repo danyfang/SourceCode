@@ -64,7 +64,7 @@ public class Now {
                 }
             }
         }
-        ans += day * 24 * 3600;
+        ans += (day-1) * 24 * 3600;
         ans += hour * 3600;
         ans += minute * 60;
         ans += second;
