@@ -114,4 +114,35 @@ public class Now {
         System.out.println(ans);
         return ans;
     }
+
+    public static int countLR (int[] a, int[] b) {
+        int n = a.length;
+        int[] sum = new int[n];
+        sum[0] = a[0];
+        for (int i=1; i<n; ++i) {
+            sum[i] = sum[i-1] + a[i];
+        }
+        int ans = 0;
+        for (int i=0; i<n; ++i){
+            for (int j=i; j<n; ++j) {
+                if (sum[j] - sum[i] + a[i] == b[i] + b[j]) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static int mountainSequence (int[] numberList) {
+        if (numberList == null || numberList.length == 0) {
+            return -1;
+        }
+        return 0;
+    }
+
+    public static int[] solve (int n, int q, int[] a, int[] p) {
+        return a;
+    }
 }
+
+
