@@ -16,4 +16,20 @@ public class Util {
         }
         return true;
     }
+
+    public static int binarySearch(int[] k, int x){
+        int l = 0;
+        int r = k.length;
+        while(l < r){
+            int m = l + (r-l)/2;
+            if(k[m] == x){
+                return m;
+            } else if(k[m] < x){
+                l = m + 1;
+            } else {
+                r = m;
+            }
+        }
+        return -1;
+    }
 }

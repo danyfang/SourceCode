@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 
 /*
 * Nowcoder solutions, written by Xuqiang Fang in Aug, 2020
@@ -68,6 +69,49 @@ public class Now {
         ans += hour * 3600;
         ans += minute * 60;
         ans += second;
+        return ans;
+    }
+
+    public static void maxCoord(int[][] coord) {
+        TreeMap<Integer, Integer> left = new TreeMap<>();
+        TreeMap<Integer, Integer> right = new TreeMap<>();
+        for (int[] ints : coord) {
+            if (!left.containsKey(ints[0])) {
+                left.put(ints[0], ints[1]);
+            } else {
+                left.put(ints[0], Math.max(ints[1], left.get(ints[0])));
+            }
+            if(!right.containsKey(ints[1])){
+                right.put(ints[1], ints[0]);
+            } else {
+                right.put(ints[1], Math.max(ints[0], right.get(ints[1])));
+            }
+        }
+        int current = right.get(right.lastKey());
+        for(int k : right.descendingKeySet()) {
+            int v = right.get(k);
+            if(v < current) {
+                continue;
+            }
+            current = v;
+            System.out.println(current + " " + left.get(current));
+        }
+    }
+
+    public static int maxProduct(int[] nums){
+        int n = nums.length;
+        int ans = 0;
+        for (int i=0; i<n; ++i) {
+            int min = nums[i];
+            int sum = nums[i];
+            ans = Math.max(ans, min * sum);
+            for (int j=i+1; j<n; ++j) {
+                min = Math.min(min, nums[j]);
+                sum += nums[j];
+                ans = Math.max(ans, min * sum);
+            }
+        }
+        System.out.println(ans);
         return ans;
     }
 }
