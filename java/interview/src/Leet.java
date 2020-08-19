@@ -1,4 +1,5 @@
 import javafx.util.Pair;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -1037,6 +1038,80 @@ public class Leet {
         return st.isEmpty();
     }
 
+
+    public boolean isSymmetric(Tree.TreeNode root) {
+        return (root == null || isSymmetricHelper(root.left, root.right));
+    }
+    private boolean isSymmetricHelper(Tree.TreeNode left, Tree.TreeNode right) {
+        if (left == null || right == null) {
+            return left == right;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+        return isSymmetricHelper(left.right, right.left) && isSymmetricHelper(left.left, right.right);
+    }
+
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int sumSoFar = nums[0];
+        int ans = nums[0];
+        for (int i=1; i<nums.length; ++i) {
+            if (sumSoFar > 0) {
+                sumSoFar += nums[i];
+            } else {
+                sumSoFar = nums[i];
+            }
+            ans = Math.max(ans, sumSoFar);
+        }
+        return ans;
+    }
+
+    public int[] plusOne(int[] digits) {
+        if (digits == null || digits.length == 0) {
+            return digits;
+        }
+        Stack<Integer> stack = new Stack<>();
+        List<Integer> list = new ArrayList<>();
+        for (int i=0; i<digits.length; ++i) {
+            stack.push(digits[i]);
+        }
+        int forward = 1;
+        while(!stack.isEmpty()) {
+            int x = forward + stack.pop();
+            list.add(x % 10);
+            forward = x / 10;
+        }
+        if(forward > 0){
+            list.add(1);
+        }
+        int[] ans = new int[list.size()];
+        int n = ans.length;
+        for(int i=0; i<n; ++i) {
+            ans[i] = list.get(n-1-i);
+        }
+        return ans;
+    }
+
+    public String convertToTitle(int n) {
+        StringBuilder sb = new StringBuilder();
+        if (n <= 26) {
+            sb.append((char)(n-1+'A'));
+            return sb.toString();
+        }
+        int b = 1;
+        while (n >= b*26) {
+            b *= 26;
+        }
+        int ans = n/b;
+        System.out.println(ans);
+        sb.append((char)('A'+ans-1));
+        n = n - b*ans;
+        sb.append(convertToTitle(n));
+        return sb.toString();
+    }
 
     // Leetcode medium level
 

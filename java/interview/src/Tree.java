@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Tree {
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -170,5 +170,24 @@ public class Tree {
         return map.get(--maxDepth);
     }
 
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        return hasPathSumHelper(root, 0, sum);
+    }
+
+    private boolean hasPathSumHelper(TreeNode root, int current, int sum) {
+        if(root.val + current == sum && root.left == null && root.right == null) {
+            return true;
+        }
+        if (root.left != null && hasPathSumHelper(root.left, root.val+current, sum)) {
+            return true;
+        }
+        if (root.right != null && hasPathSumHelper(root.right, root.val+current, sum)) {
+            return true;
+        }
+        return false;
+    }
 }
 
