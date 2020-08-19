@@ -1,7 +1,4 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /*
 * Nowcoder solutions, written by Xuqiang Fang in Aug, 2020
@@ -133,11 +130,32 @@ public class Now {
         return ans;
     }
 
-    public static int mountainSequence (int[] numberList) {
-        if (numberList == null || numberList.length == 0) {
+    public static int mountainSequence (int[] nums) {
+        if (nums == null || nums.length == 0) {
             return -1;
         }
-        return 0;
+        int n = nums.length;
+        int[] l = new int[n];
+        int[] r = new int[n];
+        Arrays.fill(l, 1);
+        Arrays.fill(r, 1);
+        for (int i=1; i<n; ++i) {
+            for (int j=0; j<i; ++j) {
+                if (nums[i] > nums[j]) {
+                    l[i] = Math.max(l[i], l[j] + 1);
+                }
+            }
+            for (int j=n-1; j>i; --j) {
+                if (nums[n-1-i] > nums[j]) {
+                    r[n-1-i] = Math.max(r[n-1-i], r[j] + 1);
+                }
+            }
+        }
+        int ans = 1;
+        for (int i=0; i<n; ++i) {
+            ans = Math.max(ans, l[i]+r[i]-1);
+        }
+        return ans;
     }
 
     public static int[] solve (int n, int q, int[] a, int[] p) {
