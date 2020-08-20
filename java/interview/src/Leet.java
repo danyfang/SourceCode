@@ -1097,19 +1097,15 @@ public class Leet {
 
     public String convertToTitle(int n) {
         StringBuilder sb = new StringBuilder();
-        if (n <= 26) {
-            sb.append((char)(n-1+'A'));
-            return sb.toString();
+        int[] num = {308915776,11881376,456976,17576,676,26,1};
+        for (int i=0; i<7; ++i) {
+            if (n > num[i]) {
+                sb.append((char)('A'+n/num[i]-1));
+                n %= num[i];
+            } else if (sb.length() > 0) {
+                sb.append('A');
+            }
         }
-        int b = 1;
-        while (n >= b*26) {
-            b *= 26;
-        }
-        int ans = n/b;
-        System.out.println(ans);
-        sb.append((char)('A'+ans-1));
-        n = n - b*ans;
-        sb.append(convertToTitle(n));
         return sb.toString();
     }
 

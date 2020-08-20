@@ -8,6 +8,5 @@ public class Main {
         System.out.println(s.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
 
         System.out.println(s.convertToTitle(53314));
-        System.out.println(s.convertToTitle(1424242));
     }
 }
