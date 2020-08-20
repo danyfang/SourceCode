@@ -1097,18 +1097,101 @@ public class Leet {
 
     public String convertToTitle(int n) {
         StringBuilder sb = new StringBuilder();
-        int[] num = {308915776,11881376,456976,17576,676,26,1};
-        for (int i=0; i<7; ++i) {
-            if (n > num[i]) {
-                sb.append((char)('A'+n/num[i]-1));
-                n %= num[i];
-            } else if (sb.length() > 0) {
-                sb.append('A');
-            }
+        while (n > 0) {
+            n--;
+            sb.append((char)('A'+ n % 26));
+            n /= 26;
         }
+        sb.reverse();
         return sb.toString();
     }
 
+    public int titleToNumber(String s) {
+        int ans = 0;
+        for(int i=0; i<s.length(); ++i) {
+            ans *= 26;
+            ans += s.charAt(i)-'A'+1;
+        }
+        return ans;
+    }
+
+    public int trailingZeroes(int n) {
+        int ans = 0;
+        long u = 5;
+        while (n >= u) {
+            ans += n / u;
+            u *= 5;
+        }
+        return ans;
+    }
+
+    public void rotate(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        int n = nums.length;
+        int y, x;
+        while (k-- > 0) {
+            y = nums[n-1];
+            x = nums[0];
+            for (int i=0; i<n; ++i) {
+                x = nums[i];
+                nums[i] = y;
+                y = x;
+            }
+        }
+    }
+
+    public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        if (n == 1) {
+            return nums[n-1];
+        }
+        if (n == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        dp[1] = nums[1];
+        for (int i=2; i<n; ++i) {
+            dp[i] = nums[i] + Math.max(dp[i-2], i-3>=0 ? dp[i-3] : 0);
+        }
+        return Math.max(dp[n-1], dp[n-2]);
+    }
+
+    public int countPrimes(int n){
+        int c = 0;
+        boolean[] arr = new boolean[n];
+        Arrays.fill(arr, true);
+        for(int i=2; i*i<n; i++){
+            if(arr[i]){
+                for(int j=i*i; j<n; j+=i)
+                    arr[j] = false;
+            }
+        }
+        for(int i=2; i<n; i++){
+            if(arr[i])
+                c++;
+        }
+        return c;
+    }
+
+    public boolean isIsomorphic(String s, String t) {
+        int[] num = new int[256];
+        int n = s.length();
+        for (int i=0; i<n; ++i) {
+            int x = s.charAt(i) - '!';
+            int y = t.charAt(i) - '!';
+            if (num[x] != 0 && num[x] != y) {
+                return false;
+            }
+            num[x] = y;
+        }
+        return true;
+    }
     // Leetcode medium level
 
     public int minOperations(int n) {
