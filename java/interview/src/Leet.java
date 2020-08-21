@@ -670,6 +670,36 @@ public class Leet {
         return ans;
     }
 
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image == null || image.length == 0) {
+            return image;
+        }
+        int r = image.length;
+        int c = image[0].length;
+        if (sr < 0 || sr >= r || sc < 0 || sc >= c) {
+            return image;
+        }
+        floodFillHelper(image, sr, sc, newColor, image[sr][sc]);
+        return image;
+    }
+
+    private void floodFillHelper(int[][] image, int sr, int sc, int newColor, int oldColor) {
+        int r = image.length;
+        int c = image[0].length;
+        if (sr < 0 || sr >= r || sc < 0 || sc >= c || image[sr][sc] != oldColor) {
+            return;
+        }
+        image[sr][sc] = newColor;
+        int[][] direcs = {{0,1},{1,0},{0,-1},{-1,0}};
+        for (int[] d : direcs) {
+            int x = sr + d[0];
+            int y = sc + d[1];
+            if (x >= 0 && x < r && y >=0 && y < c && image[x][y] == oldColor) {
+                floodFillHelper(image, x, y, newColor, oldColor);
+            }
+        }
+    }
+
 
     public int[] replaceElements(int[] arr) {
         int maxFromRight = -1;
