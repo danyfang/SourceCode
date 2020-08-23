@@ -1394,4 +1394,60 @@ public class Leet {
         }
         return ans;
     }
+
+
+    public List<Integer> mostVisited(int n, int[] rounds) {
+        List<Integer> ans = new ArrayList<>();
+        int[] f = new int[n];
+        int max = 0;
+        for (int i=1; i<rounds.length; ++i) {
+            if (rounds[i] < rounds[i-1]) {
+                for(int x=rounds[i-1]-1;  x<rounds[i]-1+n; ++x) {
+                    f[x % n]++;
+                }
+            } else {
+                for(int x=rounds[i-1]-1;  x<rounds[i]-1; ++x) {
+                    f[x]++;
+                    max = Math.max(max, f[x]);
+                }
+            }
+        }
+        f[rounds[rounds.length-1]-1]++;
+        max = Math.max(max, f[rounds[rounds.length-1]-1]);
+        for (int i=0; i<n; ++i) {
+            if (f[i] == max) {
+                ans.add(i + 1);
+            }
+        }
+        return ans;
+
+    }
+
+    public int maxCoins(int[] piles) {
+        int n = piles.length;
+        int ans = 0;
+        Arrays.sort(piles);
+        for (int i=n-1; i>n/3-1; i=i-2) {
+            ans += piles[i-1];
+        }
+        return ans;
+    }
+
+
+    public int findLatestStep(int[] arr, int m) {
+        int n = arr.length;
+        if (n == m) {
+            return m;
+        }
+        TreeSet<Integer> set = new TreeSet<>();
+        set.add(0);
+        set.add(n+1);
+        for (int i=n-1; i>=0; --i) {
+            if (set.ceiling(arr[i])-arr[i]-1 == m || arr[i] - set.floor(arr[i]) - 1  == m) {
+                return i;
+            }
+            set.add(arr[i]);
+        }
+        return -1;
+    }
 }
