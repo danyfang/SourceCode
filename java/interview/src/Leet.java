@@ -1450,4 +1450,46 @@ public class Leet {
         }
         return -1;
     }
+
+    public String thousandSeparator(int n) {
+        String s = String.valueOf(n);
+        StringBuilder sb = new StringBuilder();
+        int x = s.length() % 3;
+        if ( x == 0) {
+            x += 3;
+        }
+        for (int i=0; i<s.length(); ++i) {
+            sb.append(s.charAt(i));
+            if (i % 3 == x-1) {
+                sb.append('.');
+            }
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+    public int xorOperation(int n, int start) {
+        int ans = start;
+        for (int i=1; i<n; ++i) {
+            ans ^= start + 2 * i;
+        }
+        return ans;
+    }
+
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        List<List<Integer>> ans =  new ArrayList<>();
+        int m = grid.length;
+        int n = grid[0].length;
+        k = k % m*n;
+        List<Integer> tmp = new ArrayList<>();
+        for (int i=0; i<m*n; ++i) {
+            int x = (i - k + m * n) % (m * n);
+            tmp.add(grid[x / n][x % n]);
+            if (tmp.size() == n) {
+                ans.add(tmp);
+                tmp = new ArrayList<>();
+            }
+        }
+        return ans;
+    }
 }

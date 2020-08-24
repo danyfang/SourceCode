@@ -7,6 +7,6 @@ public class Main {
         //System.out.println(Now.mountainSequence(new int[]{1,2,3,6,1}));
         //System.out.println(Now.mountainSequence(new int[]{1,2,2,1}));
         Leet s = new Leet();
-        System.out.println(s.findLatestStep(new int[]{3,5,1,2,4}, 2));
+        System.out.println(s.shiftGrid(new int[][]{{1}, {2}, {3}, {4}, {7}, {6}, {5}}, 23));
     }
 }
