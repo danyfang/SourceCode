@@ -1407,7 +1407,7 @@ public class Leet {
     public int minOperations(int[] nums) {
         int ans = 0;
         int count = 0;
-        for (int i=0; i<nums.length; ++i) {
+        for (int i = 0; i < nums.length; ++i) {
             if (nums[i] == 0) {
                 count++;
             }
@@ -1421,5 +1421,102 @@ public class Leet {
             return 0;
         }
         return 1 + ans + minOperations(nums);
+    }
+
+    public List<Integer> mostVisited(int n, int[] rounds) {
+        List<Integer> ans = new ArrayList<>();
+        int[] f = new int[n];
+        int max = 0;
+        for (int i=1; i<rounds.length; ++i) {
+            if (rounds[i] < rounds[i-1]) {
+                for(int x=rounds[i-1]-1;  x<rounds[i]-1+n; ++x) {
+                    f[x % n]++;
+                }
+            } else {
+                for(int x=rounds[i-1]-1;  x<rounds[i]-1; ++x) {
+                    f[x]++;
+                    max = Math.max(max, f[x]);
+                }
+            }
+        }
+        f[rounds[rounds.length-1]-1]++;
+        max = Math.max(max, f[rounds[rounds.length-1]-1]);
+        for (int i=0; i<n; ++i) {
+            if (f[i] == max) {
+                ans.add(i + 1);
+            }
+        }
+        return ans;
+
+    }
+
+    public int maxCoins(int[] piles) {
+        int n = piles.length;
+        int ans = 0;
+        Arrays.sort(piles);
+        for (int i=n-1; i>n/3-1; i=i-2) {
+            ans += piles[i-1];
+        }
+        return ans;
+    }
+
+
+    public int findLatestStep(int[] arr, int m) {
+        int n = arr.length;
+        if (n == m) {
+            return m;
+        }
+        TreeSet<Integer> set = new TreeSet<>();
+        set.add(0);
+        set.add(n+1);
+        for (int i=n-1; i>=0; --i) {
+            if (set.ceiling(arr[i])-arr[i]-1 == m || arr[i] - set.floor(arr[i]) - 1  == m) {
+                return i;
+            }
+            set.add(arr[i]);
+        }
+        return -1;
+    }
+
+    public String thousandSeparator(int n) {
+        String s = String.valueOf(n);
+        StringBuilder sb = new StringBuilder();
+        int x = s.length() % 3;
+        if ( x == 0) {
+            x += 3;
+        }
+        for (int i=0; i<s.length(); ++i) {
+            sb.append(s.charAt(i));
+            if (i % 3 == x-1) {
+                sb.append('.');
+            }
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+    public int xorOperation(int n, int start) {
+        int ans = start;
+        for (int i=1; i<n; ++i) {
+            ans ^= start + 2 * i;
+        }
+        return ans;
+    }
+
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        List<List<Integer>> ans =  new ArrayList<>();
+        int m = grid.length;
+        int n = grid[0].length;
+        k = k % m*n;
+        List<Integer> tmp = new ArrayList<>();
+        for (int i=0; i<m*n; ++i) {
+            int x = (i - k + m * n) % (m * n);
+            tmp.add(grid[x / n][x % n]);
+            if (tmp.size() == n) {
+                ans.add(tmp);
+                tmp = new ArrayList<>();
+            }
+        }
+        return ans;
     }
 }
