@@ -1394,4 +1394,32 @@ public class Leet {
         }
         return ans;
     }
+
+    private void modify(int[] nums, int op, int x) {
+        if (op == 0) {
+            nums[x]++;
+        } else if (op == 1) {
+            for (int i=0; i<nums.length; ++i) {
+                nums[i] *= 2;
+            }
+        }
+    }
+    public int minOperations(int[] nums) {
+        int ans = 0;
+        int count = 0;
+        for (int i=0; i<nums.length; ++i) {
+            if (nums[i] == 0) {
+                count++;
+            }
+            if (nums[i] % 2 != 0) {
+                nums[i] -= 1;
+                ans++;
+            }
+            nums[i] /= 2;
+        }
+        if (count == nums.length) {
+            return 0;
+        }
+        return 1 + ans + minOperations(nums);
+    }
 }
