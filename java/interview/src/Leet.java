@@ -679,23 +679,22 @@ public class Leet {
         if (sr < 0 || sr >= r || sc < 0 || sc >= c) {
             return image;
         }
-        floodFillHelper(image, sr, sc, newColor, image[sr][sc]);
+        int[][] direcs = {{0,1},{1,0},{0,-1},{-1,0}};
+        boolean[][] visited = new boolean[r][c];
+        floodFillHelper(image, sr, sc, newColor, image[sr][sc], direcs, visited);
         return image;
     }
 
-    private void floodFillHelper(int[][] image, int sr, int sc, int newColor, int oldColor) {
+    private void floodFillHelper(int[][] image, int sr, int sc, int newColor, int oldColor, int[][] direcs, boolean[][] visited) {
         int r = image.length;
         int c = image[0].length;
-        if (sr < 0 || sr >= r || sc < 0 || sc >= c || image[sr][sc] != oldColor) {
-            return;
-        }
         image[sr][sc] = newColor;
-        int[][] direcs = {{0,1},{1,0},{0,-1},{-1,0}};
+        visited[sr][sc] = true;
         for (int[] d : direcs) {
             int x = sr + d[0];
             int y = sc + d[1];
-            if (x >= 0 && x < r && y >=0 && y < c && image[x][y] == oldColor) {
-                floodFillHelper(image, x, y, newColor, oldColor);
+            if (x >= 0 && x < r && y >=0 && y < c && image[x][y] == oldColor && !visited[x][y]) {
+                floodFillHelper(image, x, y, newColor, oldColor, direcs, visited);
             }
         }
     }
@@ -1489,6 +1488,70 @@ public class Leet {
                 ans.add(tmp);
                 tmp = new ArrayList<>();
             }
+        }
+        return ans;
+    }
+
+    public int[] getStrongest(int[] arr, int k) {
+        int n = arr.length;
+        int m = (n-1)/2;
+        int[][] nums = new int[n][2];
+        Arrays.sort(arr);
+        for (int i=0; i<n; ++i) {
+            nums[i][0] = arr[i];
+            nums[i][1] = Math.abs(arr[i]-arr[m]);
+        }
+        Arrays.sort(nums, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1] == o2[1]) {
+                    return o2[0] - o1[0];
+                }
+                return o2[1] - o1[1];
+            }
+        });
+        int[] ans = new int[k];
+        for (int i=0; i<k; ++i) {
+            ans[i] = nums[i][0];
+        }
+        return ans;
+    }
+
+    public int[] findDiagonalOrderTLE(List<List<Integer>> nums) {
+        int n = 0;
+        int m = 0;
+        int k = nums.size();
+        for (List<Integer> num : nums) {
+            m = Math.max(m, num.size());
+            n += num.size();
+        }
+        int[] ans = new int[n];
+        int index = 0;
+        for (int i=0; i<k+m-1; ++i) {
+            for (int j=Math.max(0, i-k); j<m; ++j) {
+                if (i-j < 0 || i-j>=k) {
+                    continue;
+                }
+                if (nums.get(i-j).size() > j) {
+                    ans[index++] = nums.get(i-j).get(j);
+                }
+            }
+        }
+        return ans;
+    }
+
+    public int[] findDiagonalOrder(List<List<Integer>> nums) {
+        int n = nums.size();
+        List<List<Long>> order = new ArrayList<>();
+        for (int i=0; i<n; ++i){
+            for (int j=0; j<nums.get(i).size(); ++j) {
+                order.add(Arrays.asList((long)nums.get(i).get(j), (long)(i+j+1)*(i+j+1)-i));
+            }
+        }
+        order.sort(Comparator.comparingLong(o -> o.get(1)));
+        int[] ans = new int[order.size()];
+        for (int i=0; i<ans.length; ++i) {
+            ans[i] = (int)(long)order.get(i).get(0);
         }
         return ans;
     }
