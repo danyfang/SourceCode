@@ -1407,6 +1407,7 @@ public class Leet {
     public int minOperations(int[] nums) {
         int ans = 0;
         int count = 0;
+        boolean shouldAddOne = false;
         for (int i = 0; i < nums.length; ++i) {
             if (nums[i] == 0) {
                 count++;
@@ -1415,12 +1416,18 @@ public class Leet {
                 nums[i] -= 1;
                 ans++;
             }
-            nums[i] /= 2;
+            if (nums[i] != 0) {
+                nums[i] /= 2;
+                shouldAddOne = true;
+            }
         }
         if (count == nums.length) {
             return 0;
         }
-        return 1 + ans + minOperations(nums);
+        if (shouldAddOne) {
+            return 1 + ans + minOperations(nums);
+        }
+        return ans + minOperations(nums);
     }
 
     public List<Integer> mostVisited(int n, int[] rounds) {
@@ -1518,5 +1525,163 @@ public class Leet {
             }
         }
         return ans;
+    }
+
+
+    public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
+        int[] num = new int[n];
+        for (int i=0; i<edges.size(); ++i) {
+            num[edges.get(i).get(1)] = 1;
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (int i=0; i<n; ++i) {
+            if (num[i] == 0) {
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+
+    public int maxSubarraySumCircular(int[] A) {
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+        int totalSum = A[0];
+        int maxSum = A[0];
+        int minSum = A[0];
+        int a = maxSum;
+        int b = minSum;
+        int n = A.length;
+        int negative = 0;
+        if (A[0] < 0) {
+            negative++;
+        }
+        for (int i=1; i<n; ++i) {
+            if (A[i] < 0) {
+                negative++;
+            }
+            totalSum += A[i];
+            if (maxSum > 0){
+                maxSum += A[i];
+            } else {
+                maxSum = A[i];
+            }
+            if (minSum < 0) {
+                minSum += A[i];
+            } else {
+                minSum = A[i];
+            }
+            a = Math.max(maxSum, a);
+            b = Math.min(minSum, b);
+        }
+        if (negative == n) {
+            return a;
+        }
+        return Math.max(a, totalSum-b);
+    }
+
+    public int longestSubarray(int[] nums) {
+        int n = nums.length;
+        if (n <= 1) {
+            return 0;
+        }
+        int[] left = new int[n];
+        int[] right = new int[n];
+        for (int i=0; i<n; ++i) {
+            if (nums[i] == 1) {
+                if (i >= 1) {
+                    left[i] = left[i-1] + 1;
+                } else {
+                    left[i] = 1;
+                }
+            }
+
+            if (nums[n-1-i] == 1) {
+                if (n-1-i < n-1) {
+                    right[n-1-i] = right[n-i] + 1;
+                } else {
+                    right[n-1-i] = 1;
+                }
+            }
+        }
+        int ans = 0;
+        for (int i=1; i<n-1; ++i) {
+            ans = Math.max(ans, left[i-1] + right[i+1]);
+        }
+        return ans;
+    }
+
+    public int numOfSubarrays(int[] arr) {
+        int n = arr.length;
+        int mod = 10^9 + 7;
+        int[][] num = new int[n][2];
+        num[0][0] = arr[0] % 2 == 1 ? 1 : 0;
+        num[0][1] = arr[0] % 2 == 0 ? 1 : 0;
+        for (int i=1; i<n; ++i) {
+            if (arr[i] % 2 == 0) {
+                num[i][0] = num[i-1][0] * 2 % mod;
+                num[i][1] = num[i-1][1] * 2 % mod;
+            } else {
+                num[i][0] = num[i-1][1] * 2 % mod;
+                num[i][1] = num[i-1][0] * 2 % mod;
+            }
+        }
+        return num[n-1][0];
+    }
+
+    public boolean containsPattern(int[] arr, int m, int k) {
+        int n = arr.length;
+        if (n < m * k) {
+            return false;
+        }
+
+        for (int i=0; i<n-m*(k-1); ++i) {
+            // i -> i+m-1;
+            int c = 1;
+            for (int j=i+m; j<=n-m;) {
+                int y = 0;
+                for (int x=0; x<m; ++x) {
+                    if (arr[j+x] == arr[i+x]) {
+                        y++;
+                    }
+                }
+                if (y == m) {
+                    c++;
+                    j = j+m;
+                } else {
+                    break;
+                }
+            }
+            if (c >= k) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getMaxLen(int[] nums) {
+        int n = nums.length;
+        int[] pos = new int[n];
+        int[] neg = new int[n];
+        int max = 0;
+        for (int i=0; i<n; ++i) {
+            if (nums[i] == 0) {
+                continue;
+            }
+            if (nums[i] > 0) {
+                pos[i] = i >= 1 ? pos[i-1] + 1 : 1;
+                if (i > 0 && neg[i-1] > 0) {
+                    neg[i] = neg[i-1] + 1;
+                }
+                max = Math.max(pos[i], max);
+            } else {
+                neg[i] = i >= 1 ? pos[i-1] + 1 : 1;
+                if (i > 0 && neg[i-1] > 0) {
+                    pos[i] = neg[i-1] + 1;
+                }
+                max = Math.max(pos[i], max);
+            }
+        }
+        return max;
     }
 }
