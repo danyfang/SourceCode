@@ -1684,4 +1684,30 @@ public class Leet {
         }
         return max;
     }
+
+
+    public int numOfSubarraysOddEven(int[] arr) {
+        int n = arr.length;
+        long[] odd = new long[n];
+        long[] even = new long[n];
+        if (arr[0] % 2 == 0) {
+            even[0] = 1;
+        } else {
+            odd[0] = 1;
+        }
+        long MOD = 10^9 + 7;
+        long ans = odd[0];
+        for (int i=1; i<n; ++i) {
+            if (arr[i] % 2 == 0) {
+                even[i] = (even[i-1]  + 1) % MOD;
+                odd[i] = odd[i-1]  % MOD;
+            } else {
+                even[i] = odd[i-1]  % MOD;
+                odd[i] = (even[i-1] + 1) % MOD;
+            }
+            ans += odd[i];
+        }
+        return (int)ans;
+    }
+
 }
