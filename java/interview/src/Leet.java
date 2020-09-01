@@ -1747,7 +1747,6 @@ public class Leet {
         return max;
     }
 
-<<<<<<< HEAD
 
     public int numOfSubarraysOddEven(int[] arr) {
         int n = arr.length;
@@ -1798,5 +1797,48 @@ public class Leet {
             sb.setCharAt(0, (char)(sb.charAt(0)-'a'+'A'));
         }
         return sb.substring(0, sb.length()-1);
+    }
+
+    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int[] e : edges) {
+            if (!map.containsKey(e[0])) {
+                map.put(e[0], new ArrayList<>());
+            }
+            map.get(e[0]).add(e[1]);
+            if (!map.containsKey(e[1])) {
+                map.put(e[1], new ArrayList<>());
+            }
+            map.get(e[1]).add(e[0]);
+        }
+        List<Boolean> visited = new ArrayList<>();
+        for (int i=0; i<hasApple.size(); ++i) {
+            visited.add(false);
+        }
+        int ans = minTimeHelper(0, map, hasApple, visited);
+        return ans;
+    }
+    private int minTimeHelper(int n, Map<Integer, List<Integer>> map, List<Boolean> hasApple, List<Boolean> visited) {
+        int ans = 0;
+        if (!map.containsKey(n)) {
+            if (hasApple.get(n)) {
+                ans += 2;
+            }
+            return ans;
+        }
+        visited.set(n, true);
+        for (int x : map.get(n)) {
+            if (visited.get(x)) {
+                continue;
+            }
+            ans += minTimeHelper(x, map, hasApple, visited);
+        }
+        if (ans == 0 && hasApple.get(n)) {
+            return 2;
+        }
+        if (ans > 0 && n != 0) {
+            ans += 2;
+        }
+        return ans;
     }
 }
