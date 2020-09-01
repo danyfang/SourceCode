@@ -1841,4 +1841,41 @@ public class Leet {
         }
         return ans;
     }
+
+    class BrowserHistory {
+        LinkedList<String> history;
+        int current;
+        public BrowserHistory(String homepage) {
+            history = new LinkedList<>();
+            history.addLast(homepage);
+            current = 0;
+        }
+
+        public void visit(String url) {
+            while (history.size() > current + 1) {
+                history.pollLast();
+            }
+            history.addLast(url);
+            current++;
+        }
+
+        public String back(int steps) {
+            while( steps-- > 0) {
+                if (current > 0) {
+                    current--;
+                }
+            }
+            return history.get(current);
+        }
+
+        public String forward(int steps) {
+            while ( steps-- > 0) {
+                if (current < history.size()-1) {
+                    current++;
+                }
+            }
+            return history.get(current);
+        }
+    }
+
 }

@@ -209,5 +209,83 @@ public class Tree {
         goodNodesHelper(root.right, max, ans);
     }
 
+    public int countPairs(TreeNode root, int distance) {
+        int[] ans = new int[1];
+        countPairsHelper(root, ans, distance);
+        return ans[0];
+    }
+
+    private List<Integer> countPairsHelper(TreeNode root, int[] v, int distance) {
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        if (root.left == null && root.right == null) {
+            ans.add(1);
+            return ans;
+        }
+        List<Integer> left = countPairsHelper(root.left, v, distance);
+        List<Integer> right = countPairsHelper(root.right, v, distance);
+        for (int x : left) {
+            for (int y : right) {
+                if (x + y <= distance) {
+                    v[0]++;
+                }
+            }
+        }
+        for (int i=0; i<left.size(); ++i) {
+            ans.add(left.get(i)+1);
+        }
+        for (int i=0; i<right.size(); ++i) {
+            ans.add(right.get(i)+1);
+        }
+        return ans;
+    }
+
+    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+        return getTargetCopyHelper(cloned, target);
+    }
+    private TreeNode getTargetCopyHelper(TreeNode cloned, TreeNode target) {
+        if (cloned == null || (cloned.left == null && cloned.right == null && cloned.val != target.val)) {
+            return null;
+        }
+        if (cloned.val == target.val) {
+            return cloned;
+        }
+
+        TreeNode left = getTargetCopyHelper(cloned.left, target);
+        return left == null ? getTargetCopyHelper(cloned.right, target) : left;
+    }
+
+    public int sumEvenGrandparent(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 0;
+        }
+        int ans = 0;
+        if (root.val % 2 == 0) {
+            if (root.left != null) {
+                if (root.left.left != null) {
+                    ans += root.left.left.val;
+                }
+                if (root.left.right != null) {
+                    ans += root.left.right.val;
+                }
+            }
+            if (root.right != null) {
+                if (root.right.left != null) {
+                    ans += root.right.left.val;
+                }
+                if (root.right.right != null) {
+                    ans += root.right.right.val;
+                }
+            }
+        }
+        ans += sumEvenGrandparent(root.left);
+        ans += sumEvenGrandparent(root.right);
+        return ans;
+    }
 }
 
