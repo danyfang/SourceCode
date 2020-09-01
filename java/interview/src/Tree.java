@@ -17,7 +17,7 @@ public class Tree {
     }
 
     //TreeConstructor [1,2,3,4,5]
-    public TreeNode constructTree(List<Integer> l){
+    public static TreeNode constructTree(List<Integer> l){
         if (l == null || l.size() == 0) {
             return null;
         }
@@ -189,5 +189,25 @@ public class Tree {
         }
         return false;
     }
+    public int goodNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int[] ans = new int[1];
+        goodNodesHelper(root, root.val, ans);
+        return ans[0];
+    }
+    private void goodNodesHelper(TreeNode root, int max, int[] ans) {
+        if (root == null) {
+            return;
+        }
+        if (root.val >= max) {
+            max = root.val;
+            ans[0]++;
+        }
+        goodNodesHelper(root.left, max, ans);
+        goodNodesHelper(root.right, max, ans);
+    }
+
 }
 
