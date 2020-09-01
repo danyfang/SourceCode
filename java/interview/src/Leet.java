@@ -1746,4 +1746,31 @@ public class Leet {
         }
         return max;
     }
+
+    public String arrangeWords(String text) {
+        if (text == null) {
+            return text;
+        }
+        String[] arr = text.split(" ");
+        if (arr.length > 0) {
+            StringBuilder temp = new StringBuilder(arr[0]);
+            temp.setCharAt(0, (char)('a'+(arr[0].charAt(0)-'A')));
+            arr[0] = temp.toString();
+        }
+        Arrays.sort(arr, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.length() - o2.length();
+            }
+        });
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<arr.length; ++i) {
+            sb.append(arr[i]);
+            sb.append(' ');
+        }
+        if (sb.length() > 0) {
+            sb.setCharAt(0, (char)(sb.charAt(0)-'a'+'A'));
+        }
+        return sb.substring(0, sb.length()-1);
+    }
 }
