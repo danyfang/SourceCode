@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -60,4 +62,50 @@ public class Util {
         }
     }
 
+    static class UnionFind{
+        private int[] parent;
+        private int[] size;
+        public UnionFind(int n) {
+            parent = new int[n];
+            size = new int[n];
+            for (int i=0; i<n; ++i) {
+                parent[i] = i;
+                size[i] = 1;
+            }
+        }
+
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            if (rootX != rootY) {
+                parent[rootX] = rootY;
+                size[rootY] += size[rootX];
+            }
+        }
+
+        private int find(int x) {
+            if (parent[x] == x) {
+                return x;
+            }
+            return parent[x] = find(parent[x]);
+        }
+
+        public int getLargestComponentSize() {
+            int ans = 0;
+            for (int i=0; i<parent.length; ++i) {
+                if (parent[i] == i && size[i] > ans) {
+                    ans = Math.max(ans, size[i]);
+                }
+            }
+            return ans;
+        }
+
+        public int getParentCount() {
+            Set<Integer> set = new HashSet<>();
+            for (int i=0; i<parent.length; ++i) {
+                set.add(find(parent[i]));
+            }
+            return set.size();
+        }
+    }
 }
