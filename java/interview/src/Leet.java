@@ -1878,4 +1878,55 @@ public class Leet {
         }
     }
 
+    public int trap(int[] h) {
+        int ans = 0;
+        if (h == null || h.length <= 2) {
+            return ans;
+        }
+        int n = h.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        left[0] = h[0];
+        right[n-1] = h[n-1];
+        int maxSoFarLeft = h[0];
+        int maxSoFarRight = h[n-1];
+        for (int i=1; i<n; ++i) {
+            maxSoFarLeft = Math.max(maxSoFarLeft, h[i]);
+            left[i] = maxSoFarLeft;
+            maxSoFarRight = Math.max(maxSoFarRight, h[n-1-i]);
+            right[n-1-i] = maxSoFarRight;
+        }
+        for (int i=0; i<n; ++i) {
+            ans += Math.min(left[i], right[i]) - h[i];
+        }
+        return ans;
+    }
+
+    public int trap2(int[] h) {
+        int ans = 0;
+        if (h == null || h.length <= 2) {
+            return ans;
+        }
+        int n = h.length;
+        int l = 0, r = n-1;
+        int left = 0, right = 0;
+        while (l <= r) {
+            if (left <= right) {
+                if (h[l] < left) {
+                    ans += left - h[l];
+                } else {
+                    left = h[l];
+                }
+                l++;
+            } else {
+                if (h[r] < right) {
+                    ans += right - h[r];
+                } else {
+                    right = h[r];
+                }
+                r--;
+            }
+        }
+        return ans;
+    }
 }
