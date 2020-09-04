@@ -1757,9 +1757,12 @@ public class Leet {
         } else {
             odd[0] = 1;
         }
-        long MOD = 10^9 + 7;
+        long MOD = 1000000000 + 7;
         long ans = odd[0];
         for (int i=1; i<n; ++i) {
+            if (arr[i] == 41) {
+                System.out.println(i);
+            }
             if (arr[i] % 2 == 0) {
                 even[i] = (even[i-1]  + 1) % MOD;
                 odd[i] = odd[i-1]  % MOD;
@@ -1769,6 +1772,16 @@ public class Leet {
             }
             ans += odd[i];
         }
+        for (long o : odd) {
+            System.out.print(o);
+            System.out.print(' ');
+        }
+        System.out.println("");
+        for (long e : even) {
+            System.out.print(e);
+            System.out.print(' ');
+        }
+        System.out.println("");
         return (int)ans;
     }
 
@@ -1908,7 +1921,7 @@ public class Leet {
             return ans;
         }
         int n = h.length;
-        int l = 0, r = n-1;
+        int l = 0, r = n - 1;
         int left = 0, right = 0;
         while (l <= r) {
             if (left <= right) {
@@ -1928,5 +1941,68 @@ public class Leet {
             }
         }
         return ans;
+    }
+    public int longestConsecutive(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int index = 0;
+        for (int i=0; i<nums.length; ++i) {
+            if (!map.containsKey(nums[i])) {
+                map.put(nums[i], index++);
+            }
+        }
+        Util.UnionFind uf = new Util.UnionFind(map.size());
+        for (int x : map.keySet()) {
+            if (map.containsKey(x-1)) {
+                uf.union(map.get(x), map.get(x-1));
+            }
+            if (map.containsKey(x+1)) {
+                uf.union(map.get(x), map.get(x+1));
+            }
+        }
+        return uf.getLargestComponentSize();
+    }
+
+    public int numIslands(char[][] grid) {
+        int ans = 0;
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return ans;
+        }
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dires = {{0,1},{0,-1},{1,0},{-1,0}};
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (grid[i][j] == '1') {
+                    ans++;
+                    numIslandsHelper(grid, m, n, i, j, dires);
+                }
+            }
+        }
+        return ans;
+    }
+    private void numIslandsHelper(char[][] grid, int m, int n, int x, int y, int[][] dires) {
+        if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == '2' || grid[x][y] == '0') {
+            return;
+        }
+        grid[x][y] = '2';
+        for (int[] d : dires) {
+            numIslandsHelper(grid, m, n, d[0]+x, d[1]+y, dires);
+        }
+    }
+
+    public int findCircleNum(int[][] M) {
+        if (M == null || M.length == 0) {
+            return 0;
+        }
+        int n = M.length;
+        Util.UnionFind uf = new Util.UnionFind(n);
+        for (int i=0; i<n; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (M[i][j] == 1) {
+                    uf.union(i, j);
+                }
+            }
+        }
+        return uf.getParentCount();
     }
 }
