@@ -1760,9 +1760,6 @@ public class Leet {
         long MOD = 1000000000 + 7;
         long ans = odd[0];
         for (int i=1; i<n; ++i) {
-            if (arr[i] == 41) {
-                System.out.println(i);
-            }
             if (arr[i] % 2 == 0) {
                 even[i] = (even[i-1]  + 1) % MOD;
                 odd[i] = odd[i-1]  % MOD;
@@ -1772,16 +1769,7 @@ public class Leet {
             }
             ans += odd[i];
         }
-        for (long o : odd) {
-            System.out.print(o);
-            System.out.print(' ');
-        }
-        System.out.println("");
-        for (long e : even) {
-            System.out.print(e);
-            System.out.print(' ');
-        }
-        System.out.println("");
+        ans %= MOD;
         return (int)ans;
     }
 
@@ -2004,5 +1992,192 @@ public class Leet {
             }
         }
         return uf.getParentCount();
+    }
+
+    public int removeCoveredIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+        int n = intervals.length;
+        Arrays.sort(intervals, (o1, o2) -> {
+            if (o1[0] == o2[0]) {
+                return o2[1] - o1[1];
+            }
+            return o1[0] - o2[0];
+        });
+        int l = intervals[0][0];
+        int r = intervals[0][1];
+        int ans = 0;
+        for (int i=1; i<n; ++i) {
+            if (intervals[i][0] >= l && intervals[i][1] <= r) {
+                ans++;
+            } else {
+                l = intervals[i][0];
+                r = intervals[i][1];
+            }
+        }
+        return n - ans;
+    }
+
+    class CustomStack {
+        private int[] nums;
+        int size;
+        public CustomStack(int maxSize) {
+            nums = new int[maxSize];
+            size = -1;
+        }
+
+        public void push(int x) {
+            if (++size < nums.length) {
+                nums[size] = x;
+            } else {
+                size--;
+            }
+        }
+
+        public int pop() {
+            if (size >= 0) {
+                return nums[size--];
+            }
+            return -1;
+        }
+
+        public void increment(int k, int val) {
+            for (int i=0; i<=Math.min(k-1, size); ++i) {
+                nums[i] += val;
+            }
+        }
+    }
+
+    public List<String> printVertically(String s) {
+        List<String> ans =  new ArrayList<>();
+        int n = 0;
+        String[] arr = s.split(" ");
+        for (int i=0; i<arr.length; ++i) {
+            n = Math.max(n, arr[i].length());
+        }
+        for (int i=0; i<n; ++i) {
+            StringBuilder sb = new StringBuilder();
+            for (int j=0; j<arr.length; ++j) {
+                if (i >= arr[j].length()) {
+                    sb.append(' ');
+                } else {
+                    sb.append(arr[j].charAt(i));
+                }
+            }
+            while(sb.charAt(sb.length()-1) == ' ') {
+                sb.deleteCharAt(sb.length()-1);
+            }
+            ans.add(sb.toString());
+        }
+        return ans;
+    }
+
+    public String removeDuplicates(String s, int k) {
+        int current = 0;
+        Stack<Character> stack = new Stack<>();
+        Stack<Integer> size = new Stack<>();
+        for (int i=0; i<s.length(); ++i) {
+            if (stack.isEmpty()) {
+                stack.push(s.charAt(i));
+                current = 1;
+            } else {
+                if (stack.peek() == s.charAt(i)) {
+                    stack.push(s.charAt(i));
+                    current++;
+                } else {
+                    stack.push(s.charAt(i));
+                    size.push(current);
+                    current = 1;
+                }
+            }
+            if (current == k) {
+                while (current-- > 0) {
+                    stack.pop();
+                }
+                if (!size.isEmpty()) {
+                    current = size.pop();
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
+    }
+
+    public int[][] matrixBlockSum(int[][] mat, int K) {
+        if (mat == null || mat.length == 0 || mat[0].length == 0) {
+            return mat;
+        }
+        int m = mat.length;
+        int n = mat[0].length;
+        int[][] ans = new int[m][n];
+        int temp = 0;
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                for (int x=i-K; x<=i+K; ++x) {
+                    for (int y=j-K; y<=j+K; ++y) {
+                        if (x>=0 && x<m && y>=0 && y<n) {
+                            temp += mat[x][y];
+                        }
+                    }
+                }
+                ans[i][j] = temp;
+                temp = 0;
+            }
+        }
+        return ans;
+    }
+
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        int ans = 0;
+        if (s.length() < minSize) {
+            return ans;
+        }
+        Map<Character, Integer> util = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int size=minSize; size<=maxSize; ++size) {
+            int round = 0;
+            util.clear();
+            for (int i=0; i<size; ++i) {
+                char c = s.charAt(i);
+                util.put(c, util.getOrDefault(c, 0) + 1);
+            }
+            if (util.size() <= maxLetters) {
+                round++;
+                map.put(s.substring(0, size), 1);
+            }
+            for (int i=size; i<s.length(); ++i) {
+                if (maxFreqIsValid(util, s.charAt(i), s.charAt(i-size), maxLetters)) {
+                    final String substring = s.substring(i + 1 - size, i + 1);
+                    map.put(substring, map.getOrDefault(substring, 0) + 1);
+                    round = Math.max(round, map.get(substring));
+                }
+            }
+            ans = Math.max(ans, round);
+        }
+        return ans;
+    }
+    private boolean maxFreqIsValid(Map<Character, Integer> map, char add, char delete, int maxLetters) {
+        map.put(add, map.getOrDefault(add, 0) + 1);
+        map.put(delete, map.get(delete)-1);
+        if (map.get(delete) == 0) {
+            map.remove(delete);
+        }
+        return map.size() <= maxLetters;
+    }
+
+    public List<Integer> numOfBurgers(int tomatoSlices, int cheeseSlices) {
+        // jumbo 4,1
+        // small 2,1
+        List<Integer> ans = new ArrayList<>();
+        int t = tomatoSlices - 2 * cheeseSlices;
+        if (t >= 0 && t % 2 == 0 && cheeseSlices-t/2 >= 0) {
+            ans.add((tomatoSlices-2*cheeseSlices) / 2);
+            ans.add(cheeseSlices-ans.get(0));
+        }
+        return ans;
     }
 }

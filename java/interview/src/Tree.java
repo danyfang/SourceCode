@@ -287,5 +287,61 @@ public class Tree {
         ans += sumEvenGrandparent(root.right);
         return ans;
     }
+
+    class FindElements {
+        private HashSet<Integer> set;
+        public FindElements(TreeNode root) {
+            set = new HashSet<>();
+            if (root == null) {
+                return;
+            }
+            helper(root, 0);
+        }
+
+        public boolean find(int target) {
+            return set.contains(target);
+        }
+
+        private void helper(TreeNode root, int val) {
+            if (root == null) {
+                return;
+            }
+            root.val = val;
+            set.add(val);
+            helper(root.left, 2 * val + 1);
+            helper(root.right, 2 * val + 2);
+        }
+    }
+
+    public TreeNode balanceBST(TreeNode root) {
+        List<Integer> l = new ArrayList<>();
+        inorderTraversal(root, l);
+        return reconstructTree(l);
+    }
+
+    private void inorderTraversal(TreeNode root, List<Integer> l) {
+        if (root == null) {
+            return;
+        }
+        inorderTraversal(root.left, l);
+        l.add(root.val);
+        inorderTraversal(root.right, l);
+    }
+
+    private TreeNode reconstructTree(List<Integer> l) {
+        if (l.size() == 0) {
+            return null;
+        }
+        if (l.size() == 1) {
+            return new TreeNode(l.get(0));
+        }
+        int n = l.size() / 2;
+        List<Integer> left = l.subList(0, n);
+        List<Integer> right = l.subList(n+1, l.size());
+        TreeNode root = new TreeNode(l.get(n));
+        root.left = reconstructTree(left);
+        root.right = reconstructTree(right);
+        return root;
+    }
 }
 

@@ -6,8 +6,17 @@ import java.util.concurrent.TimeUnit;
 public class Util {
     public static void printArray(int[] a) {
         for(int i=0; i<a.length; ++i) {
-            System.out.println(a[i]);
+            System.out.print(a[i]);
+            System.out.print(' ');
         }
+        System.out.println( "");
+    }
+    public static void printArray(long[] a) {
+        for(int i=0; i<a.length; ++i) {
+            System.out.print(a[i]);
+            System.out.print(' ');
+        }
+        System.out.println( "");
     }
 
     public static boolean isPrime(long n){
