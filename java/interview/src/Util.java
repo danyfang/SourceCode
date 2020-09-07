@@ -92,7 +92,7 @@ public class Util {
             }
         }
 
-        private int find(int x) {
+        public int find(int x) {
             if (parent[x] == x) {
                 return x;
             }

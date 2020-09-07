@@ -2180,4 +2180,197 @@ public class Leet {
         }
         return ans;
     }
+
+    public int getMaximumGold(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int m = grid.length;
+        int n = grid[0].length;
+        int ans = 0;
+        int[][] dires = {{0,1},{0,-1},{-1,0},{1,0}};
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (grid[i][j] != 0) {
+                    int[][] g = new int[m][n];
+                    for (int a=0; a<m; ++a) {
+                        for (int b=0; b<n; ++b) {
+                            g[a][b] = grid[a][b];
+                        }
+                    }
+                    ans = Math.max(ans, getMaximumGoldHelper(g, m, n, i, j, dires));
+                }
+            }
+        }
+        return ans;
+    }
+
+    private int getMaximumGoldHelper(int[][] g, int m, int n, int x, int y, int[][] dires) {
+        int ans = g[x][y];
+        g[x][y] = 0;
+        int temp = 0;
+        for (int[] d : dires) {
+            int i = x + d[0];
+            int j = y + d[1];
+            if (i<0 || i>=m || j<0 ||j >=n || g[i][j] == 0) {
+                continue;
+            }
+            int before = g[i][j];
+            temp = Math.max(getMaximumGoldHelper(g, m, n, i, j, dires), temp);
+            g[i][j] = before;
+        }
+        return ans + temp;
+    }
+
+    public int longestSubsequence(int[] arr, int difference) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int ans = 1;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int a : arr) {
+            if (map.containsKey(a - difference)) {
+                map.put(a, map.get(a-difference)+1);
+                ans = Math.max(ans, map.get(a));
+            }
+            if (!map.containsKey(a)) {
+                map.put(a, 1);
+            }
+        }
+        return ans;
+    }
+
+    public int equalSubstring(String s, String t, int maxCost) {
+        int n = s.length();
+        int[] sum = new int[n+1];
+        for (int i=0; i<n; i++) {
+            sum[i+1] = Math.abs(s.charAt(i)-t.charAt(i));
+        }
+        for (int i=1; i<=n; ++i) {
+            sum[i] += sum[i-1];
+        }
+        int l = 0, r = 1;
+        int ans = 0;
+        while ( r <= n) {
+            if (sum[r] - sum[l] > maxCost) {
+                l++;
+                r++;
+            } else {
+                ans = Math.max(r-l, ans);
+                r++;
+            }
+        }
+        return ans;
+    }
+
+    public String modifyString(String s) {
+        char[] ch = s.toCharArray();
+        for (int i=0; i<ch.length; ++i) {
+            if (ch[i] == '?') {
+                for (int j=0; j<26; ++j) {
+                    char c = (char)(j + 'a');
+                    if (i>0 && c == ch[i-1] || i<ch.length-1 && c == ch[i+1]) {
+                        continue;
+                    }
+                    ch[i] = c;
+                    break;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : ch) {
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+
+    public int numTriplets(int[] nums1, int[] nums2) {
+        int ans = 0;
+        int a = nums1.length;
+        int b = nums2.length;
+        Map<Long, Integer> mapA = new HashMap();
+        Map<Long, Integer> mapB = new HashMap();
+        for (int i=0; i<a; ++i) {
+            long t = (long)nums1[i]*(long)nums1[i];
+            mapA.put(t, mapA.getOrDefault(t, 0)+1);
+        }
+        for (int i=0; i<b; ++i) {
+            long t = (long)nums2[i]*(long)nums2[i];
+            mapB.put(t, mapB.getOrDefault(t, 0)+1);
+        }
+        for (int j=0; j<b; ++j) {
+            for (int k=j+1; k<b; ++k) {
+                long t = (long)nums2[j] * (long)nums2[k];
+                if (mapA.containsKey(t)) {
+                    ans += mapA.get(t);
+                }
+            }
+        }
+        for (int j=0; j<a; ++j) {
+            for (int k=j+1; k<a; ++k) {
+                long t = (long)nums1[j] * (long)nums1[k];
+                if (mapB.containsKey(t)) {
+                    ans += mapB.get(t);
+                }
+            }
+        }
+        return ans;
+    }
+
+    public int minCost(String s, int[] cost) {
+        Stack<Integer> stack = new Stack<>();
+        int n = cost.length;
+        stack.push(0);
+        int ans = 0;
+        for (int i=1; i<n; ++i) {
+            if (s.charAt(i) == s.charAt(stack.peek())) {
+                if (cost[i] <= cost[stack.peek()]) {
+                    ans += cost[i];
+                    continue;
+                } else {
+                    ans += cost[stack.pop()];
+                    stack.push(i);
+                }
+            } else {
+                stack.push(i);
+            }
+        }
+        return ans;
+    }
+
+    public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
+        int n = s.length();
+        Util.UnionFind uf = new Util.UnionFind(n);
+        for (List<Integer> p : pairs) {
+            uf.union(p.get(0), p.get(1));
+        }
+        Map<Integer, Set<Integer>> map = new HashMap<>();
+        Map<Integer, Character> sorted = new HashMap<>();
+        for (int i=0; i<n; ++i) {
+            int x = uf.find(i);
+            if (!map.containsKey(x)) {
+                map.put(x, new HashSet<>());
+                map.get(x).add(x);
+            }
+            map.get(x).add(i);
+        }
+        for (int k : map.keySet()) {
+            List<Integer> list = new ArrayList<>();
+            list.addAll(map.get(k));
+            List<Character> ch = new ArrayList<>();
+            for (int l : list) {
+                ch.add(s.charAt(l));
+            }
+            ch.sort((o1, o2) -> o1-o2);
+            list.sort((o1, o2) -> o1-o2);
+            for (int i=0; i<list.size(); ++i) {
+                sorted.put(list.get(i), ch.get(i));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<n; ++i) {
+            sb.append(sorted.get(i));
+        }
+        return sb.toString();
+    }
 }

@@ -6,6 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
     public static void main(String[] args) {
         Leet s = new Leet();
-        System.out.println(s.maxFreq("aabcabcab", 2, 2, 3));
+        System.out.println(s.smallestStringWithSwaps("dcab", Arrays.asList(Arrays.asList(0,3),Arrays.asList(1,2), Arrays.asList(0,2))));
     }
 }
