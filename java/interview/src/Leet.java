@@ -2373,4 +2373,46 @@ public class Leet {
         }
         return sb.toString();
     }
+
+    public int findLengthOfShortestSubarray(int[] arr) {
+        int n = arr.length;
+        // only three cases: cut beginning, cut end, cut middle
+        int a = 1, b = 1, c, d;
+        for (int i=1; i<n; ++i) {
+            if (arr[i] >= arr[i-1]) {
+                a++;
+            } else {
+                break;
+            }
+        }
+        for (int i=n-2; i>=0; --i) {
+            if (arr[i+1] >= arr[i]) {
+                b++;
+            } else {
+                break;
+            }
+        }
+        if (a == n) {
+            return 0;
+        }
+        c = a + findlengthOfShortestSubarrayHelper(arr, n-b, n, arr[a-1]);
+        d = b + findlengthOfShortestSubarrayHelper(arr, 0, a, arr[n-b]);
+        return n - Math.max(Math.max(a, b), Math.max(c, d));
+    }
+    private int findlengthOfShortestSubarrayHelper(int[] nums, int a, int b, int x) {
+        int l = a;
+        int r = b;
+        while (l < r) {
+            int m = l + (r-l)/2;
+            if (nums[m] > x) {
+                r = m;
+            } else {
+                l = m + 1;
+            }
+        }
+        if (a == 0) {
+            return l;
+        }
+        return nums.length - l;
+    }
 }
