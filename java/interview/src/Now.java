@@ -158,9 +158,9 @@ public class Now {
         return ans;
     }
 
-    public static int[] solve (int n, int q, int[] a, int[] p) {
-        return a;
-    }
+
+
+
 }
 
 
