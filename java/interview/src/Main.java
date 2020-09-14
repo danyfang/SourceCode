@@ -2,12 +2,9 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int[] nums = {300};
-        while (in.hasNext()) {
-            process(in.nextLine(), nums);
-        }
-        System.out.println(nums[0]);
+        Leet s = new Leet();
+        int[][] mat = new int[][]{{1,0,0},{0,0,1},{1,0,0}};
+        System.out.println(s.numSpecial(mat));
     }
     public static void process(String s, int[] nums) {
         String[] a = s.split(",");
