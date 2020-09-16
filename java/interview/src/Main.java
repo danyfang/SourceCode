@@ -13,6 +13,8 @@ public class Main {
             process(in.nextLine(), nums);
         }
         System.out.println(nums[0]);
+        int[][] mat = new int[][]{{1,0,0},{0,0,1},{1,0,0}};
+        System.out.println(s.numSpecial(mat));
     }
     public static void process(String s, int[] nums) {
         String[] a = s.split(",");

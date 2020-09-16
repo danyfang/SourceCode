@@ -2374,6 +2374,7 @@ public class Leet {
         return sb.toString();
     }
 
+<<<<<<< HEAD
     public int findLengthOfShortestSubarray(int[] arr) {
         int n = arr.length;
         // only three cases: cut beginning, cut end, cut middle
@@ -2415,4 +2416,102 @@ public class Leet {
         }
         return nums.length - l;
     }
+=======
+    public boolean checkIfCanBreak(String s1, String s2) {
+        int[] a = stringToIntArray(s1);
+        int[] b = stringToIntArray(s2);
+        Arrays.sort(a);
+        Arrays.sort(b);
+        return checkIfCanBreak(a, b) || checkIfCanBreak(b, a);
+    }
+
+    private int[] stringToIntArray(String s) {
+        int[] ans = new int[s.length()];
+        for (int i=0; i<s.length(); ++i) {
+            ans[i] = s.charAt(i) - 'a';
+        }
+        return ans;
+    }
+
+    private boolean checkIfCanBreak(int[] a, int[] b) {
+        for (int i=0; i<a.length; ++i) {
+            if (a[i] - b[i] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int numSpecial(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+        int[] row = new int[m];
+        int[] col = new int[n];
+        for (int i=0; i<m; ++i) {
+            int t = 0;
+            for (int j=0; j<n; ++j) {
+                t += mat[i][j];
+            }
+            row[i] = t;
+        }
+        for (int i=0; i<n; ++i) {
+            int t = 0;
+            for (int j=0; j<m; ++j) {
+                t += mat[j][i];
+            }
+            col[i] = t;
+        }
+        int ans = 0;
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (row[i] == 1 && col[j] == 1 && mat[i][j] == 1) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public int unhappyFriends(int n, int[][] preferences, int[][] pairs) {
+        int ans = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int[] p : pairs) {
+            map.put(p[0], p[1]);
+            map.put(p[1], p[0]);
+        }
+        for (int []p : pairs) {
+            if (isUnhappy(p[0], p[1], preferences, map)) {
+                ans++;
+            }
+            if (isUnhappy(p[1], p[0], preferences, map)) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+    // check if X is Unhappy
+    private boolean isUnhappy(int x, int y, int[][] p, Map<Integer, Integer> map) {
+        int indexY = findIndex(p[x], y);
+        for (int i=0; i<indexY; ++i) {
+            int z = map.get(p[x][i]);
+            int indexZ = findIndex(p[p[x][i]], z);
+            for (int j=0; j<indexZ; ++j) {
+                if (p[p[x][i]][j] == x) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private int findIndex(int[] a, int x) {
+        for (int j=0; j<a.length; ++j) {
+            if (a[j] == x) {
+                return j;
+            }
+        }
+        return -1;
+    }
+
+
+>>>>>>> 49ef46ff2cbde54197642e6bce07a1a3b6204822
 }
