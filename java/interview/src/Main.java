@@ -1,20 +1,34 @@
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Main {
-    public static void main(String[] args) {
-        Leet s = new Leet();
-        System.out.println(s.findLengthOfShortestSubarray(new int[]{1,2,3}));
-        System.out.println(s.findLengthOfShortestSubarray(new int[]{1,2,3,10,4,2,3,5}));
-        System.out.println(s.findLengthOfShortestSubarray(new int[]{5,4,3,2,1}));
-        System.out.println(s.findLengthOfShortestSubarray(new int[]{1,2,3,10,4,2,3,5,5,4,3,2,1}));
-        Scanner in = new Scanner(System.in);
-        int[] nums = {300};
-        while (in.hasNext()) {
-            process(in.nextLine(), nums);
+public class Main implements Runnable{
+
+    private static CountDownLatch countDownLatch = new CountDownLatch(1);
+    private static List<ExecutorService> threadList = new ArrayList<>();
+    private static final int MAX = 1024;
+    private static int current = 1;
+
+    @Override
+    public void run() {
+        if (current <= MAX) {
+            System.out.println(current++);
+            threadList.get(current % threadList.size()).submit(new Main());
+        } else {
+            countDownLatch.countDown();
         }
-        System.out.println(nums[0]);
-        int[][] mat = new int[][]{{1,0,0},{0,0,1},{1,0,0}};
-        System.out.println(s.numSpecial(mat));
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            threadList.add(Executors.newFixedThreadPool(1));
+        }
+
+        threadList.get(0).submit(new Main());
+        countDownLatch.await();
+        threadList.forEach(ExecutorService::shutdown);
+
     }
     public static void process(String s, int[] nums) {
         String[] a = s.split(",");

@@ -2374,7 +2374,6 @@ public class Leet {
         return sb.toString();
     }
 
-<<<<<<< HEAD
     public int findLengthOfShortestSubarray(int[] arr) {
         int n = arr.length;
         // only three cases: cut beginning, cut end, cut middle
@@ -2416,7 +2415,6 @@ public class Leet {
         }
         return nums.length - l;
     }
-=======
     public boolean checkIfCanBreak(String s1, String s2) {
         int[] a = stringToIntArray(s1);
         int[] b = stringToIntArray(s2);
@@ -2511,7 +2509,4 @@ public class Leet {
         }
         return -1;
     }
-
-
->>>>>>> 49ef46ff2cbde54197642e6bce07a1a3b6204822
 }
