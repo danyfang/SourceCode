@@ -21,14 +21,11 @@ public class Main implements Runnable{
     }
 
     public static void main(String[] args) throws InterruptedException {
-        for (int i = 0; i < 3; i++) {
-            threadList.add(Executors.newFixedThreadPool(1));
+        Leet s = new Leet();
+        String[] a = "aa bb    cc".split(" ");
+        for (String b : a) {
+            System.out.println(b);
         }
-
-        threadList.get(0).submit(new Main());
-        countDownLatch.await();
-        threadList.forEach(ExecutorService::shutdown);
-
     }
     public static void process(String s, int[] nums) {
         String[] a = s.split(",");

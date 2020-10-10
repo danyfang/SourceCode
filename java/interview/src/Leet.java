@@ -2509,4 +2509,64 @@ public class Leet {
         }
         return -1;
     }
+
+    public int specialArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        Arrays.sort(nums);
+        int l = 0;
+        int r = nums[nums.length-1] + 1;
+        int m = 0;
+        int t = 0;
+        while (l < r) {
+            m = l + (r - l) / 2;
+            t = specialArrayHelper(nums, m);
+            if (t == m) {
+                return m;
+            }
+            else if (t < m) {
+                r = m;
+            } else {
+                l = m + 1;
+            }
+        }
+        return -1;
+    }
+
+    private int specialArrayHelper(int[] nums, int x) {
+        // return the number of elements greater or equal than x
+        int l = 0;
+        int r = nums.length;
+        int ans = 0;
+        int m = 0;
+        while (l < r) {
+            m = l + (r - l) / 2;
+            if (nums[m] < x) {
+                l = m + 1;
+            } else {
+                r = m;
+            }
+        }
+        return nums.length - l;
+    }
+
+    public int minOperations(String[] logs) {
+        if (logs == null || logs.length == 0) {
+            return 0;
+        }
+        int ans = 0;
+        for (String l : logs) {
+            if (l.equals("../")) {
+                if (ans > 0) {
+                    ans--;
+                }
+            } else if (l.equals("./")) {
+                continue;
+            } else {
+                ans++;
+            }
+        }
+        return ans;
+    }
 }
