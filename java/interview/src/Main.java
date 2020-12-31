@@ -1,7 +1,9 @@
+
+import com.sun.xml.internal.rngom.util.Uri;
+
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main implements Runnable{
 
@@ -22,10 +24,7 @@ public class Main implements Runnable{
 
     public static void main(String[] args) throws InterruptedException {
         Leet s = new Leet();
-        String[] a = "aa bb    cc".split(" ");
-        for (String b : a) {
-            System.out.println(b);
-        }
+        System.out.println(Arrays.toString(s.decrypt(new int[]{5, 7, 1, 4}, 3)));
     }
     public static void process(String s, int[] nums) {
         String[] a = s.split(",");

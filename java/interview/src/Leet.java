@@ -2569,4 +2569,149 @@ public class Leet {
         }
         return ans;
     }
+
+    public boolean halvesAreAlike(String s) {
+        int total = numberOfVowels(s);
+        int n = s.length();
+        int left = numberOfVowels(s.substring(n/2));
+        return left == total - left;
+    }
+
+    private int numberOfVowels(String s) {
+        char[] vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        HashSet<Character> set = new HashSet<>();
+        for (char v : vowels) {
+            set.add(v);
+        }
+        char[] array = s.toCharArray();
+        int ans = 0;
+        for (char c : array) {
+            if (set.contains(c)) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public int countStudents(int[] students, int[] sandwiches) {
+        int n = sandwiches.length;
+        int zeros = 0;
+        int ones;
+        for (int s : students) {
+            if (s == 0) {
+                zeros++;
+            }
+        }
+        ones = n - zeros;
+        for (int i = 0; i < n; ++i) {
+            if (sandwiches[i] == 0) {
+                zeros--;
+            } else {
+                ones--;
+            }
+            if (zeros == -1 || ones == -1) {
+                return n - i;
+            }
+        }
+        return 0;
+    }
+
+    public String reformatNumber(String number) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < number.length(); ++i) {
+            if (Character.isDigit(number.charAt(i))) {
+                sb.append(number.charAt(i));
+            }
+        }
+        if (sb.length() < 4) {
+            return sb.toString();
+        }
+        StringBuilder ans = new StringBuilder();
+        int overSize = sb.length() % 3;
+        if (overSize == 1) {
+            for (int i = 0; i < sb.length() - 4; ++i) {
+                ans.append(sb.charAt(i));
+                if ((i + 1) % 3 == 0) {
+                    ans.append('-');
+                }
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                ans.append(sb.charAt(sb.length() - 4 + i));
+                if ((i+1) % 2 == 0) {
+                    ans.append('-');
+                }
+            }
+        } else {
+            for (int i = 0; i < sb.length(); ++i) {
+                ans.append(sb.charAt(i));
+                if ((i + 1) % 3 == 0) {
+                    ans.append('-');
+                }
+            }
+        }
+        if (ans.charAt(ans.length()-1) == '-') {
+            return ans.substring(0, ans.length()-1).toString();
+        }
+        return ans.toString();
+    }
+
+    public String interpret(String command) {
+        StringBuilder sb = new StringBuilder();
+        char c;
+        for (int i = 0; i < command.length(); ++i) {
+            c = command.charAt(i);
+            if (c == 'G') {
+                sb.append(c);
+            } else if (c == '(') {
+                if (i + 1 < command.length() && command.charAt(i + 1) == ')') {
+                    sb.append('o');
+                    i += 1;
+                } else {
+                    sb.append('a');
+                    sb.append('l');
+                    i += 3;
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public int maximumWealth(int[][] accounts) {
+        int ans = 0;
+        int t = 0;
+        for (int i = 0; i < accounts.length; ++i) {
+            t = 0;
+            for (int j = 0; j < accounts[i].length; ++j) {
+                t += accounts[i][j];
+            }
+            ans = Math.max(ans, t);
+        }
+        return ans;
+    }
+
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        for (String w : word1) {
+            sb1.append(w);
+        }
+        for (String w : word2) {
+            sb2.append(w);
+        }
+        return sb1.toString().equals(sb2.toString());
+    }
+
+    public int[] decrypt(int[] code, int k) {
+        int n = code.length;
+        int[] ans = new int[n];
+        Arrays.fill(ans, 0);
+        int f = k > 0 ? 1 : -1;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 1; j <= Math.abs(k); j++) {
+                ans[i] += code[(i + f*j + n) % n];
+            }
+        }
+        return ans;
+    }
 }
